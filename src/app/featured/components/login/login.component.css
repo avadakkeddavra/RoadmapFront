@@ -1,0 +1,17 @@
+.title{
+  width: 200px;
+  float: left;
+}
+.login-form{
+  float: left;
+  padding: 20px 50px;
+  width: 50%;
+}
+.login{
+  position: absolute;
+  width: 70%;
+  height: 300px;
+  top: 300px;
+  left: 50%;
+  margin: 0px -35%;
+}

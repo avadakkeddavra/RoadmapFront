@@ -1,0 +1,11 @@
+<div class="card" *ngIf="skills">
+  <div class="card-title teal lighten-2 white-text">
+    Top skills
+  </div>
+  <div class="card-body">
+    <div class="chip" *ngFor="let skill of skills">
+      <span>{{skill.skill.title}}</span>
+      <span class="value">{{skill.mark}}</span>
+    </div>
+  </div>
+</div>

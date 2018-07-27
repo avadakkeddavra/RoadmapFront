@@ -1,0 +1,175 @@
+<section class="skill-logs">
+  <div class="card">
+    <div [ngClass]="filtersShow ? 'shown card-filters z-depth-3': 'card-filters z-depth-3'">
+      <div class="card-filters-header">
+        <div class="pull-right">
+          <i class="material-icons" id="closeFilters" (click)="showFilters()">close</i>
+        </div>
+        <h4>Skills category filters</h4>
+        <p>Filters will be applied to skills table</p>
+      </div>
+      <div class="card-filters-body" >
+        <form #filtersForm="ngForm" novalidate>
+          <div class="input-field">
+            <select materialize="material_select" ngModel *ngIf="Skills && Skills.length > 0" name="skillId" id="skill">
+              <option value="" selected disabled>Not</option>
+              <optgroup *ngFor="let category of Skills" label="{{category.title}}">
+                <option *ngFor="let skill of category.skills" value="{{skill.id}}">{{skill.title}}</option>
+              </optgroup>
+
+            </select>
+            <label for="skill">Skill name</label>
+          </div>
+          <div class="input-field">
+            <select materialize="material_select" ngModel *ngIf="Users && Users.length > 0" name="userId" id="user">
+              <option value="" selected disabled>Not</option>
+              <option *ngFor="let user of Users" value="{{user.id}}">{{user.name}}</option>
+            </select>
+            <label for="user">User</label>
+          </div>
+          <div class="row">
+            <div class="col m6 s12">
+              <div class="input-field">
+                <input type="text" ngModel name="from">
+                <label for="">Mark from</label>
+              </div>
+            </div>
+            <div class="col m6 s12">
+              <div class="input-field">
+                <input type="text" ngModel name="to">
+                <label for="">Mark to</label>
+              </div>
+            </div>
+          </div>
+          <div class="input-field">
+            <input type="text" materialize="pickadate" class="datepicker" name="createdAt">
+            <label for="">From date</label>
+          </div>
+          <button class="btn blue" (click)="applyFilters(filtersForm)">Apply</button>
+        </form>
+      </div>
+    </div>
+    <div class="card-title">
+      <span>Skill logs table</span>
+      <ul class="actions right">
+        <li>
+          <i class="material-icons" id="filters" (click)="showFilters()" >filter_list</i>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div  *ngIf="filters && Object.keys(filters).length > 0">
+        <p>Applied filters <button class="btn-flat">Clear all</button></p>
+        <div class="filters">
+          <div class="chip" *ngFor="let key of Object.keys(filters)">{{key}}:{{filters[key]}}<i class="close material-icons">close</i></div>
+        </div>
+      </div>
+      <table class="responsive-table highlight">
+        <thead>
+        <tr>
+          <th>Skill</th>
+          <th>User</th>
+          <th>Category</th>
+          <th>Mark</th>
+          <th>Destionation</th>
+          <th>Comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td data-mark="10">Node.js</td>
+          <td>Alex</td>
+          <td>Backend</td>
+          <td>10</td>
+          <td>10</td>
+          <td>__</td>
+        </tr>
+        <tr>
+          <td  data-mark="8">PHP</td>
+          <td>Alex</td>
+          <td>Programming Languages</td>
+          <td>10</td>
+          <td>10</td>
+          <td></td>
+        </tr>
+        <tr  >
+          <td data-mark="5">Laravel</td>
+          <td>Alex</td>
+          <td>PHP frameworks</td>
+          <td>8</td>
+          <td>10</td>
+          <td></td>
+        </tr>
+        <tr >
+          <td data-mark="6">Angular.js</td>
+          <td>Alex</td>
+          <td>Frontend</td>
+          <td>6</td>
+          <td>10</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td data-mark="1">React.js</td>
+          <td>Alex</td>
+          <td>Frontend</td>
+          <td>3</td>
+          <td>10</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td data-mark="5">Node.js</td>
+          <td>Alex</td>
+          <td>Backend</td>
+          <td>10</td>
+          <td>10</td>
+          <td>__</td>
+        </tr>
+        <tr>
+          <td data-mark="5">PHP</td>
+          <td>Alex</td>
+          <td>Programming Languages</td>
+          <td>10</td>
+          <td>10</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td data-mark="5">Laravel</td>
+          <td>Alex</td>
+          <td>PHP frameworks</td>
+          <td>8</td>
+          <td>10</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td data-mark="5">Angular.js</td>
+          <td>Alex</td>
+          <td>Frontend</td>
+          <td>6</td>
+          <td>10</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td data-mark="5">React.js</td>
+          <td>Alex</td>
+          <td>Frontend</td>
+          <td>3</td>
+          <td>10</td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <div class="right">
+          <ul class="pagination-custom">
+            <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
+          </ul>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</section>

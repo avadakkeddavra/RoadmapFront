@@ -1,0 +1,12 @@
+<div class="table-footer" *ngIf="links && links.length != 0">
+  <div class="right">
+    <ul class="pagination-custom">
+      <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
+      <li *ngFor="let item of links">
+        <a (click)="getData($event,item.page)">{{item.page}}</a>
+      </li>
+      <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
+    </ul>
+  </div>
+  <div class="clearfix"></div>
+</div>

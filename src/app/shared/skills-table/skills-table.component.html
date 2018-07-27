@@ -1,0 +1,31 @@
+<ng-content></ng-content>
+<div class="card" *ngIf="skills && skills.skills.length > 0">
+  <div class="card-title">
+    <span>Skills marks for</span>
+    <b *ngIf="user">{{user.name}}</b>
+    <ul class="actions right">
+      <li>
+        <i class="material-icons" id="filters">filter_list</i>
+      </li>
+    </ul>
+  </div>
+  <table *ngIf="skills && skills.skills.length > 0">
+    <thead>
+    <tr>
+      <th>Skill name</th>
+      <th>Mark</th>
+      <th>Disposition</th>
+      <th>Comment</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let skill of skills.skills">
+      <td><a routerLink="/user/{{skill.userSkill.userId}}/logs/{{skill.id}}">{{skill.title}}</a></td>
+      <td><input type="text" value="{{skill.userSkill.mark}}" (change)="updateSkill('mark',$event, skill.userSkill.userId, skill.userSkill.skillId)"></td>
+      <td><input type="text" value="{{skill.userSkill.disposition}}" (change)="updateSkill('disposition',$event, skill.userSkill.userId, skill.userSkill.skillId)"></td>
+      <td><input type="text" value="{{skill.userSkill.comment}}" (change)="updateSkill('comment',$event, skill.userSkill.userId, skill.userSkill.skillId)"></td>
+    </tr>
+    </tbody>
+  </table>
+  <app-pagination  *ngIf="skills && skills.skills.length > 0" [Data]="{total:skills.total, userId:skills.skills[0].userSkill.userId}" (next)="nextPage($event)"></app-pagination>
+</div>

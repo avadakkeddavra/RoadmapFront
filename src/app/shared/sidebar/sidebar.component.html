@@ -1,0 +1,15 @@
+<ng-content></ng-content>
+<div ngClass="{{ visible ? 'sidebar z-depth-4': 'sidebar z-depth-4 collapsed' }}">
+  <div class="sidebar-header">
+    <img src="../../../assets/images/logo.png" alt="" class="responsive-img">
+    <h6>Roadmap</h6>
+  </div>
+  <div class="sidebar-body">
+    <ul class="collapsible">
+      <li><a routerLink=""><i class="material-icons">dashboard</i><span>Dashboard</span></a></li>
+      <li><a routerLink="/profile/{{id}}"><i class="material-icons">person</i><span>User page</span></a></li>
+      <li><a href=""><i class="material-icons">school</i><span>Match</span></a></li>
+      <li><a routerLink="/logs"><i class="material-icons">show_chart</i><span>Skill logs</span></a></li>
+    </ul>
+  </div>
+</div>

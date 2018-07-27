@@ -1,0 +1,31 @@
+<div class="card" *ngIf="user">
+  <div class="user-info-header">
+
+  </div>
+  <div class="user-info-body">
+    <div class="row">
+      <img src="./../../../../../assets/images/user.png" alt="" class="user-image blue">
+      <div class="col m4 user-personal">
+        <h4 class="name">{{user.name}}</h4>
+        <span class="position">{{user.email}}</span>
+      </div>
+      <div class="col m6 user-stat">
+        <div class="row">
+          <div class="col m4 stat">
+            <div class="value">{{user.total}}</div>
+            <div class="name">Total mark</div>
+          </div>
+          <div class="col m4 stat">
+            <div class="value">3+</div>
+            <div class="name">Developemet years</div>
+          </div>
+          <div class="col m4 stat">
+            <div class="value">10</div>
+            <div class="name">Projects completed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

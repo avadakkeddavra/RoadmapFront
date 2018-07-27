@@ -1,0 +1,37 @@
+<div class="card" *ngIf="matched">
+  <div class="card-title best-matched">
+    Best Matched
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s3"><a href="#for">For</a></li>
+          <li class="tab col s3"><a href="#to">To</a></li>
+        </ul>
+      </div>
+      <div id="for" class="col s12">
+        <table class="responsive-table">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Skills</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of matched">
+            <td>
+              {{user.name}}
+            </td>
+            <td>
+              <div class="chip">
+                <span>{{user.userSkills.skill.title}}</span>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

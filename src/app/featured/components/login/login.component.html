@@ -1,0 +1,26 @@
+<div class="login">
+  <div class="title">
+    <img src="../../../../assets/images/logo.png" alt="" class="responsive-img">
+    <h5>Smart IT</h5>
+    <p>Skills application</p>
+  </div>
+
+
+  <form class="login-form">
+    <div class="input-field">
+      <input type="email" name="email" #email>
+      <label for="">Email</label>
+    </div>
+    <div class="input-field">
+      <input type="password" name="password" #password>
+      <label for="">Password</label>
+    </div>
+    <button type="button" class="btn" (click)="login(email.value, password.value)">Login</button>
+  </form>
+</div>
+
+<!--<div class="errors" >-->
+  <!--<ul *ngIf="errors.details.length > 0">-->
+    <!--<li *ngFor="error of errors.details">{{error.message}}</li>-->
+  <!--</ul>-->
+<!--</div>-->

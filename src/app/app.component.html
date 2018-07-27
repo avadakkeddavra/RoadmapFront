@@ -1,0 +1,7 @@
+<app-sidebar [visible]="sideBarVisability" *ngIf="AuthService.user() != null"></app-sidebar>
+<main ngClass="{{sideBarVisability ? '' : 'full'}}">
+  <app-navbar (sideBarVisible)="sideBarToggle($event)"  *ngIf="AuthService.user() != null"></app-navbar>
+  <div class="wrapper">
+    <router-outlet></router-outlet>
+  </div>
+</main>

@@ -1,0 +1,21 @@
+<section class="user-info" *ngIf="User">
+<app-user-info [user]="User.data"></app-user-info>
+
+</section>
+<section class="statistics">
+  <div class="row">
+    <div class="col m4 top-skills">
+      <app-top-skills [skills]="TopSkills"></app-top-skills>
+      <app-best-matched [matched]="Matched"></app-best-matched>
+      <div class="card">
+        <div class="card-title purple lighten-2 white-text">
+          Skills chart
+        </div>
+        <app-user-chart [(skills)]="TopSkills"></app-user-chart>
+      </div>
+    </div>
+    <div class="col m8">
+      <app-skills-table-shared [skills]="Skills" [user]="User.data" (backHandle)="onSkillUpdate()"></app-skills-table-shared>
+    </div>
+  </div>
+</section>

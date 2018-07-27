@@ -1,0 +1,28 @@
+<section class="users-table">
+  <div class="card">
+    <div class="card-title">Users</div>
+    <table *ngIf="users">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Total mark</th>
+        <th>Created</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users" (click)="showUserSkills(user)">
+          <td>{{user.id}}</td>
+          <td><a routerLink="profile/{{user.id}}">{{user.name}}</a></td>
+          <td>{{user.email}}</td>
+          <td>
+            {{user.userSkills[0].marks}}
+            <span class="badge {{user.status.color}}">{{user.status.text}}</span>
+          </td>
+          <td>{{user.created_at | date:'dd-MMMM'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
