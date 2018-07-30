@@ -32,8 +32,12 @@ export class SkillsService {
     return this.Http.get('http://localhost:4200/api/skills/categories/list');
   }
 
-  getLogs(filters)
+  getLogs(filters, Page)
   {
-    return this.Http.post('http://localhost:4200/api/skills/logs',filters);
+    return this.Http.post(`http://localhost:4200/api/skills/logs?page=${Page}`,filters);
+  }
+
+  compare(data) {
+    return this.Http.post('http://localhost:4200/api/skills/compare',data);
   }
 }

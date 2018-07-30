@@ -12,7 +12,7 @@
         <form #filtersForm="ngForm" novalidate>
           <div class="input-field">
             <select materialize="material_select" ngModel *ngIf="Skills && Skills.length > 0" name="skillId" id="skill">
-              <option value="" selected disabled>Not</option>
+              <option value="" selected>Not</option>
               <optgroup *ngFor="let category of Skills" label="{{category.title}}">
                 <option *ngFor="let skill of category.skills" value="{{skill.id}}">{{skill.title}}</option>
               </optgroup>
@@ -57,11 +57,11 @@
         </li>
       </ul>
     </div>
-    <div class="card-body">
-      <div  *ngIf="filters && Object.keys(filters).length > 0">
-        <p>Applied filters <button class="btn-flat">Clear all</button></p>
+    <div class="card-body"  >
+      <div *ngIf="filters && Object.keys(filters).length > 0">
+        <p>Applied filters <button class="btn-flat" (click)="clearFilters()">Clear all</button></p>
         <div class="filters">
-          <div class="chip" *ngFor="let key of Object.keys(filters)">{{key}}:{{filters[key]}}<i class="close material-icons">close</i></div>
+          <div class="chip" *ngFor="let key of Object.keys(filters)">{{key}}:{{filters[key]}}<i class="close material-icons" (click)="removeFilter(key)">close</i></div>
         </div>
       </div>
       <table class="responsive-table highlight">
@@ -70,106 +70,22 @@
           <th>Skill</th>
           <th>User</th>
           <th>Category</th>
-          <th>Mark</th>
-          <th>Destionation</th>
-          <th>Comment</th>
+          <th>Old value</th>
+          <th>New value</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-          <td data-mark="10">Node.js</td>
-          <td>Alex</td>
-          <td>Backend</td>
-          <td>10</td>
-          <td>10</td>
-          <td>__</td>
-        </tr>
-        <tr>
-          <td  data-mark="8">PHP</td>
-          <td>Alex</td>
-          <td>Programming Languages</td>
-          <td>10</td>
-          <td>10</td>
-          <td></td>
-        </tr>
-        <tr  >
-          <td data-mark="5">Laravel</td>
-          <td>Alex</td>
-          <td>PHP frameworks</td>
-          <td>8</td>
-          <td>10</td>
-          <td></td>
-        </tr>
-        <tr >
-          <td data-mark="6">Angular.js</td>
-          <td>Alex</td>
-          <td>Frontend</td>
-          <td>6</td>
-          <td>10</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td data-mark="1">React.js</td>
-          <td>Alex</td>
-          <td>Frontend</td>
-          <td>3</td>
-          <td>10</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td data-mark="5">Node.js</td>
-          <td>Alex</td>
-          <td>Backend</td>
-          <td>10</td>
-          <td>10</td>
-          <td>__</td>
-        </tr>
-        <tr>
-          <td data-mark="5">PHP</td>
-          <td>Alex</td>
-          <td>Programming Languages</td>
-          <td>10</td>
-          <td>10</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td data-mark="5">Laravel</td>
-          <td>Alex</td>
-          <td>PHP frameworks</td>
-          <td>8</td>
-          <td>10</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td data-mark="5">Angular.js</td>
-          <td>Alex</td>
-          <td>Frontend</td>
-          <td>6</td>
-          <td>10</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td data-mark="5">React.js</td>
-          <td>Alex</td>
-          <td>Frontend</td>
-          <td>3</td>
-          <td>10</td>
-          <td></td>
+        <tbody *ngIf="Logs && Logs.skills.length > 0">
+        <tr *ngFor="let skill of Logs.skills">
+
+          <td class="{{skill.skill_new}}">{{skill.userSkill.skill.title}}</td>
+          <td>{{skill.user.name}}</td>
+          <td>{{skill.userSkill.skill.skillsCategory.title}}</td>
+          <td>{{skill.skill_old}}</td>
+          <td>{{skill.skill_new}}</td>
         </tr>
         </tbody>
       </table>
-      <div class="table-footer">
-        <div class="right">
-          <ul class="pagination-custom">
-            <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-          </ul>
-        </div>
-        <div class="clearfix"></div>
-      </div>
+        <app-pagination *ngIf="Pagination" [Data]="({total:Logs.total, userId:filters.userId})" (next)="nextPage($event)"></app-pagination>
     </div>
   </div>
 </section>

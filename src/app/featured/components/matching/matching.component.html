@@ -1,0 +1,66 @@
+<section class="skills-matched">
+
+  <div class="row">
+    <div class="col m4 s12">
+      <div class="card">
+        <div class="card-title">
+          Choose user & skills filters
+        </div>
+        <div class="card-body">
+          <form #matchForm="ngForm">
+            <div class="input-field">
+              <select name="userId" ngModel materialize="material_select" *ngIf="Users && Users.length > 0">
+                <option value="" selected disabled>Not</option>
+                <option value="{{user.id}}" class="left" data-icon="./../../../../assets/images/user.png" *ngFor="let user of Users">{{user.name}}</option>
+              </select>
+              <label for="">User</label>
+            </div>
+            <div class="input-field">
+              <select multiple name="skills" ngModel materialize="material_select" *ngIf="Skills && Skills.length > 0">
+                <option value="" selected disabled>Not</option>
+                <optgroup *ngFor="let category of Skills" label="{{category.title}}">
+                  <option *ngFor="let skill of category.skills" value="{{skill.id}}">{{skill.title}}</option>
+                </optgroup>
+              </select>
+              <label for="">Skills</label>
+            </div>
+            <button type="button" class="btn blue" (click)="applyFilters(matchForm)">Apply</button>
+          </form>
+        </div>
+      </div>
+      <div class="card" *ngIf="Compare && Compare.compare.length > 0">
+        <div class="card-title">Matched chart</div>
+        <div class="card-body">
+          <div id="chartdiv" style="height:300px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col m8 s12">
+      <div class="card" *ngIf="Compare && Compare.compare.length > 0">
+        <div class="card-title green white-text lighten-2">
+          Matched users
+        </div>
+        <div class="card-body" >
+          <table class="responsive-table highlight">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Skills</th>
+              <th>Persent of matching</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let userSkill of Compare.compare; let i = index" (click)="drawChart(i)">
+                <td>{{userSkill.name}}</td>
+                <td>
+                  <div class="chip" *ngFor="let skill of userSkill.compareSkills">{{skill.skill.title}} <b>{{skill.mark}}</b></div>
+                </td>
+                <td>{{userSkill.persent}} %</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

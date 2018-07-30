@@ -391,7 +391,7 @@ section.skill-logs table:not(.picker__table) tbody tr td {
   position: relative;
 }
 section.skill-logs table:not(.picker__table) tbody tr td:first-child:before {
-  content: attr(data-mark);
+  content: attr(class);
   font-size: 10px;
   color: #fff;
   width: 15px;

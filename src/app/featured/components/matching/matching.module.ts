@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {SkillLogsComponent} from './skill-logs.component';
+import {MatchingComponent} from './matching.component';
 import {MaterializeModule} from 'angular2-materialize';
 import {FormsModule} from '@angular/forms';
-import {SharedModule} from '../../../shared/shared.module';
+import {AmChartsModule} from '@amcharts/amcharts3-angular';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterializeModule,
     FormsModule,
-    SharedModule
+    AmChartsModule
   ],
-  declarations: [SkillLogsComponent]
+  declarations: [MatchingComponent]
 })
-export class SkillLogsModule { }
+export class MatchingModule { }

@@ -12,13 +12,13 @@ import {TokenInterceptor} from '../core/token.interceptor';
 import {MaterializeModule} from 'angular2-materialize';
 import {ProfileModule} from './components/profile/profile.module';
 import {UserGuard} from './guards/user.guard';
-import { LogsComponent } from './components/logs/logs.component';
 import {LogsModule} from './components/logs/logs.module';
-import { SkillLogsComponent } from './components/skill-logs/skill-logs.component';
 import {SkillLogsModule} from './components/skill-logs/skill-logs.module';
+import {MatchingModule} from './components/matching/matching.module';
 
 @NgModule({
   imports: [
+    SkillLogsModule,
     CommonModule,
     DashboardModule,
     FeaturedRoutes,
@@ -27,7 +27,7 @@ import {SkillLogsModule} from './components/skill-logs/skill-logs.module';
     ProfileModule,
     MaterializeModule,
     LogsModule,
-    SkillLogsModule
+    MatchingModule
   ],
   providers: [
     AuthService,

@@ -13,14 +13,16 @@ export class PaginationComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.Data);
-    for(let i = 0; i < this.Data.total/10; i++) {
+  ngOnChanges() {
+   this.links = [];
+    for(let i = 0; i < Math.round(this.Data.total/10); i++) {
       this.links.push({
         page: (i+1)
       })
     }
   }
+
+  ngOnInit() {}
 
   getData(event, page){
     event.preventDefault();
