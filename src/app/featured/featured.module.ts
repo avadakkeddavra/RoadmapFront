@@ -15,6 +15,8 @@ import {UserGuard} from './guards/user.guard';
 import {LogsModule} from './components/logs/logs.module';
 import {SkillLogsModule} from './components/skill-logs/skill-logs.module';
 import {MatchingModule} from './components/matching/matching.module';
+import {AdminGuard} from './guards/admin.guard';
+import {SkillsCategoriesModule} from './components/skills-categories/skills-categories.module';
 
 @NgModule({
   imports: [
@@ -27,13 +29,15 @@ import {MatchingModule} from './components/matching/matching.module';
     ProfileModule,
     MaterializeModule,
     LogsModule,
-    MatchingModule
+    MatchingModule,
+    SkillsCategoriesModule
   ],
   providers: [
     AuthService,
     AuthGuard,
     GuestGuard,
     UserGuard,
+    AdminGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

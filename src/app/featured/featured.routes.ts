@@ -8,6 +8,8 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {LogsComponent} from './components/logs/logs.component';
 import {SkillLogsComponent} from './components/skill-logs/skill-logs.component';
 import {MatchingComponent} from './components/matching/matching.component';
+import {SkillsCategoriesComponent} from './components/skills-categories/skills-categories.component';
+import {AdminGuard} from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', component:DashboardComponent },
@@ -19,7 +21,8 @@ const routes: Routes = [
 
 const Auth: Routes = [
   { path: '', children: routes, canActivate:[AuthGuard] },
-  { path: 'login', component: LoginComponent, canActivate:[GuestGuard] }
+  { path: 'login', component: LoginComponent, canActivate:[GuestGuard] },
+  { path: 'skills-categories', component:SkillsCategoriesComponent, canActivate: [AdminGuard]}
 ];
 
 @NgModule({

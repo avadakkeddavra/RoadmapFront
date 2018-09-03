@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
         this.TopSkills = [];
         this.User = response;
         if( this.User.data.role === 1) {
-          toast('This page unavaliable');
+          toast('This page unavaliable',2000);
           this.router.navigate(['']);
         }
         let Skills = this.User.data.userSkills;
@@ -49,7 +49,6 @@ export class ProfileComponent implements OnInit {
 
       this.UserService.getMatched(params.id).subscribe( response => {
         let Response:any = response;
-
         this.Matched = Response[0].compare;
 
       });
