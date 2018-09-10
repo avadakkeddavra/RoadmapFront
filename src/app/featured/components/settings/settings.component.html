@@ -1,0 +1,101 @@
+<section class="settings">
+  <div class="row">
+    <div class="col m4 s6">
+      <div class="card">
+        <div class="card-title">
+          User profile sample
+        </div>
+        <div class="card-body">
+          <div class="user-img">
+            <img src="http://localhost:3010/assets/images/{{user.avatar}}" alt="" class="responsive-img ">
+          </div>
+          <div class="user-info">
+            <h6 class="name">{{user.name}}</h6>
+            <p class="name">{{user.email}}</p>
+
+            <table class="centered">
+              <thead>
+                <tr>
+                  <th>Setting</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Role</td>
+                  <td>{{user.role === 0 ? 'User' : 'Admin'}}</td>
+                </tr>
+              <tr>
+                <td>Years of development</td>
+                <td>{{settings.dev_years}}</td>
+              </tr>
+              <tr>
+                <td>Project completed</td>
+                <td>{{settings.projects_completed}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          User settings
+        </div>
+        <div class="card-body">
+          <form #settingsForm="ngForm" *ngIf="settings">
+            <div class="input-field">
+              <input type="number" name="years" ngModel="{{settings.dev_years}}">
+              <label for="">Years of development</label>
+            </div>
+            <div class="input-field">
+              <input type="number" name="projects" ngModel="{{settings.projects_completed}}">
+              <label for="">Projects completed </label>
+            </div>
+            <button class="btn blue" (click)="setSettings(settingsForm)">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col m8 s12">
+      <div class="card">
+        <div class="card-title">
+          User data
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <form #userForm="ngForm">
+              <div class="input-field">
+                <input type="text" name="name" ngModel>
+                <label for="">Name</label>
+              </div>
+              <div class="input-field">
+                <input type="text" name="email" ngModel>
+                <label for="">Email</label>
+              </div>
+              <div class="input-field">
+                <select type="text" name="role" ngModel materialize="material_select">
+                  <option value="">Not</option>
+                  <option value="1" *ngIf="user.role === 0">Admin</option>
+                  <option value="0" *ngIf="user.role === 1">User</option>
+                </select>
+                <label for="">Role</label>
+              </div>
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Avatar</span>
+                  <input type="file" name="avatar" #avatar ngModel (change)="uploadAvatar(avatar.files)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+              <button class="btn" (click)="updateUserData(userForm)">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
