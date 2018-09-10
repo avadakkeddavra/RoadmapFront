@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AuthService} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,11 +9,15 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   sideBarStatus = true;
+  user:any;
   @Output() sideBarVisible = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private AuthService: AuthService
+  ) { }
 
   ngOnInit() {
+    this.user = this.AuthService.userData()
   }
 
   toggleSidebar() {

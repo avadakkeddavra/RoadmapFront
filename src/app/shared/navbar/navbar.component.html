@@ -4,9 +4,13 @@
     <i class="fa fa-bars" id="sidebarToggle" (click)="toggleSidebar()"></i>
     <h1 class="page-title">Dashboard</h1>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="sass.html">Sass</a></li>
-      <li><a href="badges.html">Components</a></li>
-      <li><a href="collapsible.html">JavaScript</a></li>
+      <li class="user-info">
+        <img src="http://localhost:3010/assets/images/{{user.avatar}}" alt="">
+        <div class="user-data">
+          <p>{{user.name}}</p>
+          <span>{{user.email}}</span>
+        </div>
+      </li>
     </ul>
   </div>
 </nav>

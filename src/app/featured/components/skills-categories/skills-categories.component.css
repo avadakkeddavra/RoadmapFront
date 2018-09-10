@@ -1,0 +1,30 @@
+.card-filters {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s all;
+}
+.actions li {
+  float: left;
+}
+.actions li input{
+  height: 25px;
+}
+.card-filters.show{
+  right: 0px !important;
+  opacity: 1;
+  visibility: visible;
+}
+
+
+i.fa-trash-o {
+  color: #8b8b8b;
+  font-size: 12px;
+  float: right;
+  cursor: pointer;
+}
+a{
+  cursor: pointer;
+}
+.filters:not(i){
+  padding: 10px 0px;
+}

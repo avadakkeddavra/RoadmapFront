@@ -29,4 +29,8 @@ export class AuthService {
     {
       return jwt.decode(localStorage.getItem('token'))
     }
+
+    rebuildToken(token) {
+      localStorage.setItem('token',token);
+    }
   }

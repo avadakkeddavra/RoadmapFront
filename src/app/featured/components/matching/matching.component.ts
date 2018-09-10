@@ -25,7 +25,8 @@ export class MatchingComponent implements OnInit {
 
   ngOnInit() {
     this.SkillsService.getAllSkills().subscribe( skills => {
-      this.Skills = skills;
+      let Response:any = skills;
+      this.Skills = Response;
     });
 
     this.UsersService.getAllUsers().subscribe( users => {

@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SkillsService} from '../../../core/services/skills.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {toast} from 'angular2-materialize';
+import {CategoryService} from '../../../core/services/catgory.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,15 +17,20 @@ export class ProfileComponent implements OnInit {
   Skills:any;
   TopSkills:Array<any> = [];
   Matched:Array<any> = [];
+  Categories: any = [];
   constructor(
     private router: Router,
     private UserService: UserService,
     private route:ActivatedRoute,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private CategorySevice: CategoryService
   ) { }
 
   ngOnInit() {
 
+    this.CategorySevice.all().subscribe(res => {
+      this.Categories = res;
+    });
     this.route.params.subscribe( params => {
 
       this.UserService.getUserStat(params.id).subscribe( response => {
@@ -64,4 +70,11 @@ export class ProfileComponent implements OnInit {
     this.ngOnInit();
   }
 
+  sort(event) {
+    console.log(event);
+
+    this.UserService.getUserSkills(event.userId, 1, event.id).subscribe( response => {
+      this.Skills = response
+    })
+  }
 }

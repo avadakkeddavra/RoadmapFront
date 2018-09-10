@@ -1,3 +1,23 @@
 table td, table th{
   padding: 5px 15px !important;
 }
+table th{
+  padding: 15px 15px !important;
+}
+.chip {
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+.highlight {
+  background-color: #9d9da3;
+  color: #ffffff;
+}
+
+i.fa {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #4e4e4e;
+}

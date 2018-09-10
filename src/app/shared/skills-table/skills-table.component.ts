@@ -12,8 +12,10 @@ import {toast} from 'angular2-materialize';
 export class SkillsTableComponent implements OnInit {
 
   @Input() skills;
+  @Input() categories;
   @Input() user;
   @Output() backHandle = new EventEmitter();
+  @Output() sort = new EventEmitter();
   constructor(
     private UserService:UserService,
     private SkillsService: SkillsService
@@ -48,4 +50,83 @@ export class SkillsTableComponent implements OnInit {
 
   }
 
+  sortByCategory(id) {
+    this.sort.emit({
+      by: 'category',
+      id: id,
+      userId: this.user.id
+    });
+
+    this.categories.map( function(cat, i) {
+        if(cat.id === id) {
+          cat.highlight = true;
+        } else {
+          cat.highlight = false;
+        }
+    });
+  }
+
+  sortSkills(column, event) {
+
+    if(event.target.classList.contains('fa-sort-amount-desc'))
+    {
+      if(column !== 'title') {
+        this.skills.skills.sort(function(a,b){
+
+          if(a.userSkill[column] < b.userSkill[column]){
+            return 1;
+          }
+
+          if(a.userSkill[column] > b.userSkill[column]){
+            return -1;
+          }
+          return 0;
+        });
+      } else {
+        this.skills.skills.sort(function(a,b){
+
+          if(a[column] > b[column]){
+            return 1;
+          }
+
+          if(a[column] < b[column]){
+            return -1;
+          }
+          return 0;
+        });
+      }
+
+      event.target.classList.remove('fa-sort-amount-desc');
+      event.target.classList.add('fa-sort-amount-asc');
+
+    } else {
+        if(column !== 'title') {
+          this.skills.skills.sort(function(a,b){
+
+            if(a.userSkill[column] > b.userSkill[column]){
+              return 1;
+            }
+
+            if(a.userSkill[column] < b.userSkill[column]){
+              return -1;
+            }
+            return 0;
+          });
+        } else {
+          this.skills.skills.sort(function(a,b){
+
+            if(a[column] < b[column]){
+              return 1;
+            }
+
+            if(a[column] > b[column]){
+              return -1;
+            }
+            return 0;
+          });
+        }
+      event.target.classList.remove('fa-sort-amount-asc');
+      event.target.classList.add('fa-sort-amount-desc');
+    }
+  }
 }

@@ -13,9 +13,9 @@ export class UserService {
     return this.Http.get('http://localhost:4200/api/users');
   }
 
-  getUserSkills(id, page) {
+  getUserSkills(id, page, catId = null) {
 
-    return this.Http.get('http://localhost:4200/api/user/'+id+'/skillslist?page='+page)
+    return this.Http.get('http://localhost:4200/api/user/'+id+'/skillslist?page='+page+'&id='+catId)
 
   }
 
@@ -38,4 +38,18 @@ export class UserService {
   getAllUsersSkills() {
     return this.Http.get('http://localhost:4200/api/user/allskills');
   }
+
+  uploadAvatar(data) {
+
+    return this.Http.post('http://localhost:4200/api/user/avatar', data);
+  }
+
+  getUsersSettings(id) {
+    return this.Http.get(`http://localhost:4200/api/user/settings/${id}`);
+  }
+
+  setUserSettings(id, data) {
+    return this.Http.post(`http://localhost:4200/api/user/settings/${id}`, data);
+  }
 }
+

@@ -32,6 +32,10 @@ export class SkillsService {
     return this.Http.get('http://localhost:4200/api/skills/categories/list');
   }
 
+  getSkills() {
+    return this.Http.get('http://localhost:4200/api/skills/list');
+  }
+
   getLogs(filters, Page)
   {
     return this.Http.post(`http://localhost:4200/api/skills/logs?page=${Page}`,filters);
@@ -39,5 +43,17 @@ export class SkillsService {
 
   compare(data) {
     return this.Http.post('http://localhost:4200/api/skills/compare',data);
+  }
+
+  sort(data) {
+    return  this.Http.post('http://localhost:4200/api/skills/sort',data);
+  }
+
+  search(data) {
+    return  this.Http.post('http://localhost:4200/api/skills/search',data);
+  }
+
+  delete(id) {
+    return this.Http.delete(`http://localhost:4200/api/skills/${id}`)
   }
 }

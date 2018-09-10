@@ -1,3 +1,9 @@
 .card-filters.shown{
   right: 0 !important;
 }
+.filters{
+  padding: 15px 0px !important;
+}
+.chip{
+  font-size: 10px;
+}

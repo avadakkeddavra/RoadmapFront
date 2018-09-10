@@ -25,4 +25,7 @@ export class CategoryService {
   create(data) {
     return this.Http.post(`http://localhost:4200/api/category`,data);
   }
+  search(data) {
+    return this.Http.post(`http://localhost:4200/api/category/search`,data);
+  }
 }

@@ -43,7 +43,9 @@ export class DashboardComponent implements OnInit {
     });
 
     this.CategoryService.all().subscribe( response => {
-      this.Categories = response;
+      let Response:any = response;
+      this.Categories = Response.data;
+
     })
   }
 
@@ -51,6 +53,7 @@ export class DashboardComponent implements OnInit {
     this.ChoosedUser = user;
     this.UserService.getUserSkills(user.id,1).subscribe(response => {
       this.UserSkills = response;
+      console.log(response)
 
     })
   }
@@ -82,6 +85,14 @@ export class DashboardComponent implements OnInit {
     this.CategoryService.create(body).subscribe( response => {
       let category:any = response;
       toast(category.data.title+' category was created')
+    })
+  }
+
+  sort(event) {
+    console.log(event);
+
+    this.UserService.getUserSkills(event.userId, 1, event.id).subscribe( response => {
+      this.UserSkills = response
     })
   }
 }

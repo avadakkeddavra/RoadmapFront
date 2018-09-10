@@ -17,6 +17,8 @@ import {SkillLogsModule} from './components/skill-logs/skill-logs.module';
 import {MatchingModule} from './components/matching/matching.module';
 import {AdminGuard} from './guards/admin.guard';
 import {SkillsCategoriesModule} from './components/skills-categories/skills-categories.module';
+import { SettingsComponent } from './components/settings/settings.component';
+import {SettingsModule} from './components/settings/settings.module';
 
 @NgModule({
   imports: [
@@ -30,7 +32,8 @@ import {SkillsCategoriesModule} from './components/skills-categories/skills-cate
     MaterializeModule,
     LogsModule,
     MatchingModule,
-    SkillsCategoriesModule
+    SkillsCategoriesModule,
+    SettingsModule
   ],
   providers: [
     AuthService,

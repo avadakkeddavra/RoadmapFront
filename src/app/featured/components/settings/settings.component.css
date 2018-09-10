@@ -1,0 +1,19 @@
+img{
+  width: 80px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 20px;
+  border-radius: 50%;
+}
+.user-info{
+  text-align: center;
+}
+h6{
+  font-weight: bold;
+}
+table{
+  margin-top: 10px;
+}
+thead{
+  background-color: #f9f9f9;
+}

@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="col m8">
-      <app-skills-table-shared *ngIf="Skills && User" [skills]="Skills" [user]="User.data" (backHandle)="onSkillUpdate()"></app-skills-table-shared>
+      <app-skills-table-shared *ngIf="Skills && User" [skills]="Skills" [categories]="Categories.data" [user]="User.data" (sort)="sort($event)" (backHandle)="onSkillUpdate()"></app-skills-table-shared>
     </div>
   </div>
 </section>

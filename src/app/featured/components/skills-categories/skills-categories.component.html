@@ -2,24 +2,24 @@
   <div class="row">
     <div class="col m12 s12">
       <div class="card">
-        <div class="card-filters z-depth-3">
+        <div class="card-filters z-depth-3" ngClass="{{filtersStatus.category ? 'card-filters z-depth-3 show' : 'card-filters z-depth-3'}}">
           <div class="card-filters-header">
             <div class="pull-right">
-              <i class="material-icons closeFilters">close</i>
+              <i class="material-icons closeFilters" (click)="closeFilters('category')">close</i>
             </div>
             <h4>Create a new category</h4>
           </div>
           <div class="card-filters-body">
-            <form action="">
+            <form #createCategoryForm="ngForm">
               <div class="input-field">
-                <input type="text">
-                <label for="skill">Category name</label>
+                <input type="text" id="title" name="title" ngModel>
+                <label for="title">Category name</label>
               </div>
               <div class="input-field">
-                <textarea name="" id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-                <label for="user">User</label>
+                <textarea name="description" id="description" ngModel class="materialize-textarea" data-length="120"></textarea>
+                <label for="description">Description</label>
               </div>
-              <button class="btn blue">Create</button>
+              <button class="btn blue" (click)="createCategory(createCategoryForm)">Create</button>
             </form>
           </div>
         </div>
@@ -27,11 +27,14 @@
           <span>Categories</span>
           <ul class="actions right">
             <li>
-              <i class="material-icons filters">add</i>
+              <input type="text" placeholder="Search" #catName (input)="searchCategory(catName.value)">
+            </li>
+            <li>
+              <i class="material-icons filters" (click)="showFilters('category')">add</i>
             </li>
           </ul>
         </div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="Categories && Categories.length > 0">
           <table class="responsive-table highlight">
             <thead>
             <tr>
@@ -40,25 +43,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>Backend</td>
-              <td>_______</td>
-            </tr>
-            <tr>
-              <td>Algoritms</td>
-              <td>_______</td>
-            </tr>
-            <tr>
-              <td>Frontend</td>
-              <td>_______</td>
-            </tr>
-            <tr>
-              <td>Frameworks</td>
-              <td>_______</td>
-            </tr>
-            <tr>
-              <td>Matchine learning</td>
-              <td>_______</td>
+            <tr *ngFor="let cat of filterItemsOfShow('category')">
+              <td>{{cat.title}}</td>
+              <td>{{cat.description}}</td>
+              <td><i class="fa fa-trash-o" (click)="deleteCategory(cat.id)"></i></td>
             </tr>
             </tbody>
           </table>
@@ -66,9 +54,7 @@
             <div class="right">
               <ul class="pagination-custom">
                 <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
+                <li *ngFor="let item of pagination.category" ><a  (click)="showPage('category',item.number - 1)">{{item.number}}</a></li>
                 <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
               </ul>
             </div>
@@ -79,33 +65,30 @@
     </div>
     <div class="col m12 s12">
       <div class="card">
-        <div class="card-filters z-depth-3">
+        <div class="card-filters z-depth-3" ngClass="{{filtersStatus.skills ? 'card-filters z-depth-3 show' : 'card-filters z-depth-3'}}">
           <div class="card-filters-header">
             <div class="pull-right">
-              <i class="material-icons closeFilters">close</i>
+              <i class="material-icons closeFilters" (click)="closeFilters('skills')">close</i>
             </div>
             <h4>Create a new skill</h4>
           </div>
           <div class="card-filters-body">
-            <form action="">
+            <form #createSkillForm="ngForm">
               <div class="input-field">
-                <input type="text">
-                <label for="skill">Skill name</label>
+                <input type="text" name="name" ngModel>
+                <label for="">Skill name</label>
               </div>
               <div class="input-field">
-                <select name="" id="">
-                  <option value="">LocalStorage</option>
-                  <option value="">Backend</option>
-                  <option value="">Frontend</option>
-                  <option value="">Algoritms</option>
+                <select name="category_id" *ngIf="Categories" ngModel materialize="material_select">
+                  <option *ngFor="let cat of Categories" value="{{cat.id}}">{{cat.title}}</option>
                 </select>
-                <label for="skill">Category</label>
+                <label for="">Category</label>
               </div>
               <div class="input-field">
-                <textarea name="" id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-                <label for="user">User</label>
+                <textarea name="description" ngModel id="" class="materialize-textarea" data-length="120"></textarea>
+                <label for="">User</label>
               </div>
-              <button class="btn blue">Create</button>
+              <button class="btn blue" (click)="createSkill(createSkillForm)">Create</button>
             </form>
           </div>
         </div>
@@ -113,11 +96,17 @@
           <span>Skills</span>
           <ul class="actions right">
             <li>
-              <i class="material-icons filters">add</i>
+              <input type="text" placeholder="Search" #skillName (input)="searchSkill(skillName.value)" >
+            </li>
+            <li>
+              <i class="material-icons filters" (click)="showFilters('skills')">add</i>
             </li>
           </ul>
         </div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="Skills && Skills.length > 0">
+          <div class="filters">
+            <div class="chip" *ngFor="let cat of Categories">{{cat.title}}</div>
+          </div>
           <table class="responsive-table highlight">
             <thead>
             <tr>
@@ -127,40 +116,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>PHP</td>
-              <td>Languages</td>
-              <td>_______</td>
+            <tr *ngFor="let skill of filterItemsOfShow('skills')">
+              <td>{{skill.title}}</td>
+              <td><p *ngIf="skill.skillsCategory">{{skill.skillsCategory.title}}</p></td>
+              <td>{{skill.description}}</td>
+              <td><i class="fa fa-trash-o" (click)="deleteSkill(skill.id)"></i></td>
             </tr>
-            <tr>
-              <td>Angular.js</td>
-              <td>Languages</td>
-              <td>_______</td>
-            </tr>
-            <tr>
-              <td>React.js</td>
-              <td>Languages</td>
-              <td>_______</td>
-            </tr>
-            <tr>
-              <td>Node.js</td>
-              <td>Languages</td>
-              <td>_______</td>
-            </tr>
-            <tr>
-              <td>Laravel</td>
-              <td>Languages</td>
-              <td>_______</td>
-            </tr>
+
             </tbody>
           </table>
           <div class="table-footer">
             <div class="right">
               <ul class="pagination-custom">
                 <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
+                <li *ngFor="let item of pagination.skills"><a (click)="showPage('skill',item.number - 1)">{{item.number}}</a></li>
                 <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
               </ul>
             </div>
