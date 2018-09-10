@@ -7,18 +7,13 @@ export class AuthService {
 
   constructor(private Http: HttpClient) { }
 
-  login(data)
-  {
+  login(data) {
+    return this.Http.post('http://localhost:4200/api/login',data);
+  }
 
-    console.log(data);
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded'
-      })
-    };
-    let sendData = "email="+data.email+"&password="+data.password;
-    console.log(sendData);
-    return this.Http.post('http://localhost:4200/api/login',sendData,httpOptions);
+  register(data) {
+
+    return this.Http.post('http://localhost:4200/api/register',data);
   }
 
     public user(): string {

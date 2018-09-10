@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   errors:Array<any>;
+  registerForm:boolean = false;
   constructor(
     private AuthService: AuthService,
     public Router: Router
@@ -36,5 +37,29 @@ export class LoginComponent implements OnInit {
       }
 
     })
+  }
+
+  register(name ,email, password) {
+    this.AuthService.register({
+      name: name,
+      email:email,
+      password:password
+    }).subscribe( response => {
+
+      let Response:any = response;
+      console.log(response);
+      if(Response.success) {
+
+        let token:any = Response.token;
+        localStorage.setItem('token', token);
+        this.Router.navigate(['']);
+      } else {
+        this.errors = Response.errors;
+      }
+
+    })
+  }
+  toggleRegister() {
+    this.registerForm = !this.registerForm;
   }
 }

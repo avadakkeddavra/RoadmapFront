@@ -3,10 +3,12 @@
     <img src="../../../../assets/images/logo.png" alt="" class="responsive-img">
     <h5>Smart IT</h5>
     <p>Skills application</p>
+    <button class="btn purple" style="margin: 10px 0px;" (click)="toggleRegister()">register</button>
+    <button class="btn blue" (click)="toggleRegister()">login</button>
   </div>
 
 
-  <form class="login-form">
+  <form class="login-form" *ngIf="registerForm === false">
     <div class="input-field">
       <input type="email" name="email" #email>
       <label for="">Email</label>
@@ -17,7 +19,33 @@
     </div>
     <button type="button" class="btn" (click)="login(email.value, password.value)">Login</button>
   </form>
+
+  <form class="login-form" *ngIf="registerForm === true">
+
+    <div class="input-field">
+      <input type="text" name="email" #name>
+      <label for="">Name</label>
+    </div>
+
+
+    <div class="input-field">
+      <input type="email" name="email" #email>
+      <label for="">Email</label>
+    </div>
+    <div class="input-field">
+      <input type="password" name="password" #password>
+      <label for="">Password</label>
+    </div>
+    <button type="button" class="btn blue" (click)="register(name.value, email.value, password.value)">Register</button>
+  </form>
 </div>
+
+<!--<div class="errors" >-->
+<!--<ul *ngIf="errors.details.length > 0">-->
+<!--<li *ngFor="error of errors.details">{{error.message}}</li>-->
+<!--</ul>-->
+<!--</div>-->
+
 
 <!--<div class="errors" >-->
   <!--<ul *ngIf="errors.details.length > 0">-->
