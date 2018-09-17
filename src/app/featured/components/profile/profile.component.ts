@@ -43,6 +43,7 @@ export class ProfileComponent implements OnInit {
         let Skills = this.User.data.userSkills;
 
         for(let skill of Skills) {
+
           if(skill.mark > 6 && this.TopSkills.length < 10) {
             skill.name = skill.skill.title;
             this.TopSkills.push(skill);
@@ -66,13 +67,41 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  onSkillUpdate() {
-    this.ngOnInit();
+  onSkillUpdate($event) {
+    let index = $event.index;
+    delete $event.index;
+    this.Skills[index] = $event;
+
+    let TopSkills = [];
+
+    let flag = false;
+
+    for(let i in this.TopSkills) {
+      let skill = this.TopSkills[i];
+
+      if(skill.name === $event.skill.title) {
+        skill = {};
+        skill = $event;
+        flag = true;
+      }
+
+      if(skill.mark > 5) {
+        TopSkills.push(skill);
+      }
+
+    }
+
+    if(!flag && $event.mark > 5) {
+      TopSkills.push($event);
+    }
+
+    this.TopSkills = [];
+
+    this.TopSkills = TopSkills;
+    console.log(this.TopSkills);
   }
 
   sort(event) {
-    console.log(event);
-
     this.UserService.getUserSkills(event.userId, 1, event.id).subscribe( response => {
       this.Skills = response
     })

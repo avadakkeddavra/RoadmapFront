@@ -24,7 +24,7 @@ const Auth: Routes = [
   { path: '', children: routes, canActivate:[AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate:[GuestGuard] },
   { path: 'skills-categories', component:SkillsCategoriesComponent, canActivate: [AdminGuard]},
-  { path: 'settings', component:SettingsComponent, canActivate: [AdminGuard]}
+  { path: 'settings', component:SettingsComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../../core/services/auth.service';
 import {Router} from '@angular/router';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  errors:Array<any>;
+  errors:Array<any> = [];
   registerForm:boolean = false;
   constructor(
     private AuthService: AuthService,
@@ -19,47 +20,93 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login(email:string, password:string) {
-    this.AuthService.login({
-      email:email,
-      password:password
-    }).subscribe( response => {
+  login(event, email:string, password:string) {
 
-      let Response:any = response;
-      console.log(response);
-      if(Response.success) {
+    let target = event.target;
+    if((event instanceof KeyboardEvent && event.keyCode == 13) || (event instanceof MouseEvent && target.id == 'login')) {
+      if(email != '' && password != '') {
+        this.AuthService.login({
+          email:email,
+          password:password
+        }).subscribe(
 
-        let token:any = Response.token;
-        localStorage.setItem('token', token);
-        this.Router.navigate(['']);
-      } else {
-        this.errors = Response.errors;
+          response => {
+                    console.log(response);
+                    let Response:any = response;
+                    console.log(response);
+                    if(Response.success) {
+
+                      let token:any = Response.token;
+                      localStorage.setItem('token', token);
+                      this.Router.navigate(['']);
+                    }
+
+              },
+          errors => {
+
+                if( typeof errors === 'object'){
+                  this.errors = errors.error.error.details;
+                } else {
+                  this.errors = [];
+                  this.errors[0] = {
+                    message: errors.error
+                  }
+                }
+
+                console.log(this.errors);
+              })
       }
+    }
 
-    })
   }
 
-  register(name ,email, password) {
-    this.AuthService.register({
-      name: name,
-      email:email,
-      password:password
-    }).subscribe( response => {
+  register(event, name ,email, password) {
 
-      let Response:any = response;
-      console.log(response);
-      if(Response.success) {
+    let target = event.target;
+    if((event instanceof KeyboardEvent && event.keyCode == 13) || (event instanceof MouseEvent && target.id == 'register')) {
 
-        let token:any = Response.token;
-        localStorage.setItem('token', token);
-        this.Router.navigate(['']);
-      } else {
-        this.errors = Response.errors;
-      }
+      this.AuthService.register({
+        name: name,
+        email:email,
+        password:password
+      }).subscribe( response => {
 
-    })
+          let Response:any = response;
+          console.log(response);
+          if(Response.success) {
+
+            let token:any = Response.token;
+            localStorage.setItem('token', token);
+            this.Router.navigate(['']);
+          } else {
+            this.errors = Response.errors;
+          }
+
+        },
+        errors => {
+
+          if( typeof errors === 'object'){
+            this.errors = errors.error.error.details;
+          } else {
+            this.errors = [];
+            this.errors[0] = {
+              message: errors.error
+            }
+          }
+
+          console.log(this.errors);
+        })
+    }
+
   }
-  toggleRegister() {
-    this.registerForm = !this.registerForm;
+  toggleRegister(type) {
+    if(type === 'register') {
+      this.registerForm = true;
+    }
+    if(type === 'login') {
+      this.registerForm = false;
+    }
+
   }
+
 }

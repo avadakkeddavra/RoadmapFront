@@ -24,8 +24,6 @@ export class SidebarComponent implements OnInit {
     } else {
       this.className = 'collapsed';
     }
-
-    console.log(this.className);
   }
 
 }

@@ -16,6 +16,7 @@ export class SkillsTableComponent implements OnInit {
   @Input() user;
   @Output() backHandle = new EventEmitter();
   @Output() sort = new EventEmitter();
+  currentCat:number;
   constructor(
     private UserService:UserService,
     private SkillsService: SkillsService
@@ -26,12 +27,12 @@ export class SkillsTableComponent implements OnInit {
 
   nextPage($event) {
     console.log($event);
-    this.UserService.getUserSkills($event.userId, $event.page).subscribe( response => {
+    this.UserService.getUserSkills($event.userId, $event.page, this.currentCat).subscribe( response => {
       this.skills = response;
     });
   }
 
-  updateSkill(field, item, userId, skillId) {
+  updateSkill(field, item, userId, skillId, index = null) {
     let body = {
       userId:userId,
       skillId: skillId
@@ -44,7 +45,9 @@ export class SkillsTableComponent implements OnInit {
 
     this.SkillsService.update(body).subscribe(response => {
       let skill:any = response;
+      skill.name = skill.skill.title;
       toast(skill.skill.title+' successfully updated',2000)
+      skill.index = index;
       this.backHandle.emit(skill);
     })
 
@@ -56,10 +59,11 @@ export class SkillsTableComponent implements OnInit {
       id: id,
       userId: this.user.id
     });
-
+    let $this = this;
     this.categories.map( function(cat, i) {
         if(cat.id === id) {
           cat.highlight = true;
+          $this.currentCat = id;
         } else {
           cat.highlight = false;
         }

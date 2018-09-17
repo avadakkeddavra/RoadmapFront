@@ -7,6 +7,9 @@ img{
   margin-top: 10px;
   float: left;
   margin-right: 15px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
 }
 .user-info{
   display: block;

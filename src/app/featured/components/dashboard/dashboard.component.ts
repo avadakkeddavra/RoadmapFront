@@ -31,13 +31,13 @@ export class DashboardComponent implements OnInit {
         user.status = {};
         if (user.userSkills[0].marks >= 200) {
           user.status.color = 'purple';
-          user.status.text = 'high';
+          user.status.text = 'senior';
         } else if (user.userSkills[0].marks >= 100 && user.userSkills[0].marks < 200) {
           user.status.color = 'green';
           user.status.text = 'middle';
         } else {
           user.status.color = 'orange';
-          user.status.text = 'low';
+          user.status.text = 'junior';
         }
       }
     });

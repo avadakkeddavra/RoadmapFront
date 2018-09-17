@@ -2,53 +2,51 @@
   <div class="title">
     <img src="../../../../assets/images/logo.png" alt="" class="responsive-img">
     <h5>Smart IT</h5>
-    <p>Skills application</p>
-    <button class="btn purple" style="margin: 10px 0px;" (click)="toggleRegister()">register</button>
-    <button class="btn blue" (click)="toggleRegister()">login</button>
+    <p>Roadmap</p>
+
   </div>
 
+  <div class="login-form">
+    <ul class="tabs">
+      <li class="tab" (click)="toggleRegister('login')"><a>login</a></li>
+      <li class="tab" (click)="toggleRegister('register')"><a>register</a></li>
+    </ul>
+    <form *ngIf="registerForm === false" #loginForm="ngForm" (keydown)="login($event, email.value, password.value)">
+      <div class="input-field">
+        <input type="email" name="email" id="emailLogin" #email class="validate">
+        <label for="">Email</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="password" id="passwordLogin" size="30" minlength="6" class="validate" #password>
+        <label for="">Password</label>
+      </div>
+      <button type="button" class="btn" id="login" (click)="login($event, email.value, password.value)">Login</button>
+    </form>
 
-  <form class="login-form" *ngIf="registerForm === false">
-    <div class="input-field">
-      <input type="email" name="email" #email>
-      <label for="">Email</label>
-    </div>
-    <div class="input-field">
-      <input type="password" name="password" #password>
-      <label for="">Password</label>
-    </div>
-    <button type="button" class="btn" (click)="login(email.value, password.value)">Login</button>
-  </form>
+    <form *ngIf="registerForm === true" (keydown)="register($event, nameRegister.value, emailRegister.value, passwordRegister.value)">
 
-  <form class="login-form" *ngIf="registerForm === true">
+      <div class="input-field">
+        <input type="text" name="name" #nameRegister>
+        <label for="name">Name</label>
+      </div>
 
-    <div class="input-field">
-      <input type="text" name="email" #name>
-      <label for="">Name</label>
-    </div>
-
-
-    <div class="input-field">
-      <input type="email" name="email" #email>
-      <label for="">Email</label>
-    </div>
-    <div class="input-field">
-      <input type="password" name="password" #password>
-      <label for="">Password</label>
-    </div>
-    <button type="button" class="btn blue" (click)="register(name.value, email.value, password.value)">Register</button>
-  </form>
+      <div class="input-field">
+        <input type="email" name="email" #emailRegister>
+        <label for="email">Email</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="password" #passwordRegister>
+        <label for="password">Password</label>
+      </div>
+      <button type="button" class="btn blue" id="register" (click)="register($event, nameRegister.value, emailRegister.value, passwordRegister.value)">Register</button>
+    </form>
+  </div>
+  <div class="errors" *ngIf="errors && errors.length > 0">
+    <ul>
+      <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+  </div>
 </div>
 
-<!--<div class="errors" >-->
-<!--<ul *ngIf="errors.details.length > 0">-->
-<!--<li *ngFor="error of errors.details">{{error.message}}</li>-->
-<!--</ul>-->
-<!--</div>-->
 
 
-<!--<div class="errors" >-->
-  <!--<ul *ngIf="errors.details.length > 0">-->
-    <!--<li *ngFor="error of errors.details">{{error.message}}</li>-->
-  <!--</ul>-->
-<!--</div>-->

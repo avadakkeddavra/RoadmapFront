@@ -5,7 +5,7 @@
 <section class="statistics">
   <div class="row">
     <div class="col m4 top-skills">
-      <app-top-skills [skills]="TopSkills"></app-top-skills>
+      <app-top-skills [(skills)]="TopSkills"></app-top-skills>
       <app-best-matched [matched]="Matched"></app-best-matched>
       <div class="card">
         <div class="card-title purple lighten-2 white-text">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="col m8">
-      <app-skills-table-shared *ngIf="Skills && User" [skills]="Skills" [categories]="Categories.data" [user]="User.data" (sort)="sort($event)" (backHandle)="onSkillUpdate()"></app-skills-table-shared>
+      <app-skills-table-shared *ngIf="Skills && User" [skills]="Skills" [categories]="Categories.data" [user]="User.data" (sort)="sort($event)" (backHandle)="onSkillUpdate($event)"></app-skills-table-shared>
     </div>
   </div>
 </section>

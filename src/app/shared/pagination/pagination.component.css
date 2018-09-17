@@ -2,3 +2,6 @@ a{
   display: block;
   cursor: pointer;
 }
+a.current{
+  background-color: #505050;
+}

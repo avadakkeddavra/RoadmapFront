@@ -19,14 +19,14 @@
       <tr>
         <th>Skill name <i class="fa fa-sort-amount-desc" (click)="sortSkills('title', $event)"></i></th>
         <th>Mark <i class="fa fa-sort-amount-desc" (click)="sortSkills('mark', $event)"></i></th>
-        <th>Disposition <i class="fa fa-sort-amount-desc" (click)="sortSkills('disposition', $event)"></i></th>
+        <th>Aim <i class="fa fa-sort-amount-desc" (click)="sortSkills('disposition', $event)"></i></th>
         <th>Comment </th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let skill of skills.skills" ngClass="{{skill.hide ? 'hidden' : ''}}">
+      <tr *ngFor="let skill of skills.skills; let i = index" ngClass="{{skill.hide ? 'hidden' : ''}}">
         <td><a routerLink="/user/{{skill.userSkill.userId}}/logs/{{skill.id}}">{{skill.title}}</a></td>
-        <td><input type="text" value="{{skill.userSkill.mark}}" (change)="updateSkill('mark',$event, skill.userSkill.userId, skill.userSkill.skillId)"></td>
+        <td><input type="text" value="{{skill.userSkill.mark}}" (change)="updateSkill('mark',$event, skill.userSkill.userId, skill.userSkill.skillId,i)"></td>
         <td><input type="text" value="{{skill.userSkill.disposition}}" (change)="updateSkill('disposition',$event, skill.userSkill.userId, skill.userSkill.skillId)"></td>
         <td><input type="text" value="{{skill.userSkill.comment}}" (change)="updateSkill('comment',$event, skill.userSkill.userId, skill.userSkill.skillId)"></td>
       </tr>
