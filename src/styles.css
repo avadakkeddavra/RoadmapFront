@@ -40,6 +40,10 @@ table:not(.datepicker-table) tr th span:not(.badge) {
 table:not(.datepicker-table) tr.highlighted {
   background-color: #eee;
 }
+.section-title{
+  margin: 0;
+  margin-bottom: 15px !important;
+}
 .table-footer {
   margin-top: 20px;
 }

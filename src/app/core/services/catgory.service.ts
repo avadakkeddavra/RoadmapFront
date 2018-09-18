@@ -28,4 +28,8 @@ export class CategoryService {
   search(data) {
     return this.Http.post(`http://localhost:4200/api/category/search`,data);
   }
+
+  getWithUserStats(id) {
+    return this.Http.get(`http://localhost:4200/api/category/user/${id}/stat`);
+  }
 }

@@ -2,54 +2,6 @@
 <app-users-table [users]="Users" (showSkills)="getUserSkills($event)"></app-users-table>
 <section class="skills">
   <div class="row">
-    <!--<div class="col m4 s6">-->
-      <!--<div class="card">-->
-        <!--<div class="card-title">-->
-          <!--Create skill-->
-        <!--</div>-->
-        <!--<div class="card-body">-->
-          <!--<form  #skill="ngForm" novalidate>-->
-            <!--<div class="input-field">-->
-              <!--<input type="text" name="name"  ngModel>-->
-              <!--<label for="">Skill name</label>-->
-            <!--</div>-->
-            <!--<div class="input-field">-->
-              <!--<select materialize="material_select" ngModel  [materializeSelectOptions]="{dropdown:{height:'100px'}}" name="category_id" *ngIf="Categories && Categories.data.length > 0">-->
-                <!--<option value="">None</option>-->
-                <!--<option *ngFor="let category of Categories.data"  value="{{category.id}}">{{category.title}}</option>-->
-              <!--</select>-->
-              <!--<label for="">Category</label>-->
-            <!--</div>-->
-            <!--<div class="input-field">-->
-              <!--<textarea class="materialize-textarea" name="description" ngModel data-length="120"></textarea>-->
-              <!--<label>Description</label>-->
-            <!--</div>-->
-            <!--<button class="btn" [disabled]="skill.invalid" (click)="createSkill(skill)">Create</button>-->
-            <!--<div class="clearfix"></div>-->
-          <!--</form>-->
-        <!--</div>-->
-      <!--</div>-->
-
-      <!--<div class="card">-->
-        <!--<div class="card-title">-->
-          <!--Create category-->
-        <!--</div>-->
-        <!--<div class="card-body">-->
-          <!--<form #category="ngForm">-->
-            <!--<div class="input-field">-->
-              <!--<input type="text" name="name" ngModel>-->
-              <!--<label for="">Category name</label>-->
-            <!--</div>-->
-            <!--<div class="input-field">-->
-              <!--<textarea id="textarea2" name="description" ngModel class="materialize-textarea" data-length="120"></textarea>-->
-              <!--<label for="textarea2">Description</label>-->
-            <!--</div>-->
-            <!--<button class="btn blue" (click)="createCategory(category)">Create</button>-->
-            <!--<div class="clearfix"></div>-->
-          <!--</form>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
     <div class="col m12">
       <app-skills-table-shared [skills]="UserSkills" [categories]="Categories" [user]="ChoosedUser" (sort)="sort($event)"></app-skills-table-shared>
     </div>

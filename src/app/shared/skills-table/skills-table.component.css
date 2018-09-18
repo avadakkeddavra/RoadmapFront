@@ -10,8 +10,7 @@ table th{
 }
 
 .highlight {
-  background-color: #9d9da3;
-  color: #ffffff;
+  opacity: 0.5;
 }
 
 i.fa {

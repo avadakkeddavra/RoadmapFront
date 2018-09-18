@@ -28,10 +28,19 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.CategorySevice.all().subscribe(res => {
-      this.Categories = res;
-    });
+
     this.route.params.subscribe( params => {
+
+      this.CategorySevice.getWithUserStats(params.id).subscribe(res => {
+        this.Categories = res;
+        this.Categories.data.unshift({
+          title: 'All',
+          id:null,
+          level: {
+            color: 'grey'
+          }
+        });
+      });
 
       this.UserService.getUserStat(params.id).subscribe( response => {
         this.TopSkills = [];
@@ -43,15 +52,23 @@ export class ProfileComponent implements OnInit {
         let Skills = this.User.data.userSkills;
 
         for(let skill of Skills) {
-
-          if(skill.mark > 6 && this.TopSkills.length < 10) {
+          if(skill.skill.title.length > 46) {
+            skill.skill.title = skill.skill.title.substr(0,43)+'...';
+          }
+          if(Number(skill.mark) >= 7 && this.TopSkills.length < 15) {
             skill.name = skill.skill.title;
             this.TopSkills.push(skill);
-          } else {
-            continue;
           }
         }
-
+        this.TopSkills.sort(function(a, b) {
+          if (a.mark > b.mark ) {
+            return -1;
+          }
+          if (a.mark < b.mark) {
+            return 1;
+          }
+          return 0;
+        });
       });
 
       this.UserService.getMatched(params.id).subscribe( response => {
@@ -85,13 +102,13 @@ export class ProfileComponent implements OnInit {
         flag = true;
       }
 
-      if(skill.mark > 5) {
+      if(skill.mark >= 7) {
         TopSkills.push(skill);
       }
 
     }
 
-    if(!flag && $event.mark > 5) {
+    if(!flag && $event.mark >= 7) {
       TopSkills.push($event);
     }
 

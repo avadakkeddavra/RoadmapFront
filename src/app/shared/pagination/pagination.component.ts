@@ -14,6 +14,7 @@ export class PaginationComponent implements OnInit {
   constructor() { }
 
   ngOnChanges() {
+
    this.links = [];
     for(let i = 0; i < Math.round(this.Data.total/10); i++) {
       this.links.push({
@@ -24,10 +25,20 @@ export class PaginationComponent implements OnInit {
     if(this.links.length > 0) {
       this.links[0].highlighted = true;
     }
-
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.links = [];
+    for(let i = 0; i < Math.round(this.Data.total/10); i++) {
+      this.links.push({
+        page: (i+1),
+        highlighted: false
+      })
+    }
+    if(this.links.length > 0) {
+      this.links[0].highlighted = true;
+    }
+  }
 
   getData(event, item, page){
 

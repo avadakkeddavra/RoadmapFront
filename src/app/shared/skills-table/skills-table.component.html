@@ -12,7 +12,9 @@
   </div>
   <div class="card-body">
     <div class="filters" *ngIf="categories" style="padding: 15px 0px;">
-      <div class="chip" style="font-size: 12px; height: 25px; line-height: 25px;" *ngFor="let cat of categories" ngClass="{{cat.highlight ? 'highlight' : ''}}" (click)="sortByCategory(cat.id)">{{cat.title}}</div>
+      <!--<div class="chip" style="font-size: 12px; height: 25px; line-height: 25px;" (click)="sortByCategory(null)">All</div>-->
+
+      <div class="chip" style="font-size: 12px; height: 25px; line-height: 25px;" *ngFor="let cat of categories" ngClass="{{ !cat.highlight && cat.level ? cat.level.color+' lighten-2' : cat.level.color+' lighten-2 highlight'}}" (click)="sortByCategory(cat.id)">{{cat.title}}</div>
     </div>
     <table *ngIf="skills && skills.skills.length > 0">
       <thead>

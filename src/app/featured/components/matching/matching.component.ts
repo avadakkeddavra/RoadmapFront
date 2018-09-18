@@ -36,11 +36,12 @@ export class MatchingComponent implements OnInit {
 
   applyFilters(form: NgForm) {
     let body = form.value;
+    console.log(form.value);
     let length = Object.keys(form.value.skills).length;
     console.log(length);
     this.SkillsService.compare(body).subscribe( response => {
       this.Compare = response;
-
+      console.log(this.Compare);
       for(let key in this.Compare.compare)
       {
         let user = this.Compare.compare[key];
@@ -72,10 +73,10 @@ export class MatchingComponent implements OnInit {
 
     console.log(data);
 
-    this.initChart(data);
+    this.initChart(data, this.Compare.compare[i].name);
   }
 
-  private initChart(data) {
+  private initChart(data, user) {
 
     this.AmChart = this.AmChartService.makeChart("chartdiv",{
       "type": "radar",
@@ -89,12 +90,12 @@ export class MatchingComponent implements OnInit {
       } ],
       "startDuration": 0.5,
       "graphs": [ {
-        "balloonText": "[[value]] [[value.current]]",
+        "balloonText": "[[value]] "+user,
         "bullet": "round",
         "lineThickness": 2,
         "valueField": "mark"
       }, {
-        "balloonText": "[[value]] User",
+        "balloonText": "[[value]] user",
         "bullet": "round",
         "lineThickness": 2,
         "valueField": "mark2"

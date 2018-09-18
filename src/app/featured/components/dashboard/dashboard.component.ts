@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
 
   Users:any;
   UserSkills:any;
-  Categories:any;
+  Categories:Array<any> = [];
   ChoosedUser:any;
 
   constructor(
@@ -42,15 +42,22 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.CategoryService.all().subscribe( response => {
-      let Response:any = response;
-      this.Categories = Response.data;
 
-    })
   }
 
   getUserSkills(user) {
     this.ChoosedUser = user;
+    this.CategoryService.getWithUserStats(user.id).subscribe( response => {
+      let Response:any = response;
+      this.Categories = Response.data;
+      this.Categories.unshift({
+        title: 'All',
+        id:null,
+        level: {
+          color: 'grey'
+        }
+      });
+    });
     this.UserService.getUserSkills(user.id,1).subscribe(response => {
       this.UserSkills = response;
       console.log(response)
@@ -89,8 +96,6 @@ export class DashboardComponent implements OnInit {
   }
 
   sort(event) {
-    console.log(event);
-
     this.UserService.getUserSkills(event.userId, 1, event.id).subscribe( response => {
       this.UserSkills = response
     })

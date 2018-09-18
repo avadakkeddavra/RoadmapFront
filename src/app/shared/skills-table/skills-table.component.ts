@@ -49,7 +49,7 @@ export class SkillsTableComponent implements OnInit {
       toast(skill.skill.title+' successfully updated',2000)
       skill.index = index;
       this.backHandle.emit(skill);
-    })
+    });
 
   }
 
@@ -67,12 +67,15 @@ export class SkillsTableComponent implements OnInit {
         } else {
           cat.highlight = false;
         }
+        if(id === null) {
+          $this.currentCat = null;
+        }
     });
   }
 
   sortSkills(column, event) {
 
-    if(event.target.classList.contains('fa-sort-amount-desc'))
+    if(event.target.classList.contains('fa-sort-amount-asc'))
     {
       if(column !== 'title') {
         this.skills.skills.sort(function(a,b){
@@ -100,8 +103,8 @@ export class SkillsTableComponent implements OnInit {
         });
       }
 
-      event.target.classList.remove('fa-sort-amount-desc');
-      event.target.classList.add('fa-sort-amount-asc');
+      event.target.classList.remove('fa-sort-amount-asc');
+      event.target.classList.add('fa-sort-amount-desc');
 
     } else {
         if(column !== 'title') {
@@ -129,8 +132,8 @@ export class SkillsTableComponent implements OnInit {
             return 0;
           });
         }
-      event.target.classList.remove('fa-sort-amount-asc');
-      event.target.classList.add('fa-sort-amount-desc');
+      event.target.classList.remove('fa-sort-amount-desc');
+      event.target.classList.add('fa-sort-amount-asc');
     }
   }
 }
