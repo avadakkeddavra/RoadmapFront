@@ -13,6 +13,12 @@ img{
 }
 .user-info{
   display: block;
+  position: relative;
+}
+.user-info:hover .dropdown___menu{
+  top: 100%;
+  opacity: 1;
+  visibility: visible;
 }
 .user-data{
   float: left;
@@ -26,4 +32,36 @@ img{
 }
 .user-data span {
   font-size: 12px;
+}
+
+.dropdown___menu{
+  position: absolute;
+  transition: 0.3s all;
+  opacity: 0;
+  visibility: hidden;
+  top: 0%;
+  background-color: #fff;
+  width: 100%;
+  z-index: 100;
+}
+.dropdown___menu li{
+  display: block !important;
+  float: none;
+  line-height: normal;
+}
+.dropdown___menu i{
+  color: #737373 !important;
+  float: none;
+  line-height: normal;
+  height: auto !important;
+  font-size: 15px;
+  margin-right: 10px;
+  display: inline-block !important;
+
+}
+.dropdown___menu li a{
+  display: block;
+  padding: 15px 15px !important;
+  color: #6c6c6b !important;
+  width: 100%;
 }

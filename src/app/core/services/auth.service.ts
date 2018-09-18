@@ -28,4 +28,8 @@ export class AuthService {
     rebuildToken(token) {
       localStorage.setItem('token',token);
     }
+
+    logout() {
+      localStorage.removeItem('token');
+    }
   }

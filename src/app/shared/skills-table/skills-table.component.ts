@@ -41,6 +41,9 @@ export class SkillsTableComponent implements OnInit {
     if(item.target.value > 10) {
       item.target.value = 10;
     }
+    if(item.target.value < 1) {
+      item.target.value = 1
+    }
     body[field] = item.target.value;
 
     this.SkillsService.update(body).subscribe(response => {

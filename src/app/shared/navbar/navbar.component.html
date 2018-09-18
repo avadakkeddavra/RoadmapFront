@@ -9,6 +9,12 @@
           <p>{{user.name}}</p>
           <span>{{user.email}}</span>
         </div>
+        <div class="dropdown___menu z-depth-2">
+          <ul>
+            <li><a routerLink="/profile/{{user.id}}"><i class="material-icons">person</i> Profile</a></li>
+            <li><a (click)="logout()"><i class="material-icons">logout</i>Logout</a></li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>
