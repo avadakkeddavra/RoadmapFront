@@ -29,14 +29,14 @@ export class UserChartComponent implements OnInit {
       "theme": "light",
       "dataProvider": data,
       "valueAxes": [ {
-        "axisTitleOffset": 0,
+        "axisTitleOffset": 20,
         "minimum": 0,
         "maximum":10,
-        "axisAlpha": 0.15
+        "axisAlpha": 0.1
       } ],
       "startDuration": 2,
       "graphs": [ {
-        "balloonText": "[[value]] Mark",
+        "balloonText": "[[value]] [[name]]",
         "bullet": "round",
         "lineThickness": 2,
         "valueField": "mark"

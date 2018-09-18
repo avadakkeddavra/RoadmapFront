@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   UserSkills:any;
   Categories:Array<any> = [];
   ChoosedUser:any;
-
+  Stats:any;
   constructor(
     private UserService: UserService,
     private CategoryService: CategoryService,
@@ -25,14 +25,18 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
+    this.UserService.getGlobalStats().subscribe(stats => {
+      this.Stats = stats;
+    });
+
     this.UserService.getAllUsers().subscribe( response => {
       this.Users = response;
       for(let user of this.Users) {
         user.status = {};
-        if (user.userSkills[0].marks >= 200) {
+        if (user.userSkills[0].marks >= 960) {
           user.status.color = 'purple';
           user.status.text = 'senior';
-        } else if (user.userSkills[0].marks >= 100 && user.userSkills[0].marks < 200) {
+        } else if (user.userSkills[0].marks >= 480 && user.userSkills[0].marks < 960) {
           user.status.color = 'green';
           user.status.text = 'middle';
         } else {

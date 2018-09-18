@@ -1,35 +1,43 @@
 <ng-content></ng-content>
 <section class="stats">
   <div class="row">
-    <div class="col m3 s6">
-      <div class="card">
-        <i class="material-icons green-text">local_library</i>
-        <div class="name">Skills</div>
-        <span class="mark">125</span>
-        <div class="clearfix"></div>
-      </div>
-    </div>
+    <!--<div class="col m6 s6">-->
+      <!--<div class="card">-->
+        <!--<i class="material-icons green-text">local_library</i>-->
+        <!--<div class="name">Skills</div>-->
+        <!--<span class="mark">{{stats.skills}}</span>-->
+        <!--<div class="clearfix"></div>-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="col m3 s6">
       <div class="card">
         <i class="material-icons red-text">group</i>
         <div class="name">Total mark</div>
-        <span class="mark">1252</span>
+        <span class="mark">{{stats.total}}</span>
         <div class="clearfix"></div>
       </div>
     </div>
     <div class="col m3 s6">
       <div class="card">
-        <i class="material-icons orange-text">high_quality</i>
-        <div class="name">High level users</div>
-        <span class="mark">6</span>
+        <i class="material-icons purple-text">high_quality</i>
+        <div class="name">Senior level users</div>
+        <span class="mark">{{stats.usersStat.senior}}</span>
         <div class="clearfix"></div>
       </div>
     </div>
     <div class="col m3 s6">
       <div class="card">
-        <i class="material-icons purple-text">brightness_medium</i>
-        <div class="name">Medium level users</div>
-        <span class="mark">8</span>
+        <i class="material-icons green-text">brightness_medium</i>
+        <div class="name">Middle level users</div>
+        <span class="mark">{{stats.usersStat.middle}}</span>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="col m3 s6">
+      <div class="card">
+        <i class="material-icons orange-text">brightness_medium</i>
+        <div class="name">Junior level users</div>
+        <span class="mark">{{stats.usersStat.junior}}</span>
         <div class="clearfix"></div>
       </div>
     </div>

@@ -51,5 +51,9 @@ export class UserService {
   setUserSettings(id, data) {
     return this.Http.post(`http://localhost:4200/api/user/settings/${id}`, data);
   }
+
+  getGlobalStats() {
+    return this.Http.get(`http://localhost:4200/api/stat/`);
+  }
 }
 

@@ -85,6 +85,11 @@ export class ProfileComponent implements OnInit {
   }
 
   onSkillUpdate($event) {
+
+    if($event.mark < 7) {
+      return;
+    }
+
     let index = $event.index;
     delete $event.index;
     this.Skills[index] = $event;
