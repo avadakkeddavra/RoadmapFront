@@ -53,6 +53,8 @@ export class SkillsCategoriesComponent implements OnInit {
         })
       }
 
+      this.pagination.skills[0].current = true;
+
     });
     this.CategoryService.all().subscribe( res => {
       const Response:any = res;
@@ -70,9 +72,11 @@ export class SkillsCategoriesComponent implements OnInit {
 
       for(let i = 0; i < Math.round(Response.data.length/10); i++) {
         this.pagination.category.push({
-          number: i+1
+          number: i+1,
+          current:false
         });
       }
+      this.pagination.category[0].current = true;
     })
   }
 
@@ -112,12 +116,11 @@ export class SkillsCategoriesComponent implements OnInit {
 
       for(let i = 0; i < Math.round(Response.length/10); i++) {
         this.pagination.category.push({
-          number: i+1
+          number: i+1,
+          current:false
         });
       }
-
-
-      console.log(this.pagination);
+      this.pagination.category[0].current = true;
     })
   }
 
@@ -140,24 +143,57 @@ export class SkillsCategoriesComponent implements OnInit {
       this.pagination.skills = [];
       for(let i = 0; i < Math.round(Response.length/10); i++) {
         this.pagination.skills.push({
-          number: i+1
+          number: i+1,
+          current: false
         })
       }
-
+      this.pagination.skills[0].current = true;
     })
   }
 
-  showPage(type, page) {
+  showPage(type, page, pageInfo) {
+
+    for(let pag of this.pagination.skills) {
+      if(page+1 == pag.number) {
+        pag.current = true
+      } else {
+        pag.current = false
+      }
+
+    }
+
     if(type === 'skill') {
+
+      let countVisable = 1;
+
       for(let i = 0; i < this.Skills.length; i++) {
 
-        if(i >= page*10 && i < (10*page + 10)) {
-          this.Skills[i].show = true;
-        } else {
-          this.Skills[i].show = false;
-        }
+        if(pageInfo.cat && pageInfo.cat > 0) {
 
+
+          if(this.Skills[i].categoryId == pageInfo.cat) {
+
+            if(countVisable > page*10 && countVisable <= (page*10)+10) {
+              this.Skills[i].show = true;
+            } else {
+              this.Skills[i].show = false;
+            }
+            countVisable++;
+          }
+
+        } else {
+
+          if(i+1 > page*10 && i+1 <= (page*10)+10) {
+            this.Skills[i].show = true;
+
+          } else {
+            this.Skills[i].show = false;
+          }
+
+        }
       }
+
+      console.log(this.Skills);
     } else {
       for(let i = 0; i < this.Categories.length; i++) {
 
@@ -214,5 +250,33 @@ export class SkillsCategoriesComponent implements OnInit {
         toast('Successfully deleted', 1000);
       }
     })
+  }
+
+
+  sortByCategory(catId:number) {
+    console.log(catId);
+    let countVisable = 1;
+    for(let skill of this.Skills) {
+
+      if(Number(skill.categoryId) == catId) {
+        if(countVisable <= 10) {
+          skill.show = true;
+        } else {
+          skill.show = false;
+        }
+        countVisable++;
+      } else {
+        skill.show = false;
+      }
+    }
+    this.pagination.skills = [];
+    for(let i = 0; i < Math.round(countVisable/10); i++) {
+      this.pagination.skills.push({
+        number: i+1,
+        cat: catId,
+        current: false
+      })
+    }
+    this.pagination.skills[0].current = true;
   }
 }

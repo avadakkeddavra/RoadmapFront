@@ -1,4 +1,4 @@
-<section class="settings">
+<section class="settings" *ngIf="user">
   <h5 class="section-title">Settings</h5>
   <div class="row">
     <div class="col m4 s6">
@@ -26,13 +26,13 @@
                   <td>Role</td>
                   <td>{{user.role === 0 ? 'User' : 'Admin'}}</td>
                 </tr>
-              <tr>
+              <tr *ngIf="settings">
                 <td>Years of development</td>
-                <td>{{settings.dev_years}}</td>
+                <td>{{settings.dev_years ? settings.dev_years : ''}}</td>
               </tr>
-              <tr>
+              <tr *ngIf="settings">
                 <td>Project completed</td>
-                <td>{{settings.projects_completed}}</td>
+                <td>{{settings.projects_completed ? settings.projects_completed : ''}}</td>
               </tr>
               </tbody>
             </table>
@@ -47,12 +47,12 @@
         <div class="card-body">
           <form #settingsForm="ngForm" *ngIf="settings">
             <div class="input-field">
-              <input type="number" name="years" ngModel="{{settings.dev_years}}">
-              <label for="">Years of development</label>
+              <input type="number" name="years" ngModel="{{settings.dev_years ? settings.dev_years : ''}}" class="ng-touched">
+              <label for="" class="active">Years of development</label>
             </div>
             <div class="input-field">
-              <input type="number" name="projects" ngModel="{{settings.projects_completed}}">
-              <label for="">Projects completed </label>
+              <input type="number" name="projects" ngModel="{{settings.projects_completed ? settings.projects_completed : ''}}">
+              <label for="" class="active">Projects completed </label>
             </div>
             <button class="btn blue" (click)="setSettings(settingsForm)">Save</button>
           </form>
@@ -66,22 +66,23 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <form #userForm="ngForm">
+            <form #userForm="ngForm" *ngIf="user">
               <div class="input-field">
-                <input type="text" name="name" ngModel>
-                <label for="">Name</label>
+                <input type="text" name="name" ngModel="{{user.name}}" class="ng-touched">
+                <label for="" class="active">Name</label>
               </div>
               <div class="input-field">
-                <input type="text" name="email" ngModel>
-                <label for="">Email</label>
+                <input type="email" name="email" ngModel="{{user.email}}">
+                <label for="" class="active">Email</label>
               </div>
               <div class="input-field">
-                <select type="text" name="role" ngModel materialize="material_select">
+                <select type="text" name="occupation" ngModel="{{user.occupation}}" materialize="material_select">
                   <option value="">Not</option>
-                  <option value="1" *ngIf="user.role === 0">Admin</option>
-                  <option value="0" *ngIf="user.role === 1">User</option>
+                  <option value="0" >Frontend</option>
+                  <option value="1" >Backend</option>
+                  <option value="2" >Full-stack</option>
                 </select>
-                <label for="">Role</label>
+                <label for="">Оccupation</label>
               </div>
               <div class="file-field input-field">
                 <div class="btn">
@@ -90,6 +91,17 @@
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text">
+                </div>
+              </div>
+              <div class="input-field">
+                <input type="text" materialize="pickadate" name="invitation_date" ngModel="{{user.invitation_date}}" [materializeParams]="[{format: 'yyyy-mm-dd'}]">
+                <label for="">Date of invitation</label>
+              </div>
+              <div class="input-field" *ngIf="settings">
+                <h6 for="">Profile Bg Image</h6>
+                <div class="bg-image-template" [ngStyle]="{'background': 'url('+settings.bg_image+')'}">
+                  <input type="file" name="bg-image" #bg (change)="uploadBg(bg.files)">
+                  <button id="change-bg"><i class="fa fa-pencil"></i></button>
                 </div>
               </div>
               <button class="btn" (click)="updateUserData(userForm)">Save</button>

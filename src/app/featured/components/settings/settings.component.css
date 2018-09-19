@@ -17,3 +17,43 @@ table{
 thead{
   background-color: #f9f9f9;
 }
+.bg-image-template{
+  height: 250px;
+  position: relative;
+  background-position: 0px 250px !important;
+  margin-bottom: 20px;
+  cursor: pointer;
+  -webkit-background-size: cover !important;
+  background-size: cover !important;
+}
+.bg-image-template:hover #change-bg{
+  background-color: #fff;
+  color: #5e5e5e;
+}
+.bg-image-template input{
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+#change-bg{
+  border: none;
+  background-color: rgba(255, 255, 255, 0.47);
+  display: block;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -20px;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 50%;
+  transition: 0.3s all;
+}

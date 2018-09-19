@@ -28,3 +28,10 @@ a{
 .filters:not(i){
   padding: 10px 0px;
 }
+.pagination-custom li a.highlighted{
+  background-color: #797979;
+}
+
+.chip{
+  cursor: pointer;
+}

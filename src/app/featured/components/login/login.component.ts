@@ -44,16 +44,18 @@ export class LoginComponent implements OnInit {
               },
           errors => {
 
-                if( typeof errors === 'object'){
+            console.log(errors);
+
+                if( typeof errors.error.error === 'object'){
                   this.errors = errors.error.error.details;
                 } else {
                   this.errors = [];
-                  this.errors[0] = {
-                    message: errors.error
-                  }
+                  this.errors.push({
+                    message: errors.error.error
+                  });
                 }
 
-                console.log(this.errors);
+
               })
       }
     }
@@ -100,6 +102,7 @@ export class LoginComponent implements OnInit {
 
   }
   toggleRegister(type) {
+    this.errors = [];
     if(type === 'register') {
       this.registerForm = true;
     }

@@ -18,11 +18,26 @@ export class SettingsComponent implements OnInit {
     private UserService: UserService
   ) { }
 
-  ngOnInit() {
-    this.user = this.AuthSettings.userData();
-    this.UserService.getUsersSettings(this.user.id).subscribe(res => {
-      this.settings = res;
-    })
+  async ngOnInit() {
+    await this.UserService.getUser(this.AuthSettings.userData().id).subscribe(user => {
+      let User:any = user;
+      this.user = User.data;
+
+      this.UserService.getUsersSettings(this.user.id).subscribe(res => {
+        this.settings = res;
+
+        if(this.settings.bg_image) {
+          this.settings.bg_image = 'http://localhost:3010/assets/images/'+this.settings.bg_image;
+        } else {
+          this.settings.bg_image = './../../../../assets/images/bg.jpg';
+        }
+
+        console.log(this.settings);
+      })
+
+    });
+
+
   }
 
   uploadAvatar(avatar) {
@@ -36,8 +51,31 @@ export class SettingsComponent implements OnInit {
     })
   }
 
+  uploadBg(bg) {
+    const formData = new FormData();
+    formData.append('bg', bg[0]);
+    formData.append('userId', this.user.id);
+
+    this.UserService.uploadBg(formData).subscribe(res => {
+      let Response:any = res;
+      this.settings.bg_image =  'http://localhost:3010/assets/images/'+Response.bg
+    })
+  }
+
   updateUserData(form:NgForm) {
-    console.log(form.controls)
+
+    let body = {};
+
+    for(let item of Object.keys(form.controls)){
+      let value = (form.controls[item].value).trim();
+      if(value != '') {
+        body[item] = form.controls[item].value;
+      }
+    }
+
+    this.UserService.updateUserData(this.user.id, body).subscribe(user => {
+      console.log(user);
+    });
   }
 
   setSettings(form:NgForm) {

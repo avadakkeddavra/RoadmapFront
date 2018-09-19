@@ -1,0 +1,6 @@
+.user-info-header{
+  -webkit-background-size: cover !important;
+  background-size: cover !important;
+  height: 300px !important;
+  background-position: 0px 300px !important;
+}

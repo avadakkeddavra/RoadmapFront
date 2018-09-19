@@ -6,6 +6,10 @@
   float: left;
   padding: 20px 50px;
   width: 50%;
+  margin-top: -40px;
+}
+.tabs{
+  margin-bottom: 20px;
 }
 .login-form ul.tabs{
   background-color: transparent;
@@ -26,6 +30,7 @@
   margin: 0px -35%;
 }
 
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus
@@ -40,4 +45,8 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px transparent inset;
   transition: background-color 5000s ease-in-out 0s;
   background: transparent;
+}
+
+.errors{
+  color: #ff5b58;
 }

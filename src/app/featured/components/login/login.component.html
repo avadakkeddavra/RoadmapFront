@@ -40,11 +40,11 @@
       </div>
       <button type="button" class="btn blue" id="register" (click)="register($event, nameRegister.value, emailRegister.value, passwordRegister.value)">Register</button>
     </form>
-  </div>
-  <div class="errors" *ngIf="errors && errors.length > 0">
-    <ul>
-      <li *ngFor="let error of errors">{{error.message}}</li>
-    </ul>
+    <div class="errors" *ngIf="errors && errors.length > 0">
+      <ul>
+        <li *ngFor="let error of errors">* {{error.message}}</li>
+      </ul>
+    </div>
   </div>
 </div>
 

@@ -55,7 +55,7 @@
             <div class="right">
               <ul class="pagination-custom">
                 <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                <li *ngFor="let item of pagination.category" ><a  (click)="showPage('category',item.number - 1)">{{item.number}}</a></li>
+                <li *ngFor="let item of pagination.category" ><a  (click)="showPage('category',item.number - 1, item)" ngClass="{{item.current ? 'highlighted' : ''}}">{{item.number}}</a></li>
                 <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
               </ul>
             </div>
@@ -106,7 +106,7 @@
         </div>
         <div class="card-body" *ngIf="Skills && Skills.length > 0">
           <div class="filters">
-            <div class="chip" *ngFor="let cat of Categories">{{cat.title}}</div>
+            <div class="chip" *ngFor="let cat of Categories" (click)="sortByCategory(cat.id)">{{cat.title}}</div>
           </div>
           <table class="responsive-table highlight">
             <thead>
@@ -130,7 +130,7 @@
             <div class="right">
               <ul class="pagination-custom">
                 <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                <li *ngFor="let item of pagination.skills"><a (click)="showPage('skill',item.number - 1)">{{item.number}}</a></li>
+                <li *ngFor="let item of pagination.skills"><a (click)="showPage('skill',item.number - 1, item)" ngClass="{{item.current ? 'highlighted' : ''}}">{{item.number}}</a></li>
                 <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
               </ul>
             </div>

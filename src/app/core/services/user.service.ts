@@ -7,9 +7,12 @@ export class UserService {
 
   constructor(private Http: HttpClient) { }
 
+  getUser(id) {
+    return this.Http.get(`http://localhost:4200/api/user/${id}`);
+  }
+
   getAllUsers()
   {
-
     return this.Http.get('http://localhost:4200/api/users');
   }
 
@@ -43,6 +46,10 @@ export class UserService {
 
     return this.Http.post('http://localhost:4200/api/user/avatar', data);
   }
+  uploadBg(data) {
+
+    return this.Http.post('http://localhost:4200/api/user/bg', data);
+  }
 
   getUsersSettings(id) {
     return this.Http.get(`http://localhost:4200/api/user/settings/${id}`);
@@ -54,6 +61,10 @@ export class UserService {
 
   getGlobalStats() {
     return this.Http.get(`http://localhost:4200/api/stat/`);
+  }
+
+  updateUserData(id, data) {
+    return this.Http.put(`http://localhost:4200/api/user/edit/${id}`, data);
   }
 }
 
