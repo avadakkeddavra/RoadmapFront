@@ -1,0 +1,14 @@
+section.roadmaps .card-title{
+    margin: 0;
+    padding: 0;
+    background-color:transparent;
+    border: none;
+    font-size: 24px !important;
+    margin-bottom: 15px;
+}
+
+section.roadmaps .card{
+    padding-bottom: 0px;
+    margin-bottom: 0 !important;
+
+}

@@ -7,3 +7,6 @@
 .chip{
   font-size: 10px;
 }
+.card-body{
+  height: 680px;
+}

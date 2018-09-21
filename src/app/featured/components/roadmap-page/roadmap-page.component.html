@@ -1,0 +1,51 @@
+<div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <h5>Create new Todo</h5>
+    <form #createTodoForm="ngForm">
+      <div class="input-field">
+        <input type="text" name="name" ngModel>
+        <label for="">Name</label>
+      </div>
+      <div class="input-field">
+        <textarea class="materialize-textarea" name="description" ngModel></textarea>
+        <label for="">Description</label>
+      </div>
+      <div class="input-field">
+        <button class="btn" (click)="createTodo(createTodoForm)">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<section class="roadmap-page">
+  <div class="checkpoints">
+    <ul>
+      <li *ngFor="let checkpoint of Checkpoints"><div class="chip" (click)="toggleTodos(checkpoint.id)" ngClass="{{checkpoint.active ? 'active' : ''}}">{{checkpoint.name}}</div></li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="col m3"></div>
+    <div class="col m9">
+      <div class="card">
+        <div class="card-title">
+          <span>Todos</span>
+          <ul class="actions right">
+              <li><i class="fa fa-plus" (click)="openModal()"></i></li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <ul class="todo-list">
+            <li *ngFor="let todo of Todos; let i = index">
+              <input type="checkbox" id="todo{{todo.id}}" checked="{{todo.users[0].user_todos.checked == 1 ? 'checked': ''}}" (change)="updateTodo(todo)">
+              <label for="todo{{todo.id}}">{{todo.name}}</label>
+                <i class="fa fa-angle-down drop-desc" (click)=toggleDesc(desc)></i>
+                <i class="fa fa-trash-o" (click)="deleteTodo(todo.id, i)"></i>
+                <div class="description hidden" #desc>{{todo.description}}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,73 @@
+.checkpoints{
+    text-align: center;
+    margin: 20px 0px;
+}
+.checkpoints ul{
+    position: relative;
+    display: inline-block;
+}
+.card-body{
+    padding-top: 20px;
+}
+.checkpoints ul:after{
+    content: '';
+    width: 100%;
+    position: absolute;
+    height: 2px;
+    background-color: #e4e4e4;
+    left: 0;
+    top: 50%;
+    z-index: 0;
+    margin: -4px 0px;
+}
+.checkpoints ul li{
+    text-align: left;
+    display: inline-block;
+    position: relative;
+    z-index: 20;
+    transition: 0.3s all;
+}
+.checkpoints ul li .chip{
+    transition: 0.3s all;
+    cursor: pointer;
+}
+.checkpoints ul li .chip.active{
+    background-color: #525252;
+    color: #ffffff;
+}
+.checkpoints ul li .chip:hover{
+    background-color: #525252;
+    color: #ffffff;
+}
+.checkpoints ul li:not(:last-child){
+    margin-right: 20px;
+}
+
+.description{
+    margin-left: 35px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #f9f7f7;
+    opacity: 1;
+    position: relative;
+    transition: 0.3s all;
+}
+.description.hidden{
+    position: absolute;
+    opacity: 0;
+}
+.todo-list i{
+    float: right !important;
+    font-size: 17px;
+    margin-left: 20px;
+    color: #525252
+}
+textarea{
+    height: 150px;
+}
+.modal{
+    width: 500px;
+}
+.todo-list li:not(:last-child){
+    margin-bottom: 15px;
+}

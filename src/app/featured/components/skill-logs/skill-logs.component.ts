@@ -11,11 +11,16 @@ import {NgForm} from '@angular/forms';
 export class SkillLogsComponent implements OnInit {
 
   filtersShow:boolean = false;
-  filters:any = {};
+  filters:any = {
+    data: {},
+    labels: {}
+  };
+  filtersArray:any = {};
   Users:any = [];
   Skills:any = [];
   Logs:any;
   Object:any = Object;
+  SkillsArray: any = [];
   Pagination:any;
   UsersIds:any = [];
 
@@ -25,8 +30,6 @@ export class SkillLogsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-
     this.UserService.getAllUsers().subscribe( users => {
       this.Users = users;
 
@@ -45,37 +48,69 @@ export class SkillLogsComponent implements OnInit {
       this.Skills = skills;
     });
 
-
-
+    this.SkillsService.getSkills().subscribe(skills => {
+      let Response:any = skills;
+      this.SkillsArray = Response.data;
+      console.log(this.SkillsArray);
+    })
   }
 
   showFilters() {
     this.filtersShow = !this.filtersShow;
   }
   applyFilters( form:NgForm ) {
+    console.log(form.controls);
 
     for(let key of Object.keys(form.value))
     {
       if(form.value[key] != '') {
 
-        this.filters[key] = form.value[key];
+        this.filters.data[key] = form.value[key];
+        if(key === 'userId') {
+          for(let id of form.value[key]) {
+            for(let user of this.Users) {
+              if(id == user.id){
 
+                this.filters.labels[key] = [];
+                this.filters.labels[key].push(user.name)
+
+                this.filters.data[key] = [];
+                this.filters.data[key].push(user.id)
+              }
+            }
+          }
+        }
+
+        if(key === 'skillId') {
+          for(let id of form.value[key]) {
+            for(let skill of this.SkillsArray) {
+              if(Number(id) === skill.id){
+                this.filters.labels[key] = [];
+                this.filters.labels[key].push(skill.title)
+
+                this.filters.data[key] = [];
+                this.filters.data[key].push(skill.id)
+              }
+            }
+
+          }
+        }
       }
     }
 
     this.getLogs(1);
-
+    console.log(this.filters);
+    console.log(this.Skills);
   }
 
   clearFilters() {
-    this.filters = {};
-    this.filters.userId = this.UsersIds;
-
+    this.filters.data = {};
+    this.filters.labels = {};
     this.getLogs(1);
   }
 
   removeFilter(key) {
-    delete this.filters[key];
+    this.filters.data[key] = [];
     this.getLogs(1);
   }
 
@@ -85,7 +120,7 @@ export class SkillLogsComponent implements OnInit {
   }
 
   private getLogs(Page) {
-    this.SkillsService.getLogs(this.filters, Page).subscribe( skills => {
+    this.SkillsService.getLogs(this.filters.data, Page).subscribe( skills => {
       this.paginationData(skills);
       this.Logs = skills;
     })
@@ -97,5 +132,4 @@ export class SkillLogsComponent implements OnInit {
       userId: this.filters.userId
     };
   }
-
 }

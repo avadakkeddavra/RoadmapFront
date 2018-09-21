@@ -12,7 +12,7 @@
       <div class="card-filters-body" >
         <form #filtersForm="ngForm" novalidate>
           <div class="input-field">
-            <select materialize="material_select" ngModel *ngIf="Skills && Skills.length > 0" name="skillId" id="skill">
+            <select materialize="material_select" multiple ngModel *ngIf="Skills && Skills.length > 0" name="skillId" id="skill">
               <option value="" selected>Not</option>
               <optgroup *ngFor="let category of Skills" label="{{category.title}}">
                 <option *ngFor="let skill of category.skills" value="{{skill.id}}">{{skill.title}}</option>
@@ -22,7 +22,7 @@
             <label for="skill">Skill name</label>
           </div>
           <div class="input-field">
-            <select materialize="material_select" ngModel *ngIf="Users && Users.length > 0" name="userId" id="user">
+            <select materialize="material_select" ngModel multiple *ngIf="Users && Users.length > 0" name="userId" id="user">
               <option value="" selected disabled>Not</option>
               <option *ngFor="let user of Users" value="{{user.id}}">{{user.name}}</option>
             </select>
@@ -44,7 +44,7 @@
           </div>
           <div class="input-field">
             <input type="text" materialize="pickadate" class="datepicker" name="createdAt">
-            <label for="">From date</label>
+            <label for=""> From date</label>
           </div>
           <button class="btn blue" (click)="applyFilters(filtersForm)">Apply</button>
         </form>
@@ -59,10 +59,10 @@
       </ul>
     </div>
     <div class="card-body"  >
-      <div *ngIf="filters && Object.keys(filters).length > 0">
+      <div *ngIf="filters && Object.keys(filters.labels).length > 0">
         <p>Applied filters <button class="btn-flat" (click)="clearFilters()">Clear all</button></p>
         <div class="filters">
-          <div class="chip" *ngFor="let key of Object.keys(filters)">{{key}}:{{filters[key]}}<i class="close material-icons" (click)="removeFilter(key)">close</i></div>
+          <div class="chip" *ngFor="let key of Object.keys(filters.labels);">{{filters.labels[key]}}<i class="close material-icons" (click)="removeFilter(key)">close</i></div>
         </div>
       </div>
       <table class="responsive-table highlight">
