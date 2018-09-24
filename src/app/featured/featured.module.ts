@@ -17,8 +17,9 @@ import {SkillLogsModule} from './components/skill-logs/skill-logs.module';
 import {MatchingModule} from './components/matching/matching.module';
 import {AdminGuard} from './guards/admin.guard';
 import {SkillsCategoriesModule} from './components/skills-categories/skills-categories.module';
-import { SettingsComponent } from './components/settings/settings.component';
 import {SettingsModule} from './components/settings/settings.module';
+import {RoadmapModule} from './components/roadmap/roadmap.module';
+import { RoadmapPageModule } from './components/roadmap-page/roadmap-page.module';
 
 @NgModule({
   imports: [
@@ -33,7 +34,9 @@ import {SettingsModule} from './components/settings/settings.module';
     LogsModule,
     MatchingModule,
     SkillsCategoriesModule,
-    SettingsModule
+    SettingsModule,
+    RoadmapModule,
+    RoadmapPageModule
   ],
   providers: [
     AuthService,

@@ -11,6 +11,8 @@ import {MatchingComponent} from './components/matching/matching.component';
 import {SkillsCategoriesComponent} from './components/skills-categories/skills-categories.component';
 import {AdminGuard} from './guards/admin.guard';
 import {SettingsComponent} from './components/settings/settings.component';
+import {RoadmapComponent} from './components/roadmap/roadmap.component';
+import { RoadmapPageComponent } from './components/roadmap-page/roadmap-page.component';
 
 const routes: Routes = [
   { path: '', component:DashboardComponent },
@@ -24,7 +26,9 @@ const Auth: Routes = [
   { path: '', children: routes, canActivate:[AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate:[GuestGuard] },
   { path: 'skills-categories', component:SkillsCategoriesComponent, canActivate: [AdminGuard]},
-  { path: 'settings', component:SettingsComponent, canActivate: [AuthGuard]}
+  { path: 'settings', component:SettingsComponent, canActivate: [AuthGuard]},
+  { path: 'roadmap', component: RoadmapComponent, canActivate: [AuthGuard]},
+  { path: 'roadmap/:roadmap_id', component:RoadmapPageComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

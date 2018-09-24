@@ -7,6 +7,9 @@ import {SkillsService} from './services/skills.service';
 import {HttpModule} from '@angular/http';
 import {TokenInterceptor} from './token.interceptor';
 import {CategoryService} from './services/catgory.service';
+import {RoadmapService} from './services/roadmap.service';
+import {CheckpointService} from './services/checkpoint.service';
+import {TodoService} from './services/todo.service';
 
 @NgModule({
   imports: [
@@ -20,6 +23,9 @@ import {CategoryService} from './services/catgory.service';
     UserService,
     SkillsService,
     CategoryService,
+    RoadmapService,
+    CheckpointService,
+    TodoService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

@@ -66,5 +66,18 @@ export class UserService {
   updateUserData(id, data) {
     return this.Http.put(`http://localhost:4200/api/user/edit/${id}`, data);
   }
+
+
+  getUserRoadmaps(id) {
+    return this.Http.get(`http://localhost:4200/api/user/${id}/roadmaps`);
+  }
+
+  getUserRoadmapCheckpoints(roadmap,id) {
+    return this.Http.get(`http://localhost:4200/api/user/${id}/roadmap/${roadmap}/checkpoints`);
+  }
+
+  getUserRoadmapCheckpointTodos(roadmap, checkpoint, id) {
+    return this.Http.get(`http://localhost:4200/api/user/${id}/roadmap/${roadmap}/checkpoint/${checkpoint}/todos`);
+  }
 }
 

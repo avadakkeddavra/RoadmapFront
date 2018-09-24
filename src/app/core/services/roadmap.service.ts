@@ -13,11 +13,11 @@ export class RoadmapService {
   }
 
   assignUserToRoadmap(id) {
-    return this.Http.post(this.alias+`/${id}/assign`);
+    return this.Http.post(this.alias+`/${id}/assign`, {});
   }
 
-  unassignUserToRoadmap() {
-    return this.Http.delete(this.alias+`/${id}/unassign`);
+  unassignUserToRoadmap(id) {
+    return this.Http.delete(this.alias+`/${id}/unassign`,{});
   }
 
   createRoadmap(data) {
