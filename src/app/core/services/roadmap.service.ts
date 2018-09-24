@@ -12,6 +12,10 @@ export class RoadmapService {
     return this.Http.get(this.alias);
   }
 
+  getSingleRoadmap(id) {
+    return this.Http.get(this.alias+'/'+id);
+  }
+
   assignUserToRoadmap(id) {
     return this.Http.post(this.alias+`/${id}/assign`, {});
   }

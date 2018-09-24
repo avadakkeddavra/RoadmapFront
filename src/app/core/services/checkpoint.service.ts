@@ -14,16 +14,21 @@ export class CheckpointService {
 
   assign(roadmap_id,id) {
     return this.Http.post(this.alias+'/'+roadmap_id+'/checkpoint/'+id+'/assign',{});
-
   }
 
   unassign(roadmap_id,id) {
     return this.Http.delete(this.alias+'/'+roadmap_id+'/checkpoint/'+id+'/unassign',{});
-
   }
 
   swap(roadmap_id,id) {
     return this.Http.post(this.alias+'/'+roadmap_id+'/checkpoint/'+id+'/swap',{});
+  }
 
+  discover(roadmap_id, name = '') {
+    return this.Http.get(this.alias+'/'+roadmap_id+'/checkpoint/discover?name='+name);
+  }
+
+  updatePosition(roadmap_id, data) {
+    return this.Http.post(this.alias+'/'+roadmap_id+'/checkpoint/position',data);
   }
 }

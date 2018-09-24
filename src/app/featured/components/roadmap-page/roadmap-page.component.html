@@ -17,16 +17,93 @@
   </div>
 </div>
 
-<section class="roadmap-page">
-  <div class="checkpoints">
-    <ul>
-      <li *ngFor="let checkpoint of Checkpoints"><div class="chip" (click)="toggleTodos(checkpoint.id)" ngClass="{{checkpoint.active ? 'active' : ''}}">{{checkpoint.name}}</div></li>
-    </ul>
+<div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="createCheckpointAction">
+    <div class="modal-content">
+      <h5>Create new Checkpoint</h5>
+      <form #createCheckpointForm="ngForm" style="margin-top: 20px;">
+          <div class="input-field">
+              <select materialize="material_select" ngModel *ngIf="Skills && Skills.length > 0" name="skill_id" id="skill">
+                  <option value="" selected>Not</option>
+                  <optgroup *ngFor="let category of Skills" label="{{category.title}}">
+                    <option *ngFor="let skill of category.skills" value="{{skill.id}}">{{skill.title}}</option>
+                  </optgroup>
+                </select>
+                <label for="">Skill assigned</label>
+          </div>
+        <div class="input-field">
+          <input type="text" name="name" ngModel>
+          <label for="">Name</label>
+        </div>
+        <div class="input-field">
+          <textarea class="materialize-textarea" name="description" ngModel></textarea>
+          <label for="">Description</label>
+        </div>
+        
+        <div class="input-field">
+          <button class="btn" (click)="createCheckpoint(createCheckpointForm)">Create</button>
+        </div>
+      </form>
+    </div>
   </div>
 
+
+
+
+<div id="modal2" class="modal modal-serach" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="searchAction">
+    <div class="modal-content">
+      <h5>Discover checkpoints</h5>
+      <div class="modal-header input-field">
+          <input id="icon_prefix" type="text" #search (input)="searchCheckpoints(search.value)">
+          <label for="icon_prefix">Search</label>
+      </div>
+      <div class="modal-body"> 
+        <div class="discover" *ngFor="let discover of DiscoverCheckpoints; let i = index">
+          <div class="discover-title">
+            <span class="left">{{discover.name}}</span>
+            <span class="badge green left">{{discover.skill.title}}</span>
+            <button class="blue btn right btn-small" *ngIf="!discover.assigned" (click)="assignCheckpoint(discover.id)">Add</button>
+            <button class="red btn right btn-small" *ngIf="discover.assigned" (click)="unAssignCheckpoint(discover.id, i)">Remove</button>
+
+            <div class="clearfix"></div>
+          </div> 
+          <div class="discover-body">
+            {{discover.description}}
+            <p class="creator"><span class="badge left grey">Created by</span> {{discover.creator.name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<section class="roadmap-page" *ngIf="Roadmap">
+  <div class="roadmap-category z-depth-1">
+    {{Roadmap.skillsCategory.title}}
+  </div>
+  <h5 class="section-title" *ngIf="Roadmap">{{Roadmap.name}}</h5>
+  <div class="roadmap-description" *ngIf="Roadmap.description && Roadmap.description.length > 0">
+      <div class="card">
+          <div class="card-title">Description</div>
+          <div class="card-body">
+            {{Roadmap.description}}
+          </div>
+        </div>
+  </div>
+  
   <div class="row">
-    <div class="col m3"></div>
-    <div class="col m9">
+    <div class="col m12">
+      <button class="btn teal lighten-2" id="add_checkpoint" (click)="openCreateCheckpointModal()">Add</button>
+      <button class="btn purple lighten-2" id="add_checkpoint" (click)="openSearchModal()">Discover</button>
+
+      <div class="checkpoints"> 
+          <ul dragula="Checkpoints" [(dragulaModel)]="Checkpoints" (dragulaModelChange)="dropDown($event)">
+              <li *ngFor="let checkpoint of Checkpoints; let i = index">
+                <div class="chip" (click)="toggleTodos(checkpoint.id)" ngClass="{{checkpoint.active ? 'active' : ''}}">{{checkpoint.name}}</div>
+                <div class="dropdown_actions">
+                  <i class="fa fa-pencil orange lighten-2"></i>
+                  <i class="fa fa-trash red lighten-2" (click)="unAssignCheckpoint(checkpoint.id, i)"></i>
+                </div>
+              </li>
+          </ul>
+      </div>
       <div class="card">
         <div class="card-title">
           <span>Todos</span>
@@ -35,13 +112,20 @@
           </ul>
         </div>
         <div class="card-body">
-          <ul class="todo-list">
+          <ul class="collapsible" materialize="collapsible" data-collapsible="expandable" dragula="Todos" [(dragulaModel)]="Todos">
             <li *ngFor="let todo of Todos; let i = index">
-              <input type="checkbox" id="todo{{todo.id}}" checked="{{todo.users[0].user_todos.checked == 1 ? 'checked': ''}}" (change)="updateTodo(todo)">
-              <label for="todo{{todo.id}}">{{todo.name}}</label>
-                <i class="fa fa-angle-down drop-desc" (click)=toggleDesc(desc)></i>
-                <i class="fa fa-trash-o" (click)="deleteTodo(todo.id, i)"></i>
-                <div class="description hidden" #desc>{{todo.description}}</div>
+              <div class="collapsible-header">
+                  <input type="checkbox" id="todo{{todo.id}}" checked="{{todo.users[0].user_todos.checked == 1 ? 'checked': ''}}" (change)="updateTodo(todo)">
+                  <label for="todo{{todo.id}}">{{todo.name}}</label>
+                    <i class="fa fa-trash-o" (click)="deleteTodo(todo.id, i)"></i>
+              </div>      
+              <div class="collapsible-body">
+                  <div #desc>
+                      {{todo.description}}
+                    <!-- <label for="">Edit</label>
+                    <textarea class="materialize-textarea"></textarea> -->
+                  </div>
+              </div>
             </li>
           </ul>
         </div>

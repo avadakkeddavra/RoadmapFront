@@ -20,7 +20,8 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "./../node_modules/materialize-css/dist/css/materialize.css"
+        "./../node_modules/materialize-css/dist/css/materialize.css",
+        "./../node_modules/dragula/dist/dragula.css"
       ],
       "scripts": [
         "./../node_modules/jquery/dist/jquery.js",

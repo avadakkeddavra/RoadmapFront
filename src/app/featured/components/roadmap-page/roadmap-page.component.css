@@ -1,13 +1,41 @@
+.roadmap-page{
+    position: relative;
+}
+.roadmap-category{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    padding: 10px 20px;
+    color: #000;
+    background-color: #fff;
+}
+.roadmap-description .card{
+    margin: 50px 0px;
+}
+.roadmap-description .card .card-body{
+    padding: 20px !important;
+}
 .checkpoints{
-    text-align: center;
     margin: 20px 0px;
+}
+li{
+    list-style: none !important;
 }
 .checkpoints ul{
     position: relative;
     display: inline-block;
 }
+#add_checkpoint{
+    padding: 0px 15px;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+}
+.card{
+    padding: 0 !important;
+}
 .card-body{
-    padding-top: 20px;
+    padding: 0 !important;
 }
 .checkpoints ul:after{
     content: '';
@@ -31,11 +59,56 @@
     transition: 0.3s all;
     cursor: pointer;
 }
+@keyframes fade {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0.8;
+    }
+}
+.checkpoints ul li:hover .dropdown_actions{
+    opacity: 1;
+    visibility: visible;
+    top:100%;
+}
+.checkpoints ul li:hover .dropdown_actions i:first-child{
+    animation: fade 0.5s;
+}
+.checkpoints ul li:hover .dropdown_actions i:last-child{
+    animation: fade 1.5s;
+}
+.checkpoints ul li .dropdown_actions{
+    position: absolute;
+    width: 100px;
+    top:130%;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s all;
+}
+.checkpoints ul li .dropdown_actions i{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 10px;
+    margin: 0px 3px;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    transition: 0.3s all;
+    cursor: pointer;
+    opacity: 0.8;
+}
+.checkpoints ul li .dropdown_actions i:hover{
+  opacity: 1 !important;
+}
 .checkpoints ul li .chip.active{
     background-color: #525252;
     color: #ffffff;
 }
-.checkpoints ul li .chip:hover{
+.checkpoints ul li:hover .chip{
     background-color: #525252;
     color: #ffffff;
 }
@@ -56,7 +129,8 @@
     position: absolute;
     opacity: 0;
 }
-.todo-list i{
+i.fa-trash-o{
+    display: block !important;
     float: right !important;
     font-size: 17px;
     margin-left: 20px;
@@ -65,9 +139,94 @@
 textarea{
     height: 150px;
 }
-.modal{
-    width: 500px;
+
+.modal:not(.modal-serach){
+    width: 600px;
+    max-height: 800px;
+    overflow-y: inherit !important;
 }
-.todo-list li:not(:last-child){
-    margin-bottom: 15px;
+#modal2 {
+    width: 80% !important;
+    max-height: 700px;
 }
+.modal-body .discover{
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+.modal-body .discover .discover-title{
+    display: block;
+    padding: 10px 0px;
+    font-size: 18px;
+}
+.modal-body .discover .discover-body{
+    margin-left: 20px;
+    color: #525252;
+}
+.discover-body .creator{
+    margin-top: 20px;
+    font-weight: bold;
+}
+.discover-body .creator span{
+    margin-left: 0 !important;
+    margin-right: 10px;
+    font-weight: lighter;
+}
+.discover .discover-title button.btn{
+    height: 25px !important;
+    line-height: 25px !important;
+    padding:0px 10px;
+    font-size: 12px !important;
+ }
+.collapsible-header{
+    display: block !important; 
+}
+ul.collapsible{
+    margin-top: 0 !important;
+}
+ul.collapsible li:not(.active){
+    margin-left: 0;
+    margin-right: 0;
+}
+
+ul.collapsible li .collapsible-body{
+    background-color: #fff;
+}
+
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+    pointer-events: none;
+  }
+
+  .gu-hide {
+    left: -9999px !important;
+  }
+
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+ 
+  .gu-transit {
+    opacity: 0.2;
+  }
+  li.gu-transit {
+      list-style: none !important;
+  }
+  li.gu-transit .dropdown_actions{
+   display: none;
+  }
+  .gu-mirror  .dropdown_actions{
+      display: none;
+  }
+textarea{
+    height: auto !important;
+    margin-bottom: 0 !important;
+}
+

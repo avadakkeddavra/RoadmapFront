@@ -5,6 +5,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { MaterializeModule } from 'angular2-materialize';
 import { FormsModule } from '@angular/forms';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     RouterModule,
     MaterializeModule,
-    FormsModule
+    FormsModule,
+    DragulaModule.forRoot()
   ],
   declarations: [RoadmapPageComponent]
 })
