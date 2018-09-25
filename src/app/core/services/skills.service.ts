@@ -17,6 +17,10 @@ export class SkillsService {
     return this.Http.put('http://localhost:4200/api/skills', body ,httpOptions);
   }
 
+  updateSkillData(id, data) {
+    return this.Http.put(`http://localhost:4200/api/skills/${id}`, data);
+  }
+
   create(body) {
     const httpOptions = {
       headers: new HttpHeaders({

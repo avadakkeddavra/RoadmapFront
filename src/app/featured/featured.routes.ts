@@ -13,6 +13,7 @@ import {AdminGuard} from './guards/admin.guard';
 import {SettingsComponent} from './components/settings/settings.component';
 import {RoadmapComponent} from './components/roadmap/roadmap.component';
 import { RoadmapPageComponent } from './components/roadmap-page/roadmap-page.component';
+import { SearchRoadmapsComponent } from './components/search-roadmaps/search-roadmaps.component';
 
 const routes: Routes = [
   { path: '', component:DashboardComponent },
@@ -28,7 +29,8 @@ const Auth: Routes = [
   { path: 'skills-categories', component:SkillsCategoriesComponent, canActivate: [AdminGuard]},
   { path: 'settings', component:SettingsComponent, canActivate: [AuthGuard]},
   { path: 'roadmap', component: RoadmapComponent, canActivate: [AuthGuard]},
-  { path: 'roadmap/:roadmap_id', component:RoadmapPageComponent, canActivate: [AuthGuard]}
+  { path: 'roadmaps/search', component: SearchRoadmapsComponent, canActivate: [AuthGuard]},
+  { path: 'roadmap/:roadmap_id', component:RoadmapPageComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

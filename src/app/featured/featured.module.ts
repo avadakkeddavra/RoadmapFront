@@ -20,6 +20,7 @@ import {SkillsCategoriesModule} from './components/skills-categories/skills-cate
 import {SettingsModule} from './components/settings/settings.module';
 import {RoadmapModule} from './components/roadmap/roadmap.module';
 import { RoadmapPageModule } from './components/roadmap-page/roadmap-page.module';
+import { SearchRoadmapsModule } from './components/search-roadmaps/search-roadmaps.module';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { RoadmapPageModule } from './components/roadmap-page/roadmap-page.module
     SkillsCategoriesModule,
     SettingsModule,
     RoadmapModule,
-    RoadmapPageModule
+    RoadmapPageModule,
+    SearchRoadmapsModule
   ],
   providers: [
     AuthService,

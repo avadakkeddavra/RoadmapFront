@@ -1,3 +1,10 @@
 .current{
   background-color: #f5f5f5;
 }
+.highlighted{
+  line-height: 30px !important;
+  padding: 5px 10px !important;
+}
+.highlighted i {
+  line-height: 30px;
+}

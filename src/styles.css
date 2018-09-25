@@ -180,8 +180,8 @@ table:not(.datepicker-table) tr.highlighted {
   line-height: 40px;
   margin-right: 20px;
 }
-.sidebar .sidebar-body ul li a i.fa,
-.sidebar .sidebar-body ul li .collapsible-header i.fa {
+.sidebar .sidebar-body ul li a i.fa:not(.fa-road),
+.sidebar .sidebar-body ul li .collapsible-header i.fa:not(.fa-road) {
   float: right !important;
   font-size: 14px;
   margin-right: 0;
@@ -194,7 +194,8 @@ table:not(.datepicker-table) tr.highlighted {
   margin-left: -2px !important;
 }
 .sidebar .sidebar-body ul li .collapsible-body {
-  padding: 10px 25px;
+  padding: 0 !important;
+  border: none !important;
 }
 main.full {
   width: calc(100% - 65px);
