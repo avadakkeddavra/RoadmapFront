@@ -8,6 +8,7 @@
         <th>Name</th>
         <th>Email</th>
         <th>Total mark <i class="fa fa-sort-amount-desc" id="sort" (click)="sortByTotalMark($event)"></i></th>
+        <th>Experience</th>
         <th>Last activity <i class="fa fa-sort-amount-desc" (click)="sortByDate('active',$event)"></i></th>
         <th>Start work <i class="fa fa-sort-amount-desc" (click)="sortByDate('invitation',$event)"></i></th>
       </tr>
@@ -19,12 +20,12 @@
           <td>{{user.email}}</td>
           <td>
             {{user.userSkills[0].marks}}
-            <span class="badge {{user.status.color}}">{{user.status.text}}</span>
-          </td>
+          </td> 
+          <td> <span class="badge {{user.status.color}} left">{{user.status.text}}</span></td>
           <td>{{user.updated_at | date:'dd-MMMM'}}</td>
-          <td><span *ngIf="user.invitation_date ">{{user.invitation_date | date:'dd-MMM'}}</span></td>
+          <td><p *ngIf="user.invitation_date ">{{user.invitation_date | date:'dd-MMMM'}}</p></td>
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> 
 </section>

@@ -1,0 +1,22 @@
+.card{
+    border-radius: 5px;
+    padding: 0 !important;
+}
+.card-title{
+    border-radius: 5px 5px 0px 0px;
+}
+.card-body{
+    padding: 20px;
+    margin-bottom: 0 !important;
+}
+.checkpoints-chain{
+    margin-top: 20px;
+}
+.checkpoints-chain ul li{
+    display: inline-block;
+}
+.checkpoints-chain ul li .badge{
+    float: none;
+    margin-right: 5px;
+    padding: 3px 7px;
+}

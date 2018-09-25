@@ -1,3 +1,16 @@
+<div id="modal" class="modal-errors modal bottom-sheet red lighten-3 white-text" materialize="modal" [materializeActions]="modalErrors">
+    <div class="modal-content" *ngIf="errors">
+      <h4>{{errors.title}}</h4>
+      <ul >
+        <li *ngFor="let error of errors.data">{{error.message}}</li>
+      </ul>
+    </div>
+    <div class="modal-footer red lighten-3 white-text">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat white-text">Ok</a>
+    </div>
+  </div>
+
+
 <section class="skills-matched">
   <h5> Edit Skill / Categories</h5>
   <div class="row">
@@ -45,8 +58,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let cat of filterItemsOfShow('category')">
-              <td>{{cat.title}}</td>
-              <td>{{cat.description}}</td>
+              <td><input type="text" value="{{cat.title}}" class="unstyled" #categoryTitle (change)="updateCategory('title', categoryTitle.value, cat.id)"></td>
+              <td><input type="text" value="{{cat.description}}" class="unstyled" #catDesc (change)="updateCategory('description',catDesc.value, cat.id)"></td>
               <td><i class="fa fa-trash-o" (click)="deleteCategory(cat.id)"></i></td>
             </tr>
             </tbody>
@@ -81,6 +94,7 @@
               </div>
               <div class="input-field">
                 <select name="category_id" *ngIf="Categories" ngModel materialize="material_select">
+                  <option value="" disabled selected>Choose</option>
                   <option *ngFor="let cat of Categories" value="{{cat.id}}">{{cat.title}}</option>
                 </select>
                 <label for="">Category</label>
@@ -118,9 +132,9 @@
             </thead>
             <tbody>
             <tr *ngFor="let skill of filterItemsOfShow('skills')">
-              <td>{{skill.title}}</td>
+              <td><input type="text" class="unstyled" value="{{skill.title}}" #skillTitle (change)="updateSkill('title', skillTitle.value, skill.id)"></td>
               <td><p *ngIf="skill.skillsCategory">{{skill.skillsCategory.title}}</p></td>
-              <td>{{skill.description}}</td>
+              <td><input type="text" class="unstyled" value="{{skill.description}}" #skillDesc (change)="updateSkill('description', skillDesc.value, skill.id)"></td>
               <td><i class="fa fa-trash-o" (click)="deleteSkill(skill.id)"></i></td>
             </tr>
 

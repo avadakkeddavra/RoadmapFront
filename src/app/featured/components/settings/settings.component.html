@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
           <div class="user-img">
-            <img src="http://localhost:3010/assets/images/{{user.avatar}}" alt="" class="responsive-img ">
+            <img [(src)]="user.avatar" alt="" class="responsive-img ">
           </div>
           <div class="user-info">
             <h6 class="name">{{user.name}}</h6>
@@ -47,12 +47,12 @@
         <div class="card-body">
           <form #settingsForm="ngForm" *ngIf="settings">
             <div class="input-field">
-              <input type="number" name="years" ngModel="{{settings.dev_years ? settings.dev_years : ''}}" class="ng-touched">
-              <label for="" class="active">Years of development</label>
+              <input type="number" name="years" ngModel="{{settings.dev_years ? settings.dev_years : ''}}">
+              <label for="years" class="active">Years of development</label>
             </div>
             <div class="input-field">
               <input type="number" name="projects" ngModel="{{settings.projects_completed ? settings.projects_completed : ''}}">
-              <label for="" class="active">Projects completed </label>
+              <label for="projects" class="active">Projects completed </label>
             </div>
             <button class="btn blue" (click)="setSettings(settingsForm)">Save</button>
           </form>
@@ -68,12 +68,12 @@
           <div class="row">
             <form #userForm="ngForm" *ngIf="user">
               <div class="input-field">
-                <input type="text" name="name" ngModel="{{user.name}}" class="ng-touched">
-                <label for="" class="active">Name</label>
+                <input type="text" name="name"  [(ngModel)]="user.name" autofocus>
+                <label for="name" class="{{user.name ? 'active' : ''}}">Name</label>
               </div>
               <div class="input-field">
-                <input type="email" name="email" ngModel="{{user.email}}">
-                <label for="" class="active">Email</label>
+                <input type="email" name="email" ngModel="{{user.email}}" autofocus>
+                <label for="email" class="active">Email</label>
               </div>
               <div class="input-field">
                 <select type="text" name="occupation" ngModel="{{user.occupation}}" materialize="material_select">
@@ -84,15 +84,26 @@
                 </select>
                 <label for="">Оccupation</label>
               </div>
-              <div class="file-field input-field">
-                <div class="btn">
+              <div class="file-field input-field" style="margin-bottom: 10px;">
+                <div class="btn" style="position: relative;">
                   <span>Avatar</span>
-                  <input type="file" name="avatar" #avatar ngModel (change)="uploadAvatar(avatar.files)">
+                  <input type="file" name="avatar" #avatar  (change)="fileChangeEvent($event)">
                 </div>
-                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
-                </div>
+                <image-cropper
+                    style="max-height: 300px;"
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="4 / 4"
+                    [resizeToWidth]="128"
+                    format="png"
+                    (imageCroppedBase64)="imageCropped($event)"
+                  >
+                  
+              </image-cropper>
+              <img [src]="croppedImage" alt="">
+              <button class="btn purple lighten-2" style="float:none" id="save-avatar" *ngIf="showUploadAvatarBtn" (click)="uploadAvatar()">Save</button>
               </div>
+
               <div class="input-field">
                 <input type="text" materialize="pickadate" name="invitation_date" ngModel="{{user.invitation_date}}" [materializeParams]="[{format: 'yyyy-mm-dd'}]">
                 <label for="">Date of invitation</label>

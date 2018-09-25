@@ -49,6 +49,12 @@ export class ProfileComponent implements OnInit {
           toast('This page unavaliable',2000);
           this.router.navigate(['']);
         }
+        if(this.User.data.user_setting && this.User.data.user_setting.bg_image) {
+          this.User.data.user_setting.bg_image = 'http://localhost:3010/assets/images/'+this.User.data.user_setting.bg_image;
+        } else {
+          this.User.data.user_setting = {};
+          this.User.data.user_setting.bg_image = './../../../../../assets/images/bg.jpg';
+        }
         let Skills = this.User.data.userSkills;
 
         for(let skill of Skills) {
@@ -82,6 +88,8 @@ export class ProfileComponent implements OnInit {
 
       })
     })
+
+    
   }
 
   onSkillUpdate($event) {
@@ -89,7 +97,7 @@ export class ProfileComponent implements OnInit {
     if($event.mark < 7) {
       return;
     }
-
+  
     let index = $event.index;
     delete $event.index;
     this.Skills[index] = $event;

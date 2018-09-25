@@ -1,0 +1,23 @@
+<section class="search-roadmaps">
+  <h5 class="section-title">Search</h5>
+  <div class="wrapper">
+    <div class="card" *ngFor="let roadmap of Roadmaps">
+      <div class="card-title">
+          {{roadmap.name}}
+      </div>
+      <div class="card-body">
+        <p>{{roadmap.description | slice:0:100}}</p>
+        <div class="checkpoints-chain">
+          <ul>
+            <li *ngFor="let check of roadmap.roadmap_checkpoints"><div class="chip">{{check.name}}</div></li>
+          </ul>
+        </div>
+        <div class="checkpoints-chain">
+            <ul>
+              <li *ngFor="let check of roadmap.roadmap_checkpoints"><div class="badge green">{{check.skill.title}}</div></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

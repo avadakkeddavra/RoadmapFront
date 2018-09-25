@@ -3,6 +3,7 @@ import {AuthService} from '../../../core/services/auth.service';
 import {UserService} from '../../../core/services/user.service';
 import {NgForm} from '@angular/forms';
 import {toast} from 'angular2-materialize';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -13,7 +14,12 @@ export class SettingsComponent implements OnInit {
 
   user:any;
   settings:any;
+
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  showUploadAvatarBtn:boolean = false;
   constructor(
+    private Router: Router,
     private AuthSettings: AuthService,
     private UserService: UserService
   ) { }
@@ -22,6 +28,7 @@ export class SettingsComponent implements OnInit {
     await this.UserService.getUser(this.AuthSettings.userData().id).subscribe(user => {
       let User:any = user;
       this.user = User.data;
+      this.user.avatar = `http://localhost:3010/assets/images/${this.user.avatar}`;
 
       this.UserService.getUsersSettings(this.user.id).subscribe(res => {
         this.settings = res;
@@ -40,15 +47,15 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  uploadAvatar(avatar) {
-    const formData = new FormData();
-    formData.append('avatar', avatar[0]);
-    formData.append('userId', this.user.id);
-    this.UserService.uploadAvatar(formData).subscribe(res => {
+  uploadAvatar() {
+
+    this.UserService.uploadAvatar({avatar:this.croppedImage, userId: this.user.id}).subscribe(res => {
       let Response:any = res;
-      this.user.avatar = Response.file;
+      this.user.avatar = `http://localhost:3010/assets/images/${Response.file}`;
       this.AuthSettings.rebuildToken(Response.token);
-    })
+      toast('Avatar was updated');
+    });
+    
   }
 
   uploadBg(bg) {
@@ -89,4 +96,13 @@ export class SettingsComponent implements OnInit {
       toast('Setting was updated successfully', 1000);
     })
   }
+    
+    fileChangeEvent(event: any): void {
+        this.imageChangedEvent = event;
+        this.showUploadAvatarBtn = true;
+    }
+    imageCropped(image: string) {
+        this.croppedImage = image;
+    }
+
 }

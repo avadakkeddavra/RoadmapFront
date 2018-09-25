@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import {CategoryService} from '../../../core/services/catgory.service';
 import {SkillsService} from '../../../core/services/skills.service';
+import {MaterializeAction} from 'angular2-materialize';
 import {NgForm} from '@angular/forms';
 import {toast} from 'angular2-materialize';
 
@@ -24,6 +25,11 @@ export class SkillsCategoriesComponent implements OnInit {
 
   Categories:any;
   Skills:any;
+  modalErrors = new EventEmitter<string|MaterializeAction>();
+  errors: any = {
+    data: [],
+    title: ''
+  };
 
   constructor(
     private CategoryService: CategoryService,
@@ -78,6 +84,10 @@ export class SkillsCategoriesComponent implements OnInit {
       }
       this.pagination.category[0].current = true;
     })
+  }
+
+  private openErrorsModal() {
+    this.modalErrors.emit({action:"modal",params:['open']});
   }
 
   filterItemsOfShow(type){
@@ -218,8 +228,8 @@ export class SkillsCategoriesComponent implements OnInit {
     this.SkillsService.create(body).subscribe( response => {
       let skill:any = response;
       toast(skill.data.title+' skill was created', 200)
-    }, error => {
-      console.log(error);
+    }, errors => {
+      this.generateErrors('Skill creation', errors.error.error);     
     });
   }
 
@@ -233,8 +243,21 @@ export class SkillsCategoriesComponent implements OnInit {
 
     this.CategoryService.create(body).subscribe( response => {
       let category:any = response;
-      toast(category.data.title+' category was created',200)
+      if(category.success) {
+        this.Categories.unshift(category.data)
+        toast(category.data.title+' category was created',200)
+      }       
+    },errors => {
+        this.generateErrors('Category creation', errors.error.error);      
     })
+  }
+
+  private generateErrors(type:string, Errors:Array<any>) {
+    this.errors.data = Errors;
+    this.errors.title = type;
+    console.log(this.errors);
+
+    this.openErrorsModal();
   }
 
   deleteCategory(id) {
@@ -278,5 +301,27 @@ export class SkillsCategoriesComponent implements OnInit {
       })
     }
     this.pagination.skills[0].current = true;
+  }
+
+  updateCategory(type:string,value: string, id) {
+    const body = {};
+    body[type] = value;
+    this.CategoryService.update(id, body).subscribe(category => {
+      let Response:any = category;
+      if(Response.success) {
+        toast('Category was updated', 1000);
+      }
+    })
+  }
+
+  updateSkill(type:string,value: string, id) {
+    const body = {};
+    body[type] = value;
+    this.SkillsService.updateSkillData(id, body).subscribe(category => {
+      let Response:any = category;
+      if(Response.success) {
+        toast('Skill was updated', 1000);
+      }
+    })
   }
 }

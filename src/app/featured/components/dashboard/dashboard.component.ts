@@ -34,13 +34,13 @@ export class DashboardComponent implements OnInit {
       for(let user of this.Users) {
         user.status = {};
         if (user.userSkills[0].marks >= 960) {
-          user.status.color = 'purple';
+          user.status.color = 'green';
           user.status.text = 'senior';
         } else if (user.userSkills[0].marks >= 480 && user.userSkills[0].marks < 960) {
-          user.status.color = 'green';
+          user.status.color = 'orange';
           user.status.text = 'middle';
         } else {
-          user.status.color = 'orange';
+          user.status.color = 'grey';
           user.status.text = 'junior';
         }
       }

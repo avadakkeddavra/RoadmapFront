@@ -35,3 +35,9 @@ a{
 .chip{
   cursor: pointer;
 }
+input.unstyled {
+  display: inline-block;
+  height: 30px;
+  margin-bottom: 0 !important;
+  border-bottom: 0;
+}
