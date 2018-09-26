@@ -253,11 +253,9 @@ export class SkillsCategoriesComponent implements OnInit {
   }
 
   private generateErrors(type:string, Errors:Array<any>) {
+    this.errors = {data:[], title: ''};
     this.errors.data = Errors;
     this.errors.title = type;
-    console.log(this.errors);
-
-    this.openErrorsModal();
   }
 
   deleteCategory(id) {

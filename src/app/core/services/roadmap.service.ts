@@ -27,4 +27,7 @@ export class RoadmapService {
   createRoadmap(data) {
     return this.Http.post(this.alias, data);
   }
+  search(name = null, category = null) {
+    return this.Http.get(this.alias+`/search?name=${name}&category_id=${category}`);
+  }
 }

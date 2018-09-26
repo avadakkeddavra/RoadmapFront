@@ -21,6 +21,8 @@ import {SettingsModule} from './components/settings/settings.module';
 import {RoadmapModule} from './components/roadmap/roadmap.module';
 import { RoadmapPageModule } from './components/roadmap-page/roadmap-page.module';
 import { SearchRoadmapsModule } from './components/search-roadmaps/search-roadmaps.module';
+import { CreateRoadmapModule } from './components/create-roadmap/create-roadmap.module';
+
 
 @NgModule({
   imports: [
@@ -38,7 +40,8 @@ import { SearchRoadmapsModule } from './components/search-roadmaps/search-roadma
     SettingsModule,
     RoadmapModule,
     RoadmapPageModule,
-    SearchRoadmapsModule
+    SearchRoadmapsModule,
+    CreateRoadmapModule
   ],
   providers: [
     AuthService,

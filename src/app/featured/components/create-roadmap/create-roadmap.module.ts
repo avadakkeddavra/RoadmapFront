@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchRoadmapsComponent } from './search-roadmaps.component';
+import { CreateRoadmapComponent } from './create-roadmap.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { MaterializeModule } from 'angular2-materialize';
-import { NgMasonryGridModule } from 'ng-masonry-grid'
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     MaterializeModule,
-    NgMasonryGridModule
+    FormsModule,
+    RouterModule
   ],
-  declarations: [SearchRoadmapsComponent]
+  declarations: [CreateRoadmapComponent]
 })
-export class SearchRoadmapsModule { }
+export class CreateRoadmapModule { }

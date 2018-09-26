@@ -1,0 +1,36 @@
+<section class="create-roadmap">
+
+  <div class="row">
+    <div class="col s6 m4"> 
+      <div class="card">
+        <div class="card-title">
+          Create Roadmap
+        </div>
+        <div class="card-body">
+            <form #createRoadmap="ngForm">
+                <div class="input-field">
+                  <input type="text" name="name" ngModel>
+                  <label for="">Name</label>
+                </div>
+                <div class="input-field">
+                  <select name="category_id" ngModel materialize="material_select" *ngIf="Categories && Categories.length > 0"> 
+                    <option value="">Choose</option>
+                    <option *ngFor="let cat of Categories" value="{{cat.id}}">{{cat.title}}</option>
+                  </select>
+                </div>
+                <div class="input-field">
+                  <textarea name="description" ngModel class="materialize-textarea"></textarea>
+                  <label for="">Description</label>
+                </div>
+                <div class="input-field">
+                  <button class="btn blue" (click)="create(createRoadmap)">Create</button>
+                </div>
+              </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section> 
+<app-errors-component *ngIf="Errors.data.length > 0" [errors]="Errors"></app-errors-component>

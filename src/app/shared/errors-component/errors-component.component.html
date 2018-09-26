@@ -1,0 +1,11 @@
+<div id="modal" class="modal-errors modal bottom-sheet red lighten-3 white-text" materialize="modal" [materializeActions]="modalErrors">
+    <div class="modal-content" *ngIf="errors && errors.data.length > 0">
+      <h4>{{errors.title}}</h4>
+      <ul >
+        <li *ngFor="let error of errors.data">{{error.message}}</li>
+      </ul>
+    </div>
+    <div class="modal-footer red lighten-3 white-text">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat white-text">Ok</a>
+    </div>
+  </div>

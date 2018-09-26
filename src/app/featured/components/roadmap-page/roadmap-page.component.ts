@@ -7,7 +7,7 @@ import { RoadmapService } from '../../../core/services/roadmap.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { SkillsService } from '../../../core/services/skills.service';
 
-import { MaterializeAction } from 'angular2-materialize';
+import { MaterializeAction, toast } from 'angular2-materialize';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -30,6 +30,7 @@ export class RoadmapPageComponent implements OnInit {
 
   constructor(
     private router: ActivatedRoute,
+    private _Router: Router,
     private UserService: UserService,
     private AuthService: AuthService,
     private CheckpointService: CheckpointService,
@@ -38,10 +39,19 @@ export class RoadmapPageComponent implements OnInit {
     private SkillsService: SkillsService,
   ) { }
 
-  ngOnInit() {
+ ngOnInit() {
 
-    this.router.params.subscribe(params => {
+    this.router.params.subscribe( async params => {
       let userId = this.AuthService.userData().id;
+
+      await this.RoadmapService.getSingleRoadmap(params.roadmap_id).subscribe(roadmap=> {
+        if(!roadmap){
+          toast('this roadmap does not exists');
+          this._Router.navigate(['/roadmaps/search'])
+        } else {
+          this.Roadmap = roadmap;
+        }
+      })
 
       this.SkillsService.getAllSkills().subscribe( skills => {
         this.Skills = skills;
@@ -51,9 +61,7 @@ export class RoadmapPageComponent implements OnInit {
         this.DiscoverCheckpoints = checkpoints;
       })
 
-      this.RoadmapService.getSingleRoadmap(params.roadmap_id).subscribe(roadmap=> {
-        this.Roadmap = roadmap;
-      })
+      
 
       this.UserService.getUserRoadmapCheckpoints(params.roadmap_id, userId).subscribe(checkpoints => {
         this.Checkpoints = checkpoints;
@@ -72,6 +80,8 @@ export class RoadmapPageComponent implements OnInit {
         this.Checkpoints[0].active = true;
         this.ActiveCheckpoint = this.Checkpoints[0];
         this.Todos = this.Checkpoints[0].todos;
+      }, error => {
+        this.Checkpoints = [];
       });
 
     })

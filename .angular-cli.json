@@ -21,7 +21,8 @@
       "styles": [
         "styles.css",
         "./../node_modules/materialize-css/dist/css/materialize.css",
-        "./../node_modules/dragula/dist/dragula.css"
+        "./../node_modules/dragula/dist/dragula.css",
+        "./../node_modules/ng-masonry-grid/ng-masonry-grid.css" 
       ],
       "scripts": [
         "./../node_modules/jquery/dist/jquery.js",
