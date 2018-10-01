@@ -12,11 +12,11 @@
         <div class="card-title purple lighten-2 white-text">
           Skills chart
         </div>
-        <app-user-chart [(skills)]="TopSkills"></app-user-chart>
+        <app-user-chart [(skills)]="AimSkills"></app-user-chart>
       </div>
     </div>
     <div class="col m8">
-      <app-skills-table-shared *ngIf="Skills && User" [skills]="Skills" [categories]="Categories.data" [user]="User.data" (sort)="sort($event)" (backHandle)="onSkillUpdate($event)"></app-skills-table-shared>
+      <app-skills-table-shared *ngIf="Skills && User" [skills]="Skills" [categories]="Categories" [user]="User.data" (sort)="sort($event)" (backHandle)="onSkillUpdate($event)"></app-skills-table-shared>
     </div>
   </div>
 </section>

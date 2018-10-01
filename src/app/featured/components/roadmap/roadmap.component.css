@@ -12,3 +12,16 @@ section.roadmaps .card{
     margin-bottom: 0 !important;
 
 }
+a:first-child{
+    cursor: pointer;
+    margin-right: 0 !important;
+    display: inline-block !important;
+}
+a i {
+    cursor: pointer;
+}
+.card{
+    width: 450px;
+    border-radius: 5px;
+    padding: 0 !important;
+}

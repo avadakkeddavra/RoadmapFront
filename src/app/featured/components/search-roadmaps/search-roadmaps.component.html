@@ -5,29 +5,28 @@
     <form action="">
       <div class="row">
           <div class="input-field col m6">
-              <input type="text" class="unstyled z-depth-2" #nameFilter>
+              <input type="text" name="name" class="unstyled z-depth-2" #nameFilter>
               <label for="">Search</label>
           </div>
           <div class="input-field col m4">
-            <select name="category_id" id="category_id" #catFilter class="unstyled z-depth-2" style="background-color: #fff;" materialize="material_select">
-              <option value="" disabled selected>Choose</option>
+            <select name="category_id" id="category_id" #catFilter  class="unstyled z-depth-2" style="background-color: #fff;" materialize="material_select">
+              <option value="" disabled>Choose</option>
               <option *ngFor="let cat of Categories" value="{{cat.id}}">{{cat.title}}</option>
             </select>
           </div>
           <div class="input-field col m2">
-            <button type="button" class="btn gradient-45deg-indigo-light-blue" id="find-btn" (click)="search(nameFilter.value, catFilter.value)">Find</button>
+            <button type="button" *ngIf="Categories" class="btn gradient-45deg-indigo-light-blue" id="find-btn" (click)="search(nameFilter.value, catFilter.value)">Find</button>
           </div>
       </div>
     </form>
   </div>
-<div class="row" *ngIf="Roadmaps && Roadmaps.length > 0; else notfound">
+<div class="row" *ngIf="SearchRoadmaps && SearchRoadmaps.length > 0; else notfound">
     <ng-masonry-grid
     [masonryOptions]="{ transitionDuration: '0.8s', gutter: 10, columnWidth:'.card' }" 
-    [useAnimation]="true"
-    [useImagesLoaded]="true"
-    [scrollAnimationOptions]="{}">
+    (onNgMasonryInit)="onNgMasonryInit($event)"
+    >
     <!-- Masonry Grid Item -->
-        <ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="" *ngFor="let roadmap of Roadmaps; let i = index;" (click)="removeItem($event)"> 
+        <ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="" *ngFor="let roadmap of SearchRoadmaps; let i = index;"> 
         <!-- Grid Content  -->
         <div class="card gradient-45deg-indigo-light-blue white-text">
             <div class="card-title gradient-45deg-indigo-light-blue">
@@ -38,51 +37,24 @@
               <p>{{roadmap.description | slice:0:100}}</p>
               <div class="checkpoints-chain">
                 <ul>
-                  <li *ngFor="let check of roadmap.roadmap_checkpoints"><div class="chip">{{check.name}}</div></li>
+                  <li *ngFor="let check of roadmap.roadmap_checkpoints"><div class="chip">{{check.name | slice:0:30}}</div></li>
                 </ul>
               </div>
               <div class="checkpoints-chain">
                   <ul>
-                    <li *ngFor="let check of roadmap.roadmap_checkpoints"><div class="badge green">{{check.skill.title}}</div></li>
+                    <li *ngFor="let check of roadmap.roadmap_checkpoints"><div class="badge green">{{check.skill.title | slice:0:30}}</div></li>
                   </ul>
               </div>
             </div>
             <div class="card-action">
-              <button class="btn">Assign</button>
+              <button class="btn" *ngIf="!roadmap.assigned" (click)="assign(roadmap.id,i)">Assign</button>
+              <p class="assigned" *ngIf="roadmap.assigned"><i class="material-icons green-text">check</i> <span>Assigned</span> </p> 
             </div>
           </div>
         </ng-masonry-grid-item>
   </ng-masonry-grid>
+  <button type="button" class="btn" (click)="loadmore()">Loadmore</button> 
 </div>
-
-
-  <!-- <div class="row" *ngIf="Roadmaps; else notfound">
-    <div class="col s6 m4" *ngFor="let roadmap of Roadmaps">
-        <div class="card gradient-45deg-indigo-light-blue white-text">
-            <div class="card-title gradient-45deg-indigo-light-blue">
-                {{roadmap.name}}
-                <span class="right category-title">{{roadmap.skillsCategory.title}}</span>
-            </div>
-            <div class="card-body"> 
-              <p>{{roadmap.description | slice:0:100}}</p>
-              <div class="checkpoints-chain">
-                <ul>
-                  <li *ngFor="let check of roadmap.roadmap_checkpoints"><div class="chip">{{check.name}}</div></li>
-                </ul>
-              </div>
-              <div class="checkpoints-chain">
-                  <ul>
-                    <li *ngFor="let check of roadmap.roadmap_checkpoints"><div class="badge green">{{check.skill.title}}</div></li>
-                  </ul>
-              </div>
-            </div>
-            <div class="card-action">
-              <button class="btn">Assign</button>
-            </div>
-          </div>
-    </div>
-  </div> -->
-
   <ng-template #notfound>
     <h5 class="not-found">
       <i class="fa fa-frown-o"></i>

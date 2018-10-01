@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
   User:any;
   Skills:any;
   TopSkills:Array<any> = [];
+  AimSkills: Array<any> = [];
   Matched:Array<any> = [];
   Categories: any = [];
   constructor(
@@ -33,13 +34,14 @@ export class ProfileComponent implements OnInit {
 
       this.CategorySevice.getWithUserStats(params.id).subscribe(res => {
         this.Categories = res;
-        this.Categories.data.unshift({
+        this.Categories.unshift({
           title: 'All',
           id:null,
           level: {
             color: 'grey'
           }
         });
+        console.log(this.Categories);
       });
 
       this.UserService.getUserStat(params.id).subscribe( response => {
@@ -65,7 +67,14 @@ export class ProfileComponent implements OnInit {
             skill.name = skill.skill.title;
             this.TopSkills.push(skill);
           }
+
+          if(Number(skill.disposition) >= 7 ) {
+            skill.name = skill.skill.title;
+            this.AimSkills.push(skill);
+          }
+          
         }
+        console.log(this.AimSkills)
         this.TopSkills.sort(function(a, b) {
           if (a.mark > b.mark ) {
             return -1;

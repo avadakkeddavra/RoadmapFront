@@ -27,7 +27,23 @@ export class RoadmapService {
   createRoadmap(data) {
     return this.Http.post(this.alias, data);
   }
-  search(name = null, category = null) {
-    return this.Http.get(this.alias+`/search?name=${name}&category_id=${category}`);
+  search(name = null, category = null, offset = null) {
+
+    let params = '';
+
+    if(name) {
+      params += `name=${name}`;
+    }
+  
+    if(category) {
+      params += `&category=${category}`;
+    }
+
+    if(offset) {
+      params += `&offset=${offset}`;
+    }
+
+    return this.Http.get(this.alias+`/search?${params}`);
   }
+
 }

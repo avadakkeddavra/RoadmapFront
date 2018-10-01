@@ -39,7 +39,7 @@ export class UserChartComponent implements OnInit {
         "balloonText": "[[value]] [[name]]",
         "bullet": "round",
         "lineThickness": 2,
-        "valueField": "mark"
+        "valueField": "disposition"
       } ],
       "categoryField": "name",
       "export": {

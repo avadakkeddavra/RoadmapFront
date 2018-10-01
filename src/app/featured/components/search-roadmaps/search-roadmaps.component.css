@@ -15,7 +15,7 @@ h5.not-found{
     font-size: 15px;
     font-weight: bold;
 }
-.card-action button{
+.card-action button:not(.btn-flat){
     border-radius: 50px;
     font-size: 13px !important; 
     height: 30px;
@@ -23,8 +23,16 @@ h5.not-found{
     transition: 0.3s all !important;
     background: #f48fb1;
 }
-
-.unstyled{
+p.assigned{
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #fff;
+}
+p.assigned span{
+    display: inline-block;
+    transform: translateY(-5px);
+}
+.unstyled{ 
     border: none !important;
     background-color: #fff !important;
 }

@@ -5,6 +5,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { MaterializeModule } from 'angular2-materialize';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { RouterModule } from '@angular/router';
     SharedModule,
     MaterializeModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    CKEditorModule
   ],
   declarations: [CreateRoadmapComponent]
 })

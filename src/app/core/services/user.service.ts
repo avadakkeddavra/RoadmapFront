@@ -79,5 +79,10 @@ export class UserService {
   getUserRoadmapCheckpointTodos(roadmap, checkpoint, id) {
     return this.Http.get(`http://localhost:4200/api/user/${id}/roadmap/${roadmap}/checkpoint/${checkpoint}/todos`);
   }
+
+
+  generateRoadmaps() {
+    return this.Http.get('http://localhost:4200/api/user/roadmaps/generate');
+  }
 }
 

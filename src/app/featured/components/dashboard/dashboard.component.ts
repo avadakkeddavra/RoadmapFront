@@ -49,11 +49,11 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  getUserSkills(user) {
+  async getUserSkills(user) {
     this.ChoosedUser = user;
-    this.CategoryService.getWithUserStats(user.id).subscribe( response => {
+    await this.CategoryService.getWithUserStats(user.id).subscribe( response => {
       let Response:any = response;
-      this.Categories = Response.data;
+      this.Categories = Response;
       this.Categories.unshift({
         title: 'All',
         id:null,
@@ -61,6 +61,7 @@ export class DashboardComponent implements OnInit {
           color: 'grey'
         }
       });
+      console.log(this.Categories);
     });
     this.UserService.getUserSkills(user.id,1).subscribe(response => {
       this.UserSkills = response;

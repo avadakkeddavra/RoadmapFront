@@ -9,6 +9,7 @@ import { SkillsService } from '../../../core/services/skills.service';
 
 import { MaterializeAction, toast } from 'angular2-materialize';
 import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-roadmap-page',
@@ -18,7 +19,7 @@ import { NgForm } from '@angular/forms';
 export class RoadmapPageComponent implements OnInit {
 
   Checkpoints:any;
-  Todos:any;
+  Todos:any = []; 
   Roadmap:any;
   modalActions = new EventEmitter<string|MaterializeAction>();
   searchAction = new EventEmitter<string|MaterializeAction>();
@@ -37,6 +38,7 @@ export class RoadmapPageComponent implements OnInit {
     private TodoService: TodoService,
     private RoadmapService: RoadmapService,
     private SkillsService: SkillsService,
+    private  sanitize: DomSanitizer
   ) { }
 
  ngOnInit() {
@@ -45,11 +47,19 @@ export class RoadmapPageComponent implements OnInit {
       let userId = this.AuthService.userData().id;
 
       await this.RoadmapService.getSingleRoadmap(params.roadmap_id).subscribe(roadmap=> {
+        
         if(!roadmap){
           toast('this roadmap does not exists');
           this._Router.navigate(['/roadmaps/search'])
         } else {
           this.Roadmap = roadmap;
+          // this.Roadmap.description = this.sanitize.bypassSecurityTrustHtml(this.Roadmap.description);
+
+          if(this.Roadmap.creator_id !== userId) {
+              this.Roadmap.forked = true;
+              console.log(this.Roadmap);
+          }
+
         }
       })
 
@@ -130,6 +140,7 @@ export class RoadmapPageComponent implements OnInit {
 
     this.TodoService.create(this.Roadmap.id, this.ActiveCheckpoint.id, form.value).subscribe(res => {
       let Response:any = res;
+      this.Todos = [];
       this.Todos.push(Response.todo);
     });
   }

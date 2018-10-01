@@ -29,10 +29,4 @@ export class ErrorsComponentComponent implements OnInit {
   ngOnInit() {
 
   }
-  // ngOnChanges() {
-  //   let $this = this;
-  //   setTimeout(function() {
-  //     $this.modalErrors.emit({action:"modal",params:['open']}); 
-  //   },100);
-  // }
 }

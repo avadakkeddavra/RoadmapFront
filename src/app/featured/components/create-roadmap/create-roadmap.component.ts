@@ -30,6 +30,7 @@ export class CreateRoadmapComponent implements OnInit {
   }
   create(form:NgForm) {
     console.log(form.value);
+
     this.RoadmapService.createRoadmap(form.value).subscribe(roadmap => {
       let Response:any = roadmap; 
       this.Router.navigate([`/roadmap/${Response.id}`])

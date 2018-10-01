@@ -1,7 +1,7 @@
 <section class="create-roadmap">
 
   <div class="row">
-    <div class="col s6 m4"> 
+    <div class="col s6 m6"> 
       <div class="card">
         <div class="card-title">
           Create Roadmap
@@ -19,9 +19,16 @@
                   </select>
                 </div>
                 <div class="input-field">
-                  <textarea name="description" ngModel class="materialize-textarea"></textarea>
-                  <label for="">Description</label>
+                    <label for="">Description</label>
+                      <ckeditor
+                      name="description"
+                      ngModel
+                      [config]="{}"
+                      [readonly]="false"
+                      debounce="500">
+                    </ckeditor>  
                 </div>
+
                 <div class="input-field">
                   <button class="btn blue" (click)="create(createRoadmap)">Create</button>
                 </div>
