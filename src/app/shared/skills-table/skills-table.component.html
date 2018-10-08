@@ -28,9 +28,9 @@
       <tbody>
       <tr *ngFor="let skill of skills.skills; let i = index" ngClass="{{skill.hide ? 'hidden' : ''}}">
         <td><a routerLink="/user/{{skill.userSkills[0].userId}}/logs/{{skill.id}}">{{skill.title}}</a></td> 
-        <td><input type="text" value="{{skill.userSkills[0].mark}}" (change)="updateSkill('mark',$event, skill.userSkill.userId, skill.userSkill.skillId,i)"></td>
-        <td><input type="text" value="{{skill.userSkills[0].disposition}}" (change)="updateSkill('disposition',$event, skill.userSkill.userId, skill.userSkill.skillId)"></td>
-        <td><input type="text" value="{{skill.userSkills[0].comment}}" (change)="updateSkill('comment',$event, skill.userSkill.userId, skill.userSkill.skillId)"></td>
+        <td><input type="text" value="{{skill.userSkills[0].mark}}" (change)="updateSkill('mark',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId,i)"></td>
+        <td><input type="text" value="{{skill.userSkills[0].disposition}}" (change)="updateSkill('disposition',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId)"></td>
+        <td><input type="text" value="{{skill.userSkills[0].comment}}" (change)="updateSkill('comment',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId)"></td>
       </tr>
       </tbody>
     </table>

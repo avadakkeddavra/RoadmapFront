@@ -22,7 +22,7 @@ import {RoadmapModule} from './components/roadmap/roadmap.module';
 import { RoadmapPageModule } from './components/roadmap-page/roadmap-page.module';
 import { SearchRoadmapsModule } from './components/search-roadmaps/search-roadmaps.module';
 import { CreateRoadmapModule } from './components/create-roadmap/create-roadmap.module';
-
+import { RoadmapStatModule } from './components/roadmap-stat/roadmap-stat.module';
 
 @NgModule({
   imports: [
@@ -41,7 +41,8 @@ import { CreateRoadmapModule } from './components/create-roadmap/create-roadmap.
     RoadmapModule,
     RoadmapPageModule,
     SearchRoadmapsModule,
-    CreateRoadmapModule
+    CreateRoadmapModule,
+    RoadmapStatModule
   ],
   providers: [
     AuthService,

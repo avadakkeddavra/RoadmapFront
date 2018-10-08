@@ -46,7 +46,10 @@ export class UserChartComponent implements OnInit {
         "enabled": true
       }
     } );
-
+  }
+  
+  ngOnChanges() {
+    console.log(this.skills);
   }
 
 }

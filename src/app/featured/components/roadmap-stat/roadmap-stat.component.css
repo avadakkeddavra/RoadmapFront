@@ -1,0 +1,38 @@
+.wrapper{
+    width: 80%;
+    margin: 0 auto;
+}
+.log{
+    margin-bottom: 40px;
+    position: relative;
+}
+.log:after{
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 40px;
+    width: 2px;
+    height: 100%;
+    background-color: #777;
+}
+.log-foo
+h6.log-title{
+    padding: 10px;
+}
+h6.log-title i{
+    display: inline-block;
+    background-color: #eee;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.log .log_body{
+    padding-left: 40px;
+}
+.log .child-log{
+    background-color: #fff;
+    padding: 15px;
+}
+.log .child-log .child-log-footer{
+    margin-top: 20px; 
+}

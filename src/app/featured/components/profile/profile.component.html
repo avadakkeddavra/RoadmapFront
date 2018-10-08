@@ -12,7 +12,7 @@
         <div class="card-title purple lighten-2 white-text">
           Skills chart
         </div>
-        <app-user-chart [(skills)]="AimSkills"></app-user-chart>
+        <app-user-chart *ngIf="AimSkills.length > 0" [(skills)]="AimSkills"></app-user-chart>
       </div>
     </div>
     <div class="col m8">

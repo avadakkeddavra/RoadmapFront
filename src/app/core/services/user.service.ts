@@ -84,5 +84,9 @@ export class UserService {
   generateRoadmaps() {
     return this.Http.get('http://localhost:4200/api/user/roadmaps/generate');
   }
+
+  getUserRoadmapStats(id) {
+    return this.Http.get(`http://localhost:4200/api/user/roadmap-stats/${id}`);
+  }
 }
 

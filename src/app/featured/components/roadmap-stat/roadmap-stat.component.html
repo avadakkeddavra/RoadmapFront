@@ -1,0 +1,24 @@
+<section class="roadmap_stats">
+  <div class="wrapper">
+    <div class="log" *ngFor="let key of Object.keys(Data)">
+      <h6 class="log-title"><i class="fa fa-code"></i> {{key | date:'d of MMMM y'}}</h6>
+      <div class="log_body">
+        <div class="child-log z-depth-2" *ngFor="let log of Data[key]">
+            <h6 *ngIf="log.type == 'todo'">Create a {{log.type}} <b>{{log.name}}</b> of checkpoint <b>{{log.checkpoint}}</b> </h6>
+            <h6 *ngIf="log.type == 'checkpoint'">Create a {{log.type}} <b>{{log.name}}</b></h6>
+            <h6 *ngIf="log.type == 'user'"><b>{{log.name}}</b> was assigned</h6>
+
+            <div class="child-log-footer">
+              <i class="fa fa-clock-o"></i>
+              {{log.updated_at}} <br>   
+              <i class="fa fa-user"></i>
+              <span *ngIf="log.type == 'checkpoint'">{{log.creator.name}}</span>
+              <span *ngIf="log.type == 'user'">{{log.name}}</span>
+              <span *ngIf="log.type == 'todo'">{{log.creatorName}}</span>
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
