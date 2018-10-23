@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { MaterializeModule } from 'angular2-materialize';
 import { FormsModule } from '@angular/forms';
 import { DragulaModule } from 'ng2-dragula';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { DragulaModule } from 'ng2-dragula';
     RouterModule,
     MaterializeModule,
     FormsModule,
+    EditorModule,
     DragulaModule.forRoot()
   ],
   declarations: [RoadmapPageComponent]

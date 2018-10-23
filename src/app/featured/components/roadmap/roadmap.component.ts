@@ -3,6 +3,8 @@ import {RoadmapService} from '../../../core/services/roadmap.service';
 import {UserService} from '../../../core/services/user.service';
 import {AuthService} from '../../../core/services/auth.service';
 import { toast } from 'angular2-materialize';
+import { Masonry, MasonryGridItem } from 'ng-masonry-grid'; 
+
 
 @Component({
   selector: 'app-roadmap',
@@ -11,15 +13,29 @@ import { toast } from 'angular2-materialize';
 })
 export class RoadmapComponent implements OnInit {
 
-
+  filters:any = {
+    name: null,
+    category: null,
+    offset: null
+  };
+  SearchRoadmaps: any = [];
   Roadmaps: any;
   User: any;
+  
+  _toggleFlag:boolean = true;
+
+  _masonry: Masonry;
   constructor(
     private RoadmapService: RoadmapService,
     private UserSerice: UserService,
     private AuthService: AuthService
   ) { }
-
+  
+  onNgMasonryInit($event: Masonry) {
+    console.log($event); 
+    this._masonry = $event; 
+  }
+  
   async ngOnInit() {
 
     this.User = await this.AuthService.userData();
@@ -30,7 +46,21 @@ export class RoadmapComponent implements OnInit {
     })
 
   }
+  toggleRoadmaps(flag:boolean) {
+    this._toggleFlag = flag;
+    console.log(this._toggleFlag);
+  }
 
+  focusOnSearch() {
+      // Create our event (with options)
+      var evt = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      });
+      // If cancelled, don't dispatch our event
+      var canceled = !document.querySelector('a.results-tab').dispatchEvent(evt);
+  }
   unassign(id, index) {
     this.RoadmapService.unassignUserToRoadmap(id).subscribe(res => {
       let roadmaps = [];
@@ -50,5 +80,45 @@ export class RoadmapComponent implements OnInit {
       console.log(error.error);
       toast(error.error.message)
     })
+  }
+
+  search(name) {
+    if(name.length > 0) {
+      this.filters.name = name;
+      this.RoadmapService.search(name, '').subscribe(roadmaps => {
+        this.SearchRoadmaps = roadmaps;
+        console.log(this.SearchRoadmaps);
+      })
+    };
+    
+  }
+  
+  
+  loadmore(data) {
+    console.log(data);
+    this.RoadmapService.search(this.filters.name,this.filters.category, this.SearchRoadmaps.length).subscribe(res => {
+      let Response:any = res;
+      for(let item of Response)
+      {
+        this.SearchRoadmaps.push(item);    
+      } 
+    })
+  }
+
+  addItems(item) {  
+    this._masonry.setAddStatus('add'); // set status to 'add'
+    this.Roadmaps.push(item);
+  }
+  
+  async assign($event) {
+    console.log($event)
+    await this.RoadmapService.assignUserToRoadmap($event.id).subscribe(res => {
+      this.toggleRoadmaps(true);
+      this.Roadmaps.push($event.roadmap);
+      this.addItems($event.roadmap);
+     
+      console.log(this.Roadmaps);
+    });
+    
   }
 }  

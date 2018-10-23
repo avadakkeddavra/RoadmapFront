@@ -24,9 +24,13 @@ export class RoadmapPageComponent implements OnInit {
   modalActions = new EventEmitter<string|MaterializeAction>();
   searchAction = new EventEmitter<string|MaterializeAction>();
   createCheckpointAction = new EventEmitter<string|MaterializeAction>();
+  BooleanAction = new EventEmitter<string|MaterializeAction>();
+  Deleting:any;
+
+  Assigned:Boolean = false;
   ActiveCheckpoint:any;
   DiscoverCheckpoints: any;
-  Skills:any;
+  Skills:any = [];
 
 
   constructor(
@@ -47,24 +51,24 @@ export class RoadmapPageComponent implements OnInit {
       let userId = this.AuthService.userData().id;
 
       await this.RoadmapService.getSingleRoadmap(params.roadmap_id).subscribe(roadmap=> {
-        
-        if(!roadmap){
-          toast('this roadmap does not exists');
-          this._Router.navigate(['/roadmaps/search'])
-        } else {
           this.Roadmap = roadmap;
-          // this.Roadmap.description = this.sanitize.bypassSecurityTrustHtml(this.Roadmap.description);
-
+          this.Assigned = this.Roadmap.assigned;
           if(this.Roadmap.creator_id !== userId) {
               this.Roadmap.forked = true;
-              console.log(this.Roadmap);
           }
 
-        }
+          console.log(this.Roadmap);
       })
 
       this.SkillsService.getAllSkills().subscribe( skills => {
-        this.Skills = skills;
+          let Skills:any = skills;
+          console.log(skills);
+          for(let item of Skills) {
+            if(item.id == this.Roadmap.category_id) {
+              this.Skills.push(item);
+            }
+          }
+          console.log(this.Skills);
       });
     
       this.CheckpointService.discover(params.roadmap_id).subscribe(checkpoints => {
@@ -75,21 +79,32 @@ export class RoadmapPageComponent implements OnInit {
 
       this.UserService.getUserRoadmapCheckpoints(params.roadmap_id, userId).subscribe(checkpoints => {
         this.Checkpoints = checkpoints;
-        this.Checkpoints.sort(function(a, b){
-          let current = a.user_checkpoints.index_number;
-          let next = b.user_checkpoints.index_number;
-          if(current > next){
-            return 1;
-          } else if(current < next) {
-            return -1;
-          } else{
-            return 0;
-          }
-        })
-        console.log(this.Checkpoints);
-        this.Checkpoints[0].active = true;
-        this.ActiveCheckpoint = this.Checkpoints[0];
-        this.Todos = this.Checkpoints[0].todos;
+
+        if(this.Checkpoints.length > 0) {
+          this.Checkpoints.map( (item) => {
+            if(this.AuthService.userData().id == item.creator_id) {
+                item.canEdit = true
+            } else{
+              item.canEdit = false;
+            }
+          })
+          this.Checkpoints.sort(function(a, b){
+            let current = a.user_checkpoints.index_number;
+            let next = b.user_checkpoints.index_number;
+            if(current > next){
+              return 1;
+            } else if(current < next) {
+              return -1;
+            } else{
+              return 0;
+            }
+          })
+          console.log(this.Checkpoints);
+          this.Checkpoints[0].active = true;
+          this.ActiveCheckpoint = this.Checkpoints[0];
+          this.Todos = this.Checkpoints[0].todos;
+        }
+
       }, error => {
         this.Checkpoints = [];
       });
@@ -103,11 +118,13 @@ export class RoadmapPageComponent implements OnInit {
       if(checkpoint.id == id) {
           checkpoint.active = true;
           this.Todos = checkpoint.todos;
+          this.ActiveCheckpoint = {};
           this.ActiveCheckpoint = checkpoint;
       } else {
         checkpoint.active = false;
       }
     }
+    console.log(this.ActiveCheckpoint)
   }
 
 
@@ -115,6 +132,9 @@ export class RoadmapPageComponent implements OnInit {
    this.createCheckpointAction.emit({action:"modal",params:['open']});
  } 
  openSearchModal() {
+  this.CheckpointService.discover(this.Roadmap.id).subscribe(checkpoints => {
+    this.DiscoverCheckpoints = checkpoints;
+  })
   this.searchAction.emit({action:"modal",params:['open']})
 
  }
@@ -140,16 +160,25 @@ export class RoadmapPageComponent implements OnInit {
 
     this.TodoService.create(this.Roadmap.id, this.ActiveCheckpoint.id, form.value).subscribe(res => {
       let Response:any = res;
-      this.Todos = [];
+      
       this.Todos.push(Response.todo);
     });
+    this.closeModal();
   }
 
   createCheckpoint(form:NgForm) {
     this.CheckpointService.create(this.Roadmap.id, form.value).subscribe(checkpoint => {
-     this.Checkpoints.push(checkpoint)
-    })
-  }
+      checkpoint['active'] = true;
+      
+      if(this.ActiveCheckpoint) {
+        this.ActiveCheckpoint.active = false; 
+      }
+
+      this.ActiveCheckpoint = {};
+      this.ActiveCheckpoint = checkpoint; 
+      this.Checkpoints.push(checkpoint)
+    }) 
+  } 
 
   assignCheckpoint(id) {
     this.CheckpointService.assign(this.Roadmap.id, id).subscribe(checkpoint => {
@@ -157,6 +186,14 @@ export class RoadmapPageComponent implements OnInit {
         this.Checkpoints.push(Res.checkpoint);
         this.searchAction.emit({action:"modal",params:['close']})
     })
+  }
+  
+  showDeleteChoose(id, index) {
+      this.Deleting = {
+        id: id,
+        idnex: index
+     }
+    this.BooleanAction.emit({action:'modal', params:['open']});
   }
 
   unAssignCheckpoint(id, index) {
@@ -168,10 +205,27 @@ export class RoadmapPageComponent implements OnInit {
           checkpoints.push(checkpoint);
         }
      }
-     
+      this.DiscoverCheckpoints[index].assigned = false;
       this.Checkpoints = checkpoints;
       this.toggleTodos(checkpoints[0].id);
+      this.Deleting = {};
     })
+  }
+  
+  forceDeleteCheckpoint(id, index) {
+    this.CheckpointService.force(this.Roadmap.id, id).subscribe(checkpoint => {
+      console.log(checkpoint);
+      let checkpoints:Array<any> = [];
+      for(let checkpoint of this.Checkpoints) {
+         if(checkpoint.id != id) {
+           checkpoints.push(checkpoint);
+         }
+      }
+      
+       this.Checkpoints = checkpoints;
+       this.toggleTodos(checkpoints[0].id);
+       this.Deleting = {}
+     })
   }
 
   updateTodo(todo) {
@@ -200,6 +254,8 @@ export class RoadmapPageComponent implements OnInit {
     })
   }
 
+
+
   dropDown($event) {
     let userCheckpoints = [];
     for(let i in this.Checkpoints) {
@@ -218,5 +274,21 @@ export class RoadmapPageComponent implements OnInit {
       this.CheckpointService.discover(this.Roadmap.id,value).subscribe(res => {
         this.DiscoverCheckpoints = res;
       })
+  }
+
+
+  updateContentTodo(type, content, id) {
+    let body = {};
+    body[type] = content;
+    console.log(body);
+  }
+  
+
+  merge(id, index) {
+    this.CheckpointService.merge(this.Roadmap.id, id).subscribe(res => {
+      this.Checkpoints.push(res);
+      this.searchAction.emit({action:"modal",params:['close']});
+      this.DiscoverCheckpoints[index].assigned = true;
+    })
   }
 }

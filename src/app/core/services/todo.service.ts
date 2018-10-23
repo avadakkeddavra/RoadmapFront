@@ -23,4 +23,8 @@ export class TodoService {
   check(id,data) {
     return this.Http.put('http://localhost:4200/api/todo/'+id+'/check',data);
   }
+
+  update(roadmap,checkpoint, id, data) {
+    return this.Http.put(this.alias+'/'+roadmap+'/checkpoint/'+checkpoint+'/todo/'+id,data);
+  }
 }

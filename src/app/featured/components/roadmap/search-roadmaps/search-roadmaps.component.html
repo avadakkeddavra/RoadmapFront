@@ -1,0 +1,36 @@
+<section class="search-roadmaps">
+<div class="row" *ngIf="SearchRoadmaps && SearchRoadmaps.length > 0; else notfound">
+    <div class="col s8 offset-s1 roadmap-feed z-depth-2">
+        <div class="card z-depth-0" *ngFor="let roadmap of SearchRoadmaps;let i = index">
+          <div class="card-content">
+              <p class="date">{{roadmap.created_at | date:'dd-MMMM'}}</p>
+              <span class="card-title">{{roadmap.name}}</span>
+              <p [innerHtml]="roadmap.description | slice:0:100"></p>
+  
+  
+  
+              <div class="stats">
+                  <div class="creator">
+                      <b>Created by: </b>{{roadmap.Creator.name}}
+                  </div>
+                <ul>
+                  <li><span class="badge blue">{{roadmap.skillsCategory.title}}</span></li>
+                  <li>chekpoints <b>{{roadmap.checkpoints.length}}</b></li>
+                  <li>users <b>{{roadmap.users.length}}</b></li>
+                </ul>
+              </div>
+          </div>
+          <div class="card-action ">
+            <a class="grey-text" routerLink="/roadmap/{{roadmap.id}}"><i class="material-icons green-text" *ngIf="roadmap.assigned" >check</i> page</a>
+            <a class="grey-text" *ngIf="!roadmap.assigned" (click)="assign(roadmap.id, i)">Assign</a>
+          </div>
+        </div>
+      </div>
+</div>
+  <ng-template #notfound>
+    <h5 class="not-found">
+      <i class="fa fa-frown-o"></i>
+      Nothing Founded
+    </h5>
+  </ng-template>
+</section>

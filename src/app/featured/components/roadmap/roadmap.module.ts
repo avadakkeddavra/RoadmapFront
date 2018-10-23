@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RoadmapComponent } from './roadmap.component';
 import {SharedModule} from '../../../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { SearchRoadmapsComponent } from './search-roadmaps/search-roadmaps.component';
 import { NgMasonryGridModule } from 'ng-masonry-grid'
 
 @NgModule({
@@ -12,6 +13,6 @@ import { NgMasonryGridModule } from 'ng-masonry-grid'
     RouterModule,
     NgMasonryGridModule
   ],
-  declarations: [RoadmapComponent]
+  declarations: [RoadmapComponent, SearchRoadmapsComponent]
 })
 export class RoadmapModule { }

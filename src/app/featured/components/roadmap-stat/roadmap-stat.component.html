@@ -1,5 +1,5 @@
 <section class="roadmap_stats">
-  <div class="wrapper">
+  <div class="wrapper" *ngIf="Data; else nothing">
     <div class="log" *ngFor="let key of Object.keys(Data)">
       <h6 class="log-title"><i class="fa fa-code"></i> {{key | date:'d of MMMM y'}}</h6>
       <div class="log_body">
@@ -9,16 +9,16 @@
             <h6 *ngIf="log.type == 'user'"><b>{{log.name}}</b> was assigned</h6>
 
             <div class="child-log-footer">
-              <i class="fa fa-clock-o"></i>
-              {{log.updated_at}} <br>   
-              <i class="fa fa-user"></i>
-              <span *ngIf="log.type == 'checkpoint'">{{log.creator.name}}</span>
-              <span *ngIf="log.type == 'user'">{{log.name}}</span>
-              <span *ngIf="log.type == 'todo'">{{log.creatorName}}</span>
-
-            </div>
+              Created by
+                <b *ngIf="log.type == 'checkpoint'">{{log.creator.name}}</b>
+                <b *ngIf="log.type == 'user'">{{log.name}}</b>
+                <b *ngIf="log.type == 'todo'">{{log.creatorName}}</b>
+                on
+               {{log.updated_at}}  
+            </div> 
         </div>
       </div>
     </div>
   </div>
+  <ng-template #nothing><div class="wrapper center"><h5>Nothing founded</h5></div></ng-template>
 </section>

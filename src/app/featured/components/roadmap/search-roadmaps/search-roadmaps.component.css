@@ -3,7 +3,7 @@
     background-color: #ff4b53 !important;
     height: 4px !important;
 }
-section.roadmaps .card-title{
+section.search-roadmaps .card-title{
     margin: 0;
     padding: 0;
     background-color:transparent;
@@ -11,14 +11,14 @@ section.roadmaps .card-title{
     font-size: 24px !important;
     margin-bottom: 15px;
 }
-section.roadmaps header{
+section.search-roadmaps header{
     margin: -20px !important;
     height: 180px;
     padding: 40px;
     position: relative;
 }
 
-section.roadmaps header input{
+section.search-roadmaps header input{
    border: none;
    outline: none;
    height: 40px;
@@ -29,11 +29,11 @@ section.roadmaps header input{
    color: #696969ee;
    border-radius: 2px;
 }
-section.roadmaps header .row i{
+section.search-roadmaps header .row i{
     transform: translate(-40px, 12px);
     font-size: 16px;
 }
-section.roadmaps .card{
+section.search-roadmaps .card{
     padding-bottom: 0px;
     margin-bottom: 0 !important;
 
@@ -50,13 +50,9 @@ ul.tabs{
     margin-left: 40px;
     position: absolute;
     bottom: 0%;
-    left: 90px;
+    left: 0;
     width: 100%;
     background-color: #197bca;
-}
-ul.tabs a.active{
-    border-bottom: 4px solid #fff;
-    font-weight: bold;
 }
 .create-roadmap{
     position: absolute;
@@ -115,4 +111,8 @@ ul.tabs a.active{
     margin-right: 10px !important;
     cursor: pointer;
     font-size: 13px;
+}
+.not-found{
+    margin-top: 100px;
+    text-align: center;
 }

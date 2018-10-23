@@ -19,7 +19,11 @@ export class CheckpointService {
   unassign(roadmap_id,id) {
     return this.Http.delete(this.alias+'/'+roadmap_id+'/checkpoint/'+id+'/unassign',{});
   }
-
+  
+  force(roadmap_id,id) {
+    return this.Http.delete(this.alias+'/'+roadmap_id+'/checkpoint/'+id,{});
+  }
+  
   swap(roadmap_id,id) {
     return this.Http.post(this.alias+'/'+roadmap_id+'/checkpoint/'+id+'/swap',{});
   }
@@ -30,5 +34,9 @@ export class CheckpointService {
 
   updatePosition(roadmap_id, data) {
     return this.Http.post(this.alias+'/'+roadmap_id+'/checkpoint/position',data);
+  }
+
+  merge(roadmap_id, id) {
+    return this.Http.post(this.alias+'/'+roadmap_id+'/checkpoint/'+id+'/merge',{});
   }
 }

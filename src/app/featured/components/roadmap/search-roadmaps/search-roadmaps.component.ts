@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { RoadmapService } from '../../../core/services/roadmap.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { RoadmapService } from '../../../../core/services/roadmap.service';
 import { Masonry, MasonryGridItem } from 'ng-masonry-grid'; 
-import { CategoryService } from '../../../core/services/catgory.service';
-import { AuthService } from '../../../core/services/auth.service';
+import { CategoryService } from '../../../../core/services/catgory.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-search-roadmaps',
@@ -11,10 +11,15 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class SearchRoadmapsComponent implements OnInit {
 
-  SearchRoadmaps:any;
+  @Input() SearchRoadmaps:any;
+  @Output() loadmoreAction = new EventEmitter();
+  @Output() assignAction = new EventEmitter();
+
+
+
   Categories:any;
   _masonry: Masonry;
-  filters:any = {
+  @Input() filters:any = {
     name: null,
     category: null,
     offset: null
@@ -25,30 +30,7 @@ export class SearchRoadmapsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.RoadmapService.search().subscribe(roadmaps => {
-      this.SearchRoadmaps = roadmaps;
-    
-    });
-    this.CategoryService.all().subscribe(categories => {
-      let Response:any = categories;
-      this.Categories = Response.data;
-      console.log();
-    })
-  }
-
-  search(name, category) {
-
-   
-    if(name.length > 0 || category.length > 0) {
-      console.log(name);
-      this.filters.name = name;
-      this.filters.category = category;
-      this.RoadmapService.search(name, category).subscribe(roadmaps => {
-        this.SearchRoadmaps = roadmaps;
-        console.log(this.SearchRoadmaps);
-      })
-    };
-    
+  
   }
 
   onNgMasonryInit($event: Masonry) {
@@ -122,27 +104,15 @@ export class SearchRoadmapsComponent implements OnInit {
   }
   
   assign(id, index) {
-    this.RoadmapService.assignUserToRoadmap(id).subscribe(res => {
-      this.SearchRoadmaps[index]['assigned'] = true;
-    })
+    this.assignAction.emit({id, roadmap: this.SearchRoadmaps[index]});
   }
 
-  // reorder items to original position
-  // Note: Add masonry option:- horizontalOrder: true
-  reorderItems() {
-    if (this._masonry) {
-        this._masonry.reOrderItems();
-    }
-  }
 
   loadmore() {
-    this.RoadmapService.search(this.filters.name,this.filters.category, this.SearchRoadmaps.length).subscribe(res => {
-
-      let Roadmaps:any = res;
-      for(let item of Roadmaps)
-      {
-        this.addItems(item);    
-      } 
-    })
+    this.loadmoreAction.emit({
+      name: this.filters.name,
+      category: this.filters.category,
+      length:  this.SearchRoadmaps.length
+    });
   }
 }

@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
 
     this.id = this.AuthService.userData().id;
-
+    // console.log(this.AuthService.userData());
     if(this.visible) {
       this.className = '';
     } else {

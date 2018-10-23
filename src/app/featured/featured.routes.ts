@@ -13,7 +13,6 @@ import {AdminGuard} from './guards/admin.guard';
 import {SettingsComponent} from './components/settings/settings.component';
 import {RoadmapComponent} from './components/roadmap/roadmap.component';
 import { RoadmapPageComponent } from './components/roadmap-page/roadmap-page.component';
-import { SearchRoadmapsComponent } from './components/search-roadmaps/search-roadmaps.component';
 import { CreateRoadmapComponent } from './components/create-roadmap/create-roadmap.component';
 import { RoadmapStatComponent } from './components/roadmap-stat/roadmap-stat.component';
 
@@ -32,7 +31,6 @@ const Auth: Routes = [
   { path: 'settings', component:SettingsComponent, canActivate: [AuthGuard]},
   { path: 'roadmap', component: RoadmapComponent, canActivate: [AuthGuard]},
   { path: 'roadmaps/create', component: CreateRoadmapComponent, canActivate: [AuthGuard]},
-  { path: 'roadmaps/search', component: SearchRoadmapsComponent, canActivate: [AuthGuard]},
   { path: 'roadmap-stats/:id', component: RoadmapStatComponent, canActivate: [AuthGuard]},
   { path: 'roadmap/:roadmap_id', component:RoadmapPageComponent, canActivate: [AuthGuard]},
 ];
