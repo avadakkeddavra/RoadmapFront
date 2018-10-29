@@ -160,8 +160,8 @@ export class RoadmapPageComponent implements OnInit {
 
     this.TodoService.create(this.Roadmap.id, this.ActiveCheckpoint.id, form.value).subscribe(res => {
       let Response:any = res;
-      
-      this.Todos.push(Response.todo);
+      this.ActiveCheckpoint.todos.push(Response.todo);
+
     });
     this.closeModal();
   }
@@ -169,7 +169,9 @@ export class RoadmapPageComponent implements OnInit {
   createCheckpoint(form:NgForm) {
     this.CheckpointService.create(this.Roadmap.id, form.value).subscribe(checkpoint => {
       checkpoint['active'] = true;
-      
+      checkpoint['todos'] = [];
+      checkpoint['canEdit'] = true;
+      this.Todos = [];
       if(this.ActiveCheckpoint) {
         this.ActiveCheckpoint.active = false; 
       }
@@ -251,6 +253,7 @@ export class RoadmapPageComponent implements OnInit {
         }
      }
      this.Todos = todos;
+     this.ActiveCheckpoint.todos = todos;
     })
   }
 

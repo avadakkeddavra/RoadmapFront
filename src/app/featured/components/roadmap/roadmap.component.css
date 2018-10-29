@@ -36,8 +36,9 @@ section.roadmaps header .row i{
 section.roadmaps .card{
     padding-bottom: 0px;
     margin-bottom: 0 !important;
-
+    position: relative; 
 }
+
 a:first-child{
     cursor: pointer;
     margin-right: 0 !important;

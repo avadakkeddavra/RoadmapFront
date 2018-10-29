@@ -26,6 +26,7 @@
                     <b>Created by: </b>{{roadmap.Creator.name}}
                 </div>
               <ul>
+                <li *ngIf="roadmap.creator_id != User.id"><span class="badge teal">Forked</span></li>
                 <li><span class="badge blue">{{roadmap.skillsCategory.title}}</span></li>
                 <li>chekpoints <b>{{roadmap.checkpoints.length}}</b></li>
                 <li>users <b>{{roadmap.users.length}}</b></li>
