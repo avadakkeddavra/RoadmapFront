@@ -8,14 +8,16 @@
       </div>
     </div>
 
-    <ul class="navigation tabs blue" >
+    <ul class="navigation custom-tabs blue" >
         <li class="tab"><a [ngClass]="_toggleFlag ? 'active white-text': 'white-text'" (click)="toggleRoadmaps(true)">My Roadmaps</a></li>
         <li class="tab"><a [ngClass]="!_toggleFlag ? 'white-text results-tab active': 'white-text results-tab'" (click)="toggleRoadmaps(false)">Results</a></li>
     </ul>
     <a class="btn-floating btn-large waves-effect waves-light red create-roadmap" routerLink="/roadmaps/create"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large waves-effect waves-light teal generate-roadmap" (click)="generate()"><i class="material-icons">create_new_folder</i></a>
+
   </header>
   <div id="my" [ngClass]="_toggleFlag === true ? 'row' : 'row hide'">
-    <div class="col s8 offset-s1 roadmap-feed z-depth-2">
+    <div class="col s8 offset-s1 roadmap-feed z-depth-2" *ngIf="Roadmaps && Roadmaps.length > 0; else nothing">
       <div class="card z-depth-0" *ngFor="let roadmap of Roadmaps;let i = index">
         <div class="card-content">
             <p class="date">{{roadmap.created_at | date:'dd-MMMM'}}</p>
@@ -40,7 +42,7 @@
         </div>
       </div>
     </div>
-    <ng-template #nothing><h5 class="center">You haven't got any roadmaps</h5></ng-template>
+    <ng-template #nothing><h5 class="center" style="margin-top: 50px;">You haven't got any roadmaps</h5></ng-template>
   </div>
 
   <div id="results" [ngClass]="_toggleFlag === false ? 'row' : 'row hide'">

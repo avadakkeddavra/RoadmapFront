@@ -19,7 +19,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class RoadmapPageComponent implements OnInit {
 
   Checkpoints:any;
-  Todos:any = []; 
   Roadmap:any;
   modalActions = new EventEmitter<string|MaterializeAction>();
   searchAction = new EventEmitter<string|MaterializeAction>();
@@ -56,59 +55,62 @@ export class RoadmapPageComponent implements OnInit {
           if(this.Roadmap.creator_id !== userId) {
               this.Roadmap.forked = true;
           }
-
-          console.log(this.Roadmap);
-      })
-
-      this.SkillsService.getAllSkills().subscribe( skills => {
-          let Skills:any = skills;
-          console.log(skills);
-          for(let item of Skills) {
-            if(item.id == this.Roadmap.category_id) {
-              this.Skills.push(item);
-            }
-          }
-          console.log(this.Skills);
-      });
     
-      this.CheckpointService.discover(params.roadmap_id).subscribe(checkpoints => {
-        this.DiscoverCheckpoints = checkpoints;
+          this.SkillsService.getAllSkills().subscribe( skills => {
+            let Skills:any = skills;
+            console.log(skills);
+            for(let item of Skills) {
+              if(item.id == this.Roadmap.category_id) {
+                this.Skills.push(item);
+              }
+            }
+            console.log(this.Skills);
+        });
+      
+        this.CheckpointService.discover(params.roadmap_id).subscribe(checkpoints => {
+          this.DiscoverCheckpoints = checkpoints;
+        })
+  
+        
+  
+        this.UserService.getUserRoadmapCheckpoints(params.roadmap_id, userId).subscribe(checkpoints => {
+          this.Checkpoints = checkpoints;
+  
+          if(this.Checkpoints.length > 0) {
+            this.Checkpoints.map( (item) => {
+              if(this.AuthService.userData().id == item.creator_id) {
+                  item.canEdit = true
+              } else{
+                item.canEdit = false;
+              }
+            })
+            this.Checkpoints.sort(function(a, b){
+              let current = a.user_checkpoints.index_number;
+              let next = b.user_checkpoints.index_number;
+              if(current > next){
+                return 1;
+              } else if(current < next) {
+                return -1;
+              } else{
+                return 0;
+              }
+            })
+            console.log(this.Checkpoints);
+            this.Checkpoints[0].active = true;
+            this.ActiveCheckpoint = this.Checkpoints[0];
+          }
+  
+        }, error => {
+          this.Checkpoints = [];
+        });
+  
+      }, error => {
+        toast('This roadmap does not exist',2000);
+        this._Router.navigate(['roadmap']);
+        return;
       })
 
-      
-
-      this.UserService.getUserRoadmapCheckpoints(params.roadmap_id, userId).subscribe(checkpoints => {
-        this.Checkpoints = checkpoints;
-
-        if(this.Checkpoints.length > 0) {
-          this.Checkpoints.map( (item) => {
-            if(this.AuthService.userData().id == item.creator_id) {
-                item.canEdit = true
-            } else{
-              item.canEdit = false;
-            }
-          })
-          this.Checkpoints.sort(function(a, b){
-            let current = a.user_checkpoints.index_number;
-            let next = b.user_checkpoints.index_number;
-            if(current > next){
-              return 1;
-            } else if(current < next) {
-              return -1;
-            } else{
-              return 0;
-            }
-          })
-          console.log(this.Checkpoints);
-          this.Checkpoints[0].active = true;
-          this.ActiveCheckpoint = this.Checkpoints[0];
-          this.Todos = this.Checkpoints[0].todos;
-        }
-
-      }, error => {
-        this.Checkpoints = [];
-      });
-
+     
     })
 
   }
@@ -117,7 +119,6 @@ export class RoadmapPageComponent implements OnInit {
     for(let checkpoint of this.Checkpoints) {
       if(checkpoint.id == id) {
           checkpoint.active = true;
-          this.Todos = checkpoint.todos;
           this.ActiveCheckpoint = {};
           this.ActiveCheckpoint = checkpoint;
       } else {
@@ -171,7 +172,6 @@ export class RoadmapPageComponent implements OnInit {
       checkpoint['active'] = true;
       checkpoint['todos'] = [];
       checkpoint['canEdit'] = true;
-      this.Todos = [];
       if(this.ActiveCheckpoint) {
         this.ActiveCheckpoint.active = false; 
       }
@@ -247,12 +247,11 @@ export class RoadmapPageComponent implements OnInit {
   deleteTodo(id, index) {
     this.TodoService.unassign(id).subscribe(res => {
       let todos = [];
-      for(let todo of this.Todos) {
+      for(let todo of this.ActiveCheckpoint.todos) {
         if(todo.id != id) {
           todos.push(todo);
         }
      }
-     this.Todos = todos;
      this.ActiveCheckpoint.todos = todos;
     })
   }

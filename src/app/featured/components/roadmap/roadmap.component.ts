@@ -106,18 +106,16 @@ export class RoadmapComponent implements OnInit {
   }
 
   addItems(item) {  
-    this._masonry.setAddStatus('add'); // set status to 'add'
     this.Roadmaps.push(item);
   }
   
   async assign($event) {
     console.log($event)
-    await this.RoadmapService.assignUserToRoadmap($event.id).subscribe(res => {
+    await this.RoadmapService.assignUserToRoadmap($event.id).subscribe( async res => {
+      
+      await this.Roadmaps.push($event.roadmap);
       this.toggleRoadmaps(true);
-      this.Roadmaps.push($event.roadmap);
-      this.addItems($event.roadmap);
-     
-      console.log(this.Roadmaps);
+      toast('Assigned', 2000);
     });
     
   }

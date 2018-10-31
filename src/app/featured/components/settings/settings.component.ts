@@ -93,6 +93,7 @@ export class SettingsComponent implements OnInit {
 
     this.UserService.setUserSettings(this.user.id, body).subscribe(res => {
       this.settings = res;
+      
       toast('Setting was updated successfully', 1000);
     })
   }

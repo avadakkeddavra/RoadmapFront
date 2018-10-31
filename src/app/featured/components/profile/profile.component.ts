@@ -103,7 +103,7 @@ export class ProfileComponent implements OnInit {
 
   onSkillUpdate($event) {
 
-    if($event.mark < 7) {
+    if($event.mark < 7 && $event.aim < 7) {
       return;
     }
   
@@ -127,7 +127,7 @@ export class ProfileComponent implements OnInit {
       if(skill.mark >= 7) {
         TopSkills.push(skill);
       }
-
+      
     }
 
     if(!flag && $event.mark >= 7) {
@@ -135,9 +135,41 @@ export class ProfileComponent implements OnInit {
     }
 
     this.TopSkills = [];
-
     this.TopSkills = TopSkills;
-    console.log(this.TopSkills);
+
+    let AimSkills = [];
+    flag = false;
+
+    for( let i in this.AimSkills) {
+      let skill = this.AimSkills[i];
+
+      if(skill.name === $event.skill.title) {
+        skill = {};
+        skill = $event;
+        flag = true;
+      }
+
+      if(skill.disposition >= 7) {
+        AimSkills.push(skill);
+      }
+    }
+
+    if(!flag && $event.disposition >= 7) {
+      AimSkills.push($event);
+    }
+    AimSkills.sort( function(a, b) {
+      if(a.disposition < b.disposition) {
+        return 1;
+      } else if(a.disposition > b.disposition) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+
+    this.AimSkills = [];
+    this.AimSkills = AimSkills.splice(0,15);
+    console.log(this.AimSkills.length)
   }
 
   sort(event) {

@@ -140,7 +140,7 @@
         </div>
         <div class="card-body">
           <ul class="collapsible" materialize="collapsible" data-collapsible="expandable" dragula="Todos" [(dragulaModel)]="Todos">
-            <li *ngFor="let todo of Todos; let i = index">
+            <li *ngFor="let todo of ActiveCheckpoint.todos; let i = index">
               <div class="collapsible-header">
                   <input type="checkbox" *ngIf="Assigned" id="todo{{todo.id}}" checked="{{todo.users[0].user_todos.checked == 1 ? 'checked': ''}}" (change)="updateTodo(todo)">
                   <label for="todo{{todo.id}}" *ngIf="todo.creator_id !== AuthService.userData().id">{{todo.name}} <i class="material-icons">lock_outline</i></label>
