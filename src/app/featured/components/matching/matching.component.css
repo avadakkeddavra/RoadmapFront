@@ -1,0 +1,57 @@
+#showSkillsList{
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  line-height: 30px;
+  text-align: left;
+  margin-bottom: 0px;
+  transition: 0.3s;
+  box-shadow: none;
+}
+#showSkillsList i {
+  line-height: 0px !important;
+}
+#showSkillsList.active{
+  display: block;
+  height: 40px;
+  padding-left: 20px;
+  width: 100%;
+}
+.skills-field{
+  margin-bottom: 20px;
+}
+.input-field{
+  position: relative;
+}
+#skillsList{
+  height: 400px;
+  overflow-y: scroll;
+  position: absolute;
+  z-index: 1000000;
+  transform: translateY(200px);
+  visibility: hidden;
+  opacity: 0;
+  width: 100%;
+  transition: 0.1s;
+}
+#skillsList.show{
+  transform: translateY(30px);
+  visibility: visible;
+  opacity: 1;
+}
+#skillsList .collapsible-body{
+  margin: 0;
+  background-color: #fafafa;
+  padding: 0px;
+}
+#skillsList .collapsible-body .input-field{
+  margin-top: 0 !important;
+  padding-bottom: 10px;
+  background-color: #fff;
+  padding: 0px 30px;
+  border-bottom: 1px solid #eee;
+}
+#skillsList .collapsible-body .input-field label{
+  margin-bottom: 20px;
+  display: block;
+}

@@ -11,11 +11,14 @@ import {AmChart, AmChartsService} from '@amcharts/amcharts3-angular';
 })
 export class MatchingComponent implements OnInit {
 
-  filters:any;
-  Skills:any;
-  Users:any;
-  Compare:any;
-  AmChart:AmChart;
+  filters: any;
+  Skills: any;
+  Users: any;
+  Compare: any;
+  AmChart: AmChart;
+  _skillsShow: Boolean = false;
+  choosedSkills: any = {};
+  _object: nay = Object;
 
   constructor(
     private UsersService: UserService,
@@ -36,17 +39,17 @@ export class MatchingComponent implements OnInit {
 
   applyFilters(form: NgForm) {
     let body = form.value;
-    console.log(form.value);
-    let length = Object.keys(form.value.skills).length;
-    console.log(length);
+    let length = Object.keys(this.choosedSkills).length;
+
+    body.skills = Object.keys(this.choosedSkills);
+
     this.SkillsService.compare(body).subscribe( response => {
       this.Compare = response;
       console.log(this.Compare);
       for(let key in this.Compare.compare)
       {
         let user = this.Compare.compare[key];
-
-        this.Compare.compare[key].persent = Math.round((100*Object.keys(user.compareSkills).length)/length);
+        this.Compare.compare[key].persent = Math.round((100 * Object.keys(user.compareSkills).length) / length);
       }
     })
   }
@@ -74,6 +77,17 @@ export class MatchingComponent implements OnInit {
     console.log(data);
 
     this.initChart(data, this.Compare.compare[i].name);
+  }
+  showSkillsList(): void {
+    this._skillsShow = !this._skillsShow;
+  }
+
+  chooseSkill(event, id, title = ''): void {
+    if (this.choosedSkills[id]) {
+      delete this.choosedSkills[id];
+    } else {
+      this.choosedSkills[id] = title;
+    }
   }
 
   private initChart(data, user) {

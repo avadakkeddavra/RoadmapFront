@@ -36,7 +36,7 @@ export class ProfileComponent implements OnInit {
         this.Categories = res;
         this.Categories.unshift({
           title: 'All',
-          id:null,
+          id: null,
           level: {
             color: 'grey'
           }
@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
           toast('This page unavaliable',2000);
           this.router.navigate(['']);
         }
-        if(this.User.data.user_setting && this.User.data.user_setting.bg_image) {
+        if (this.User.data.user_setting && this.User.data.user_setting.bg_image) {
           this.User.data.user_setting.bg_image = 'http://localhost:3010/assets/images/'+this.User.data.user_setting.bg_image;
         } else {
           this.User.data.user_setting = {};
@@ -59,22 +59,31 @@ export class ProfileComponent implements OnInit {
         }
         let Skills = this.User.data.userSkills;
 
-        for(let skill of Skills) {
-          if(skill.skill.title.length > 46) {
+        for (let skill of Skills) {
+          if (skill.skill.title.length > 46) {
             skill.skill.title = skill.skill.title.substr(0,43)+'...';
           }
-          if(Number(skill.mark) >= 7 && this.TopSkills.length < 15) {
+          if (Number(skill.mark) >= 7 && this.TopSkills.length < 15) {
             skill.name = skill.skill.title;
             this.TopSkills.push(skill);
           }
 
-          if(Number(skill.disposition) >= 7 ) {
+          if (Number(skill.disposition) >= 7 ) {
             skill.name = skill.skill.title;
             this.AimSkills.push(skill);
           }
-          
+          this.AimSkills.sort(function (a, b) {
+            if (a.disposition < b.disposition) {
+              return 1;
+            } else if (a.disposition > b.disposition) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          this.AimSkills = this.AimSkills.splice(0, 15);
         }
-        console.log(this.AimSkills)
+        console.log(this.AimSkills);
         this.TopSkills.sort(function(a, b) {
           if (a.mark > b.mark ) {
             return -1;
@@ -95,10 +104,8 @@ export class ProfileComponent implements OnInit {
       this.UserService.getUserSkills(params.id, 1).subscribe( response => {
         this.Skills = response;
 
-      })
-    })
-
-    
+      });
+    });
   }
 
   onSkillUpdate($event) {
@@ -106,16 +113,15 @@ export class ProfileComponent implements OnInit {
     if($event.mark < 7 && $event.aim < 7) {
       return;
     }
-  
-    let index = $event.index;
+    const index = $event.index;
     delete $event.index;
     this.Skills[index] = $event;
 
-    let TopSkills = [];
+    const TopSkills = [];
 
     let flag = false;
 
-    for(let i in this.TopSkills) {
+    for (let i in this.TopSkills) {
       let skill = this.TopSkills[i];
 
       if(skill.name === $event.skill.title) {
@@ -124,20 +130,19 @@ export class ProfileComponent implements OnInit {
         flag = true;
       }
 
-      if(skill.mark >= 7) {
+      if (skill.mark >= 7) {
         TopSkills.push(skill);
       }
-      
     }
 
-    if(!flag && $event.mark >= 7) {
+    if (!flag && $event.mark >= 7) {
       TopSkills.push($event);
     }
 
     this.TopSkills = [];
     this.TopSkills = TopSkills;
 
-    let AimSkills = [];
+    const AimSkills = [];
     flag = false;
 
     for( let i in this.AimSkills) {

@@ -16,13 +16,35 @@
               <label for="">User</label>
             </div>
             <div class="input-field">
-              <select multiple name="skills" ngModel materialize="material_select" *ngIf="Skills && Skills.length > 0">
-                <option value="" selected disabled>Not</option>
-                <optgroup *ngFor="let category of Skills" label="{{category.title}}">
-                  <option *ngFor="let skill of category.skills" value="{{skill.id}}">{{skill.title}}</option>
-                </optgroup>
-              </select>
-              <label for="">Skills</label>
+
+                  <ul class="collapsible" id="skillsList" [ngClass]="_skillsShow ? 'collapsible show': 'collapsible'">
+                    <li *ngFor="let category of Skills">
+                      <div class="collapsible-header"><i class="material-icons">filter_drama</i>{{category.title}}</div>
+                      <div class="collapsible-body">
+                            <div class="input-field"  *ngFor="let skill of category.skills">
+                               <input type="checkbox" id="{{skill.id}}" (change)="chooseSkill($event, skill.id, skill.title)" />
+                               <label for="{{skill.id}}" style="z-index: 100000;pointer-events: visible;">{{skill.title}}</label>
+                            </div>
+                      </div>
+                    </li>
+                  </ul>
+            </div>
+            <div class="input-field skills-field" *ngIf="choosedSkills">
+              <a [ngClass]="_skillsShow ? 'btn white-text active teal': 'btn white grey-text'"
+                 id="showSkillsList"
+                 (click)="showSkillsList()"
+              >
+                <i class="close material-icons" *ngIf="!_skillsShow;else text">add</i>
+                <ng-template #text>choose skill</ng-template>
+              </a>
+              <div class="chip" *ngIf="_object.keys(choosedSkills).length == 0">
+                Choose your skills
+                <i class="close material-icons" >close</i>
+              </div>
+              <div class="chip" *ngFor="let id of _object.keys(choosedSkills)">
+                {{choosedSkills[id]}}
+                <i class="close material-icons" (click)="chooseSkill( $event, id)">close</i>
+              </div>
             </div>
             <button type="button" class="btn blue" (click)="applyFilters(matchForm)">Apply</button>
           </form>
