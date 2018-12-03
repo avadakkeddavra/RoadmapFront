@@ -17,7 +17,7 @@
             </div>
             <div class="input-field">
 
-                  <ul class="collapsible" id="skillsList" [ngClass]="_skillsShow ? 'collapsible show': 'collapsible'">
+                  <ul class="collapsible" materialize="collapsible" id="skillsList" [ngClass]="_skillsShow ? 'collapsible show': 'collapsible'">
                     <li *ngFor="let category of Skills">
                       <div class="collapsible-header"><i class="material-icons">filter_drama</i>{{category.title}}</div>
                       <div class="collapsible-body">
@@ -43,7 +43,7 @@
               </div>
               <div class="chip" *ngFor="let id of _object.keys(choosedSkills)">
                 {{choosedSkills[id]}}
-                <i class="close material-icons" (click)="chooseSkill( $event, id)">close</i>
+                <i class="close material-icons" (click)="chooseSkill ( $event, id)">close</i>
               </div>
             </div>
             <button type="button" class="btn blue" (click)="applyFilters(matchForm)">Apply</button>

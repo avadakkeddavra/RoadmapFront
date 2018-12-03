@@ -18,6 +18,13 @@
                     <option *ngFor="let cat of Categories" value="{{cat.id}}">{{cat.title}}</option>
                   </select>
                 </div>
+              <div class="input-field">
+                <select name="type" ngModel materialize="material_select">
+                  <option value="">Choose roadmap type</option>
+                  <option value="0">Default</option>
+                  <option value="1">Mentroship</option>
+                </select>
+              </div>
                 <div class="input-field">
                     <editor 
                     ngModel

@@ -17,8 +17,8 @@ export class MatchingComponent implements OnInit {
   Compare: any;
   AmChart: AmChart;
   _skillsShow: Boolean = false;
+  _object: any = Object;
   choosedSkills: any = {};
-  _object: nay = Object;
 
   constructor(
     private UsersService: UserService,
@@ -28,8 +28,7 @@ export class MatchingComponent implements OnInit {
 
   ngOnInit() {
     this.SkillsService.getAllSkills().subscribe( skills => {
-      let Response:any = skills;
-      this.Skills = Response;
+      this.Skills = skills;
     });
 
     this.UsersService.getAllUsers().subscribe( users => {
@@ -92,7 +91,7 @@ export class MatchingComponent implements OnInit {
 
   private initChart(data, user) {
 
-    this.AmChart = this.AmChartService.makeChart("chartdiv",{
+    this.AmChart = this.AmChartService.makeChart( 'chartdiv', {
       "type": "radar",
       "theme": "light",
       "dataProvider": data,

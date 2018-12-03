@@ -20,7 +20,7 @@
       </div>
       <div class="input-field">
           <editor name="description" ngModel apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
-          " [init]="{plugins: 'link'}"></editor> 
+          " [init]="{plugins: 'link'}"></editor>
       </div>
       <div class="input-field">
         <button class="btn" (click)="createTodo(createTodoForm)">Create</button>
@@ -50,7 +50,7 @@
           <textarea class="materialize-textarea" name="description" ngModel></textarea>
           <label for="">Description</label>
         </div>
-        
+
         <div class="input-field">
           <button class="btn" (click)="createCheckpoint(createCheckpointForm)">Create</button>
         </div>
@@ -63,28 +63,30 @@
 
 <div id="modal2" class="modal modal-search bottom-sheet" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="searchAction">
     <div class="modal-content">
-     
+
       <div class="modal-header blue white-text input-field row">
           <h5 class="col s1">Discover checkpoints</h5>
           <div class="col s8">
               <input id="icon_prefix" class="browser-default z-depth-2" type="text" #search (input)="searchCheckpoints(search.value)">
           </div>
       </div>
-      <div class="modal-body"> 
+      <div class="modal-body">
         <div class="discover z-depth-1" *ngFor="let discover of DiscoverCheckpoints; let i = index">
           <div class="discover-title">
             <span class="left">{{discover.name}}</span>
             <span class="badge green left">{{discover.skill.title}}</span>
             <div *ngIf="discover.roadmap.id === Roadmap.id">
                 <button class="blue btn right btn-small" *ngIf="!discover.assigned" (click)="assignCheckpoint(discover.id)">Add</button>
-                <button class="red btn right btn-small" *ngIf="discover.assigned" (click)="unAssignCheckpoint(discover.id, i)">Remove</button>
+                <button class="red btn right btn-small" *ngIf="discover.assigned && !Roadmap.mentor" (click)="unAssignCheckpoint(discover.id, i)">Remove</button>
+                <button class="red btn right btn-small" *ngIf="discover.assigned && Roadmap.mentor" (click)="forceDeleteCheckpoint(discover.id, i)">Remove</button>
             </div>
             <div  *ngIf="discover.roadmap.id != Roadmap.id">
                 <button class="teal btn right btn-small" *ngIf="!discover.assigned" (click)="merge(discover.id, i)">Merge</button>
-                <button class="red btn right btn-small" *ngIf="discover.assigned" (click)="unAssignCheckpoint(discover.id, i)">Remove</button>
+                <button class="red btn right btn-small" *ngIf="discover.assigned && !Roadmap.mentor" (click)="unAssignCheckpoint(discover.id, i)">Remove</button>
+                <button class="red btn right btn-small" *ngIf="discover.assigned && Roadmap.mentor" (click)="forceDeleteCheckpoint(discover.id, i)">Remove</button>
             </div>
             <div class="clearfix"></div>
-          </div> 
+          </div>
           <div class="discover-body" >
             {{ discover.description }}
             <ul class="info">
@@ -106,64 +108,107 @@
           <div class="card-title">Description</div>
           <div class="card-body" >
               <editor name="description" ngModel="{{Roadmap.description}}" #desc apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
-              " [init]="{plugins: 'link',inline:true}" (onFocusOut)="change(desc)"></editor> 
+              " [init]="{plugins: 'link',inline:true}" (onFocusOut)="change(desc)"></editor>
           </div>
         </div>
   </div>
-  
+
   <div class="row">
     <div class="col m12">
-      <div class="checkpoint_actions" *ngIf="Assigned">
+      <div class="checkpoint_actions" *ngIf="Assigned || Roadmap.mentor">
         <button class="btn teal lighten-2" id="add_checkpoint" (click)="openCreateCheckpointModal()">Add</button>
         <button class="btn purple lighten-2" id="add_checkpoint" (click)="openSearchModal()">Discover</button>
       </div>
-      
 
-      <div class="checkpoints" *ngIf="Checkpoints && Checkpoints.length > 0"> 
-          <ul dragula="Checkpoints" [(dragulaModel)]="Checkpoints" (dragulaModelChange)="dropDown($event)">
+
+      <div class="checkpoints" *ngIf="Checkpoints && Checkpoints.length > 0">
+
+          <ul dragula="Checkpoints" *ngIf="!Roadmap.mentor" [(dragulaModel)]="Checkpoints" (dragulaModelChange)="dropDown($event)">
               <li *ngFor="let checkpoint of Checkpoints; let i = index">
-                <div class="chip" (click)="toggleTodos(checkpoint.id)" ngClass="{{checkpoint.active ? 'active' : ''}}">{{checkpoint.name}}</div>
+                <div class="chip white-text {{checkpoint.user_checkpoints.checked == 1 ? 'green' : 'grey'}}" (click)="toggleTodos(checkpoint.id)" ngClass="{{checkpoint.active ? 'active' : ''}}">{{checkpoint.name}}</div>
                 <div class="dropdown_actions" *ngIf="Assigned">
-                  <i class="fa fa-pencil orange lighten-2" *ngIf="checkpoint.canEdit"></i>
-                  <i class="fa fa-trash red lighten-2" *ngIf="checkpoint.canEdit" (click)="showDeleteChoose(checkpoint.id, i)"></i>
-                  <i class="fa fa-trash red lighten-2" *ngIf="!checkpoint.canEdit" (click)="unAssignCheckpoint(checkpoint.id, i)"></i>
+                  <i class="fa fa-pencil orange lighten-2" *ngIf="checkpoint.canEdit && checkpoint.creator_id"></i>
+                  <i class="fa fa-trash red lighten-2" *ngIf="checkpoint.canEdit && checkpoint.creator_id" (click)="showDeleteChoose(checkpoint.id, i)"></i>
+                  <i class="fa fa-trash red lighten-2" *ngIf="!checkpoint.canEdit && checkpoint.creator_id" (click)="unAssignCheckpoint(checkpoint.id, i)"></i>
                 </div>
               </li>
           </ul>
+        <ul dragula="Checkpoints" *ngIf="Roadmap.mentor" [(dragulaModel)]="Checkpoints" (dragulaModelChange)="dropDown($event)">
+          <li *ngFor="let checkpoint of Checkpoints; let i = index">
+            <div class="chip white-text grey" (click)="toggleTodos(checkpoint.id)" ngClass="{{checkpoint.active ? 'active' : ''}}">{{checkpoint.name}}</div>
+            <div class="dropdown_actions" *ngIf="Assigned || Roadmap.mentor">
+              <i class="fa fa-pencil orange lighten-2" ></i>
+              <i class="fa fa-trash red lighten-2" (click)="showDeleteChoose(checkpoint.id, i)"></i>
+            </div>
+          </li>
+        </ul>
+
       </div>
       <div class="card" *ngIf="ActiveCheckpoint">
         <div class="card-title">
           <span>Todos for <b class="chip white-text blue">{{ActiveCheckpoint.skill.title}}</b></span>
           <ul class="actions right">
-              <li><i class="fa fa-plus" *ngIf="Assigned" (click)="openModal()"></i></li>
+              <li><i class="fa fa-plus" *ngIf="Assigned || Roadmap.mentor" (click)="openModal()"></i></li>
           </ul>
         </div>
         <div class="card-body">
-          <ul class="collapsible" materialize="collapsible" data-collapsible="expandable" dragula="Todos" [(dragulaModel)]="Todos">
+          <ul class="collapsible" *ngIf="!Roadmap.mentor" materialize="collapsible" data-collapsible="expandable" dragula="Todos" [(dragulaModel)]="ActiveCheckpoint.todos">
             <li *ngFor="let todo of ActiveCheckpoint.todos; let i = index">
               <div class="collapsible-header">
                   <input type="checkbox" *ngIf="Assigned" id="todo{{todo.id}}" checked="{{todo.users[0].user_todos.checked == 1 ? 'checked': ''}}" (change)="updateTodo(todo)">
-                  <label for="todo{{todo.id}}" *ngIf="todo.creator_id !== AuthService.userData().id">{{todo.name}} <i class="material-icons">lock_outline</i></label>
-                  <label for="todo{{todo.id}}"  *ngIf="todo.creator_id === AuthService.userData().id">
-                      <editor *ngIf="Assigned; else taskLable" name="name" ngModel="{{todo.name}}" #name apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
+                  <label for="todo{{todo.id}}" *ngIf="todo.creator_id !== User.id">{{todo.name}} <i class="material-icons">lock_outline</i></label>
+                  <label for="todo{{todo.id}}"  *ngIf="todo.creator_id === User.id">
+                      <editor *ngIf="Assigned || Roadmap.mentor; else taskLable" name="name" ngModel="{{todo.name}}" #name apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
                       " [init]="{plugins: 'link',inline:true}" (onChange)="updateContentTodo('name',name.element.innerHTML, todo.id)"></editor>
                       <ng-template #taskLable> <span [innerHtml]="todo.name"></span> </ng-template>
                   </label>
+                <span class="badge green white-text" *ngIf="Roadmap.Mentor && Roadmap.Mentor.id == todo.creator_id; else badge">default</span>
+                <ng-template #badge><span class="badge orange white-text" >{{todo.creator.name}}</span></ng-template>
 
-                  
-                  <i class="fa fa-trash-o" *ngIf="Assigned" (click)="deleteTodo(todo.id, i)"></i>
-              </div>      
+                  <i class="fa fa-trash-o" *ngIf="Roadmap.Mentor && Assigned && todo.creator_id != Roadmap.Mentor.id" (click)="deleteTodo(todo.id, i)"></i>
+              </div>
               <div class="collapsible-body">
                   <div class='todo-body' #desc >
-                    <div *ngIf="todo.creator_id === AuthService.userData().id; else taskDescription">
-                        <editor *ngIf="Assigned; else taskDescription" name="description" ngModel="{{todo.description}}" #desc apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
-                        " [init]="{plugins: 'link',inline:true}" (onChange)="updateContentTodo('description',desc.element.innerHTML, todo.id)"></editor> 
+                    <div *ngIf="todo.creator_id === User.id; else taskDescription">
+                        <editor *ngIf="Assigned || Roadmap.mentor; else taskDescription" name="description" ngModel="{{todo.description}}" #desc apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
+                        " [init]="{plugins: 'link',inline:true}" (onChange)="updateContentTodo('description',desc.element.innerHTML, todo.id)"></editor>
                     </div>
                     <ng-template #taskDescription><div [innerHtml]="todo.description"></div></ng-template>
                   </div>
               </div>
             </li>
           </ul>
+
+
+
+
+
+          <ul class="collapsible" *ngIf="Roadmap.mentor" materialize="collapsible" data-collapsible="expandable" dragula="Todos" [(dragulaModel)]="ActiveCheckpoint.todos">
+            <li *ngFor="let todo of ActiveCheckpoint.todos; let i = index">
+              <div class="collapsible-header">
+                <label for="todo{{todo.id}}">
+
+                  <editor name="name" ngModel="{{todo.name}}" #name apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
+                      " [init]="{plugins: 'link',inline:true}" (onChange)="updateContentTodo('name',name.element.innerHTML, todo.id)"></editor>
+
+                </label>
+                <span class="badge green white-text" *ngIf="Roadmap.mentor && Roadmap.Mentor.id == todo.creator_id; else badge">default</span>
+                <ng-template #badge><span class="badge green white-text" >{{todo.creator.name}}</span></ng-template>
+                <i class="fa fa-trash-o" (click)="forceDeleteTodo(todo.id, i)"></i>
+              </div>
+
+              <div class="collapsible-body">
+                <div class='todo-body' #desc >
+                  <div >
+                    <editor name="description" ngModel="{{todo.description}}" #desc apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
+                        " [init]="{plugins: 'link',inline:true}" (onChange)="updateContentTodo('description',desc.element.innerHTML, todo.id)"></editor>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+
         </div>
       </div>
     </div>

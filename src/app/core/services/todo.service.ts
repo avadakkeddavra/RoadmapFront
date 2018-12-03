@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-
+import 'rxjs/Rx';
 @Injectable()
 export class TodoService {
 
@@ -20,11 +20,15 @@ export class TodoService {
     return this.Http.delete(`http://localhost:4200/api/todo/${id}/unassign`,{});
   }
 
-  check(id,data) {
-    return this.Http.put('http://localhost:4200/api/todo/'+id+'/check',data);
+  check(roadmap, checkpoint, id, data) {
+    return this.Http.put(this.alias+'/'+roadmap+'/checkpoint/'+checkpoint+'/todo/'+id+'/check',data);
   }
 
   update(roadmap,checkpoint, id, data) {
     return this.Http.put(this.alias+'/'+roadmap+'/checkpoint/'+checkpoint+'/todo/'+id,data);
+  }
+
+  forceDeleteTodo(roadmap_id, id) {
+    return this.Http.delete(this.alias+'/'+roadmap_id+'/todo/'+id);
   }
 }

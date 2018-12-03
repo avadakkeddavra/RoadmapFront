@@ -76,8 +76,17 @@ label i {
 ul.actions li {
     line-height: 40px !important;
 }
+.checkpoints ul li{
+  position: relative;
+  z-index: 2;
+}
+label{
+  display: inline-block !important;
+  font-size: 16px;
+}
 .checkpoints ul li:hover .dropdown_actions{
     opacity: 1;
+    z-index: 100000;
     visibility: visible;
     top:100%;
 }
@@ -93,6 +102,7 @@ ul.actions li {
     top:130%;
     text-align: left;
     opacity: 0;
+    z-index: 100000000000000;
     visibility: hidden;
     transition: 0.3s all;
 }
@@ -113,9 +123,12 @@ ul.actions li {
 .checkpoints ul li .dropdown_actions i:hover{
   opacity: 1 !important;
 }
-.checkpoints ul li .chip.active{
-    background-color: #525252;
+.checkpoints ul li .chip.active:not(.green){
+    background-color: #525252 !important;
     color: #ffffff;
+}
+.checkpoints ul li .chip.active.green{
+  background-color: #2f8232 !important;
 }
 .checkpoints ul li:hover .chip{
     background-color: #525252;
