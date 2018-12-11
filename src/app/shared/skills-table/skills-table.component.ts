@@ -16,9 +16,12 @@ export class SkillsTableComponent implements OnInit {
   @Input() user;
   @Output() backHandle = new EventEmitter();
   @Output() sort = new EventEmitter();
-  currentCat:number;
+  @Output() search = new EventEmitter();
+  currentCat: number;
+  showSearch: Boolean = false;
+  searchString: string;
   constructor(
-    private UserService:UserService,
+    private UserService: UserService,
     private SkillsService: SkillsService
   ) { }
 
@@ -26,8 +29,7 @@ export class SkillsTableComponent implements OnInit {
   }
 
   nextPage($event) {
-    console.log($event);
-    this.UserService.getUserSkills($event.userId, $event.page, this.currentCat).subscribe( response => {
+    this.UserService.getUserSkills($event.userId, $event.page, this.currentCat, this.searchString).subscribe( response => {
       this.skills = response;
     });
   }
@@ -60,7 +62,8 @@ export class SkillsTableComponent implements OnInit {
     this.sort.emit({
       by: 'category',
       id: id,
-      userId: this.user.id
+      userId: this.user.id,
+      searchValue: this.searchString
     });
     let $this = this;
     this.categories.map( function(cat, i) {

@@ -20,3 +20,9 @@ i.fa {
   cursor: pointer;
   color: #4e4e4e;
 }
+.actions li{
+  display: inline-block;
+}
+.actions li input{
+  height: auto !important;
+}

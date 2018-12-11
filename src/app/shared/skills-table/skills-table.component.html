@@ -1,22 +1,24 @@
 <ng-content></ng-content>
-<div class="card" *ngIf="skills && skills.skills.length > 0">
+<div class="card">
   <div class="card-title">
     <span>Skills marks for</span>
     <b *ngIf="user">{{user.name}}</b>
     <ul class="actions right">
+      <li *ngIf="showSearch">
+        <input type="text" placeholder="Search" #searchinput [(ngModel)]="searchString" (input)="search.emit(searchinput.value)">
+      </li>
       <li>
-        <i class="material-icons" id="filters">filter_list</i>
+        <i class="material-icons" (click)="showSearch = !showSearch">search</i>
       </li>
     </ul>
 
   </div>
   <div class="card-body">
     <div class="filters" *ngIf="categories" style="padding: 15px 0px;">
-      <!--<div class="chip" style="font-size: 12px; height: 25px; line-height: 25px;" (click)="sortByCategory(null)">All</div>-->
 
       <div class="chip" style="font-size: 12px; height: 25px; line-height: 25px;" *ngFor="let cat of categories" ngClass="{{ !cat.highlight && cat.level ? cat.level.color+' lighten-2' : cat.level.color+' lighten-2 highlight'}}" (click)="sortByCategory(cat.id)">{{cat.title}}</div>
     </div>
-    <table *ngIf="skills && skills.skills.length > 0">
+    <table >
       <thead>
       <tr>
         <th>Skill name <i class="fa fa-sort-amount-desc" (click)="sortSkills('title', $event)"></i></th>
@@ -25,9 +27,9 @@
         <th>Comment </th>
       </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="skills && skills.skills.length > 0; else nothing">
       <tr *ngFor="let skill of skills.skills; let i = index" ngClass="{{skill.hide ? 'hidden' : ''}}">
-        <td><a routerLink="/user/{{skill.userSkills[0].userId}}/logs/{{skill.id}}">{{skill.title}}</a></td> 
+        <td><a routerLink="/user/{{skill.userSkills[0].userId}}/logs/{{skill.id}}">{{skill.title}}</a></td>
         <td><input type="text" value="{{skill.userSkills[0].mark}}" (change)="updateSkill('mark',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId,i)"></td>
         <td><input type="text" value="{{skill.userSkills[0].disposition}}" (change)="updateSkill('disposition',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId)"></td>
         <td><input type="text" value="{{skill.userSkills[0].comment}}" (change)="updateSkill('comment',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId)"></td>
@@ -35,6 +37,9 @@
       </tbody>
     </table>
   </div>
-
+  <ng-template #nothing>
+    <div>    <h5 class="center">Nothing founded</h5>
+    </div>
+  </ng-template>
   <app-pagination  *ngIf="skills && skills.skills.length > 0" [Data]="{total:skills.total, userId:skills.skills[0].userSkills[0].userId}" (next)="nextPage($event)"></app-pagination>
 </div>

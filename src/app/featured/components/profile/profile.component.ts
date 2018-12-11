@@ -13,16 +13,15 @@ import {CategoryService} from '../../../core/services/catgory.service';
 })
 export class ProfileComponent implements OnInit {
 
-  User:any;
-  Skills:any;
-  TopSkills:Array<any> = [];
+  User: any;
+  Skills: any;
   AimSkills: Array<any> = [];
-  Matched:Array<any> = [];
+  Matched: Array<any> = [];
   Categories: any = [];
   constructor(
     private router: Router,
     private UserService: UserService,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private AuthService: AuthService,
     private CategorySevice: CategoryService
   ) { }
@@ -45,9 +44,8 @@ export class ProfileComponent implements OnInit {
       });
 
       this.UserService.getUserStat(params.id).subscribe( response => {
-        this.TopSkills = [];
         this.User = response;
-        if( this.User.data.role === 1) {
+        if (this.User.data.role === 1) {
           toast('This page unavaliable',2000);
           this.router.navigate(['']);
         }
@@ -62,10 +60,6 @@ export class ProfileComponent implements OnInit {
         for (let skill of Skills) {
           if (skill.skill.title.length > 46) {
             skill.skill.title = skill.skill.title.substr(0,43)+'...';
-          }
-          if (Number(skill.mark) >= 7 && this.TopSkills.length < 15) {
-            skill.name = skill.skill.title;
-            this.TopSkills.push(skill);
           }
 
           if (Number(skill.disposition) >= 7 ) {
@@ -83,103 +77,70 @@ export class ProfileComponent implements OnInit {
           });
           this.AimSkills = this.AimSkills.splice(0, 15);
         }
-        console.log(this.AimSkills);
-        this.TopSkills.sort(function(a, b) {
-          if (a.mark > b.mark ) {
-            return -1;
-          }
-          if (a.mark < b.mark) {
-            return 1;
-          }
-          return 0;
-        });
       });
 
       this.UserService.getMatched(params.id).subscribe( response => {
-        let Response:any = response;
+        let Response: any = response;
         this.Matched = Response[0].compare;
 
       });
 
       this.UserService.getUserSkills(params.id, 1).subscribe( response => {
         this.Skills = response;
-
       });
     });
   }
 
   onSkillUpdate($event) {
-
-    if($event.mark < 7 && $event.aim < 7) {
+    console.log($event);
+    if ($event.mark < 7 && $event.aim < 7) {
       return;
     }
     const index = $event.index;
     delete $event.index;
     this.Skills[index] = $event;
 
-    const TopSkills = [];
-
+    const AimSkills = [];
     let flag = false;
 
-    for (let i in this.TopSkills) {
-      let skill = this.TopSkills[i];
-
-      if(skill.name === $event.skill.title) {
-        skill = {};
-        skill = $event;
-        flag = true;
-      }
-
-      if (skill.mark >= 7) {
-        TopSkills.push(skill);
-      }
-    }
-
-    if (!flag && $event.mark >= 7) {
-      TopSkills.push($event);
-    }
-
-    this.TopSkills = [];
-    this.TopSkills = TopSkills;
-
-    const AimSkills = [];
-    flag = false;
-
-    for( let i in this.AimSkills) {
+    for ( let i in this.AimSkills) {
       let skill = this.AimSkills[i];
 
-      if(skill.name === $event.skill.title) {
+      if (skill.name === $event.skill.title) {
         skill = {};
         skill = $event;
         flag = true;
       }
 
-      if(skill.disposition >= 7) {
+      if (skill.disposition >= 7) {
         AimSkills.push(skill);
       }
     }
 
-    if(!flag && $event.disposition >= 7) {
+    if (!flag && $event.disposition >= 7) {
       AimSkills.push($event);
+      AimSkills.sort( function(a, b) {
+        if (a.disposition < b.disposition) {
+          return 1;
+        } else if (a.disposition > b.disposition) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      this.AimSkills = AimSkills.splice(0,15);
     }
-    AimSkills.sort( function(a, b) {
-      if(a.disposition < b.disposition) {
-        return 1;
-      } else if(a.disposition > b.disposition) {
-        return -1;
-      } else {
-        return 0;
-      }
-    })
-
-    this.AimSkills = [];
-    this.AimSkills = AimSkills.splice(0,15);
-    console.log(this.AimSkills.length)
   }
 
   sort(event) {
-    this.UserService.getUserSkills(event.userId, 1, event.id).subscribe( response => {
-      this.Skills = response
-    })
+    this.UserService.getUserSkills(event.userId, 1, event.id, event.searchValue).subscribe( response => {
+      this.Skills = response;
+    });
+  }
+
+  onSearch(event) {
+    this.UserService.getUserSkills(this.User.data.id, 1, null, event).subscribe((data: any) => {
+      this.Skills = data;
+    });
   }
 }

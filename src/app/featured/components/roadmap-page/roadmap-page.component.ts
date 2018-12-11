@@ -18,13 +18,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class RoadmapPageComponent implements OnInit {
 
-  Checkpoints:any;
-  Roadmap:any;
+  Checkpoints: any;
+  Roadmap: any;
   modalActions = new EventEmitter<string|MaterializeAction>();
   searchAction = new EventEmitter<string|MaterializeAction>();
   createCheckpointAction = new EventEmitter<string|MaterializeAction>();
   BooleanAction = new EventEmitter<string|MaterializeAction>();
-  Deleting:any;
+  Deleting: any;
 
   Assigned:Boolean = false;
   ActiveCheckpoint:any;
@@ -188,7 +188,7 @@ export class RoadmapPageComponent implements OnInit {
         let Res: any = checkpoint;
         this.Checkpoints.push(Res.checkpoint);
         this.searchAction.emit({action:"modal",params:['close']})
-    })
+    });
   }
 
   showDeleteChoose(id, index) {
@@ -276,7 +276,7 @@ export class RoadmapPageComponent implements OnInit {
 
   dropDown($event) {
     let userCheckpoints = [];
-    for(let i in this.Checkpoints) {
+    for (let i in this.Checkpoints) {
       let check = this.Checkpoints[i];
 
       this.Checkpoints[i].user_checkpoints.index_number = Number(i)+1;
@@ -285,13 +285,13 @@ export class RoadmapPageComponent implements OnInit {
     }
     this.CheckpointService.updatePosition(this.Roadmap.id,{checkpoints:userCheckpoints}).subscribe(res => {
       console.log(res);
-    })
+    });
   }
 
   searchCheckpoints(value) {
       this.CheckpointService.discover(this.Roadmap.id,value).subscribe(res => {
         this.DiscoverCheckpoints = res;
-      })
+      });
   }
 
 

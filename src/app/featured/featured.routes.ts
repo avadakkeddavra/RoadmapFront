@@ -17,22 +17,22 @@ import { CreateRoadmapComponent } from './components/create-roadmap/create-roadm
 import { RoadmapStatComponent } from './components/roadmap-stat/roadmap-stat.component';
 
 const routes: Routes = [
-  { path: '', component:DashboardComponent },
-  { path: 'profile/:id', component:ProfileComponent },
-  { path: 'user/:user_id/logs/:id', component:LogsComponent },
-  { path: 'logs', component:SkillLogsComponent },
-  { path: 'match', component: MatchingComponent },
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'user/:user_id/logs/:id', component: LogsComponent, canActivate: [AuthGuard] },
+  { path: 'logs', component: SkillLogsComponent, canActivate: [AuthGuard] },
+  { path: 'match', component: MatchingComponent, canActivate: [AuthGuard] },
 ];
 
 const Auth: Routes = [
-  { path: '', children: routes, canActivate:[AuthGuard] },
-  { path: 'login', component: LoginComponent, canActivate:[GuestGuard] },
-  { path: 'skills-categories', component:SkillsCategoriesComponent, canActivate: [AdminGuard]},
-  { path: 'settings', component:SettingsComponent, canActivate: [AuthGuard]},
+  { path: '', children: routes, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
+  { path: 'skills-categories', component: SkillsCategoriesComponent, canActivate: [AdminGuard]},
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
   { path: 'roadmap', component: RoadmapComponent, canActivate: [AuthGuard]},
   { path: 'roadmaps/create', component: CreateRoadmapComponent, canActivate: [AuthGuard]},
   { path: 'roadmap-stats/:id', component: RoadmapStatComponent, canActivate: [AuthGuard]},
-  { path: 'roadmap/:roadmap_id', component:RoadmapPageComponent, canActivate: [AuthGuard]},
+  { path: 'roadmap/:roadmap_id', component: RoadmapPageComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

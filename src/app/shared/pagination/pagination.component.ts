@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnChanges {
 
   @Input() Data:any;
   @Output() next = new EventEmitter();
@@ -20,7 +20,7 @@ export class PaginationComponent implements OnInit {
       this.links.push({
         page: (i+1),
         highlighted: false
-      })
+      });
     }
     if(this.links.length > 0) {
       this.links[0].highlighted = true;

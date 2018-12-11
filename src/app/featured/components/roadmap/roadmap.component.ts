@@ -77,8 +77,8 @@ export class RoadmapComponent implements OnInit {
   }
 
   generate() {
-    this.UserSerice.generateRoadmaps().subscribe(res => {
-      this.Roadmaps = res;
+    this.UserSerice.generateRoadmaps().subscribe((res: any) => {
+      this.Roadmaps = res.roadmaps.concat(res.mentor_roadmaps);
     }, error => {
       console.log(error.error);
       toast(error.error.message);

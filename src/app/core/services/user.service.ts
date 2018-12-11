@@ -16,9 +16,9 @@ export class UserService {
     return this.Http.get('http://localhost:4200/api/users');
   }
 
-  getUserSkills(id, page, catId = null) {
+  getUserSkills(id, page, catId = null, name = '') {
 
-    return this.Http.get('http://localhost:4200/api/user/'+id+'/skillslist?page='+page+'&id='+catId)
+    return this.Http.get('http://localhost:4200/api/user/'+id+'/skillslist?page='+page+'&id='+catId+'&name='+name);
 
   }
 

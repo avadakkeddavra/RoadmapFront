@@ -12,11 +12,11 @@ import {toast} from 'angular2-materialize';
 })
 export class DashboardComponent implements OnInit {
 
-  Users:any;
-  UserSkills:any;
-  Categories:Array<any> = [];
-  ChoosedUser:any;
-  Stats:any;
+  Users: any;
+  UserSkills: any;
+  Categories: Array<any> = [];
+  ChoosedUser: any;
+  Stats: any;
   constructor(
     private UserService: UserService,
     private CategoryService: CategoryService,
@@ -52,57 +52,31 @@ export class DashboardComponent implements OnInit {
   async getUserSkills(user) {
     this.ChoosedUser = user;
     await this.CategoryService.getWithUserStats(user.id).subscribe( response => {
-      let Response:any = response;
+      let Response: any = response;
       this.Categories = Response;
       this.Categories.unshift({
         title: 'All',
-        id:null,
+        id: null,
         level: {
           color: 'grey'
         }
       });
       console.log(this.Categories);
     });
-    this.UserService.getUserSkills(user.id,1).subscribe(response => {
+    this.UserService.getUserSkills(user.id, 1).subscribe(response => {
       this.UserSkills = response;
-      console.log(response)
-
-    })
-  }
-
-  createSkill(form:NgForm) {
-
-    const body = {
-      title: form.controls.name.value,
-      description: form.controls.description.value,
-      category_id: form.controls.category_id.value,
-    };
-
-    this.SkillsService.create(body).subscribe( response => {
-      let skill:any = response;
-      toast(skill.data.title+' skill was created')
-    }, error => {
-        console.log(error);
     });
   }
 
-  createCategory(form:NgForm)
-  {
-
-    const body = {
-      title: form.controls.name.value,
-      description: form.controls.description.value,
-    };
-
-    this.CategoryService.create(body).subscribe( response => {
-      let category:any = response;
-      toast(category.data.title+' category was created')
-    })
+  sort(event) {
+    this.UserService.getUserSkills(event.userId, 1, event.id, event.searchValue).subscribe( response => {
+      this.UserSkills = response;
+    });
   }
 
-  sort(event) {
-    this.UserService.getUserSkills(event.userId, 1, event.id).subscribe( response => {
-      this.UserSkills = response
-    })
+  search(value) {
+    this.UserService.getUserSkills(this.ChoosedUser.id, 1, null, value).subscribe( response => {
+      this.UserSkills = response;
+    });
   }
 }

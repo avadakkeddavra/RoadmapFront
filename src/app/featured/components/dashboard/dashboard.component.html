@@ -2,8 +2,8 @@
 <app-users-table [users]="Users" (showSkills)="getUserSkills($event)"></app-users-table>
 <section class="skills">
   <div class="row">
-    <div class="col m12">
-      <app-skills-table-shared [skills]="UserSkills" [categories]="Categories" [user]="ChoosedUser" (sort)="sort($event)"></app-skills-table-shared>
+    <div class="col m12" *ngIf="ChoosedUser">
+      <app-skills-table-shared [skills]="UserSkills" [categories]="Categories" [user]="ChoosedUser" (sort)="sort($event)" (search)="search($event)"></app-skills-table-shared>
     </div>
   </div>
 </section>

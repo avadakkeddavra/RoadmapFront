@@ -7,12 +7,14 @@ import {RouterModule} from '@angular/router';
 import {SkillsTableComponent} from './skills-table/skills-table.component';
 import { ErrorsComponentComponent } from './errors-component/errors-component.component';
 import {MaterializeModule} from 'angular2-materialize';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    MaterializeModule
+    MaterializeModule,
+    FormsModule
   ],
   declarations: [NavbarComponent, SidebarComponent, PaginationComponent, SkillsTableComponent, ErrorsComponentComponent],
   exports: [NavbarComponent, SidebarComponent, PaginationComponent, SkillsTableComponent, ErrorsComponentComponent]

@@ -117,7 +117,7 @@
     <div class="col m12">
       <div class="checkpoint_actions" *ngIf="Assigned || Roadmap.mentor">
         <button class="btn teal lighten-2" id="add_checkpoint" (click)="openCreateCheckpointModal()">Add</button>
-        <button class="btn purple lighten-2" id="add_checkpoint" (click)="openSearchModal()">Discover</button>
+        <button class="btn purple lighten-2" id="add_checkpoint" *ngIf="Roadmap.mentor === true || !Roadmap.Mentor" (click)="openSearchModal()">Discover</button>
       </div>
 
 
@@ -155,7 +155,7 @@
           <ul class="collapsible" *ngIf="!Roadmap.mentor" materialize="collapsible" data-collapsible="expandable" dragula="Todos" [(dragulaModel)]="ActiveCheckpoint.todos">
             <li *ngFor="let todo of ActiveCheckpoint.todos; let i = index">
               <div class="collapsible-header">
-                  <input type="checkbox" *ngIf="Assigned" id="todo{{todo.id}}" checked="{{todo.users[0].user_todos.checked == 1 ? 'checked': ''}}" (change)="updateTodo(todo)">
+                  <input type="checkbox" *ngIf="Assigned" id="todo{{todo.id}}" checked="{{todo.todos_usertodos && todo.todos_usertodos.checked == 1 ? 'checked': ''}}" (change)="updateTodo(todo)">
                   <label for="todo{{todo.id}}" *ngIf="todo.creator_id !== User.id">{{todo.name}} <i class="material-icons">lock_outline</i></label>
                   <label for="todo{{todo.id}}"  *ngIf="todo.creator_id === User.id">
                       <editor *ngIf="Assigned || Roadmap.mentor; else taskLable" name="name" ngModel="{{todo.name}}" #name apiKey="dc8l1mhcepaismnop9h1rg7arqnzqbh7kc30qulvjus8ra18
