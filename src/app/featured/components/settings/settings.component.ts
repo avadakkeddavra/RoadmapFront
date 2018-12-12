@@ -28,13 +28,13 @@ export class SettingsComponent implements OnInit {
   async ngOnInit() {
     await this.UserService.getUser(this.AuthSettings.userData().id).subscribe((user: any) => {
       this.user = user.data;
-      this.user.avatar = `${environment.api}/${user.data.avatar}`;
+      this.user.avatar = `${environment.api}/assets/images/${user.data.avatar}`;
       this.imageChangedEvent = this.user.avatar;
       this.UserService.getUsersSettings(this.user.id).subscribe((res: any) => {
         this.settings = res;
 
         if (this.settings.bg_image) {
-          this.settings.bg_image = environment.api + '/' + this.settings.bg_image;
+          this.settings.bg_image = environment.api + '/assets/images/' + this.settings.bg_image;
         } else {
           this.settings.bg_image = './../../../../assets/images/bg.jpg';
         }
