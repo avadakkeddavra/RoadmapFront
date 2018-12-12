@@ -1,11 +1,9 @@
-<div class="table-footer" *ngIf="links && links.length != 0">
+<div class="table-footer">
   <div class="right">
     <ul class="pagination-custom">
-      <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-      <li *ngFor="let item of links">
-        <a (click)="getData($event,item, item.page)" ngClass="{{ item.highlighted ? 'current' : ''}}">{{item.page}}</a>
-      </li>
-      <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
+      <li><span>{{(CurrentPage*10-10) === 0 ? 1 : CurrentPage*10-10 }}-{{ CurrentPage === PagesCount ? Total : CurrentPage*10}} of {{Total}}</span></li>
+      <li class="cursor" [ngClass]=" CurrentPage === 1 ? 'disabled' : ''" (click)="getData( CurrentPage - 1 )"><a><i class="fa fa-angle-left"></i></a></li>
+      <li  class="cursor" (click)="getData( CurrentPage + 1 )"><a><i class="fa fa-angle-right"></i></a></li>
     </ul>
   </div>
   <div class="clearfix"></div>

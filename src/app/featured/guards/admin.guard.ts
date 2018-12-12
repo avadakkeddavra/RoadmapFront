@@ -14,18 +14,17 @@ export class AdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    let token = localStorage.getItem('token');
-    let jwt = require('jsonwebtoken');
+    const token = localStorage.getItem('token');
+    const jwt = require('jsonwebtoken');
 
-    if(token) {
+    if (token) {
 
-      let user = jwt.decode(token);
+      const user = jwt.decode(token);
 
-      if(user.role == 1) {
+      if (user.role === 1) {
         return true;
       } else {
-        this.router.navigate(['']);
-        toast('Only for admins', 2000);
+        this.router.navigate(['/profile', user.id]);
         return false;
       }
 

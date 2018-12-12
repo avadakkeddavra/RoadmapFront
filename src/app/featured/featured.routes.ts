@@ -17,7 +17,7 @@ import { CreateRoadmapComponent } from './components/create-roadmap/create-roadm
 import { RoadmapStatComponent } from './components/roadmap-stat/roadmap-stat.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: '', component: DashboardComponent, canActivate: [AdminGuard] },
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'user/:user_id/logs/:id', component: LogsComponent, canActivate: [AuthGuard] },
   { path: 'logs', component: SkillLogsComponent, canActivate: [AuthGuard] },

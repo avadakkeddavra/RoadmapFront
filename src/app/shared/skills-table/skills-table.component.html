@@ -5,7 +5,7 @@
     <b *ngIf="user">{{user.name}}</b>
     <ul class="actions right">
       <li *ngIf="showSearch">
-        <input type="text" placeholder="Search" #searchinput [(ngModel)]="searchString" (input)="search.emit(searchinput.value)">
+        <input type="text" placeholder="Search" #searchinput [(ngModel)]="searchString" (input)="search.emit({category: SortedCategory, title: searchinput.value})">
       </li>
       <li>
         <i class="material-icons" (click)="showSearch = !showSearch">search</i>
@@ -18,7 +18,7 @@
 
       <div class="chip" style="font-size: 12px; height: 25px; line-height: 25px;" *ngFor="let cat of categories" ngClass="{{ !cat.highlight && cat.level ? cat.level.color+' lighten-2' : cat.level.color+' lighten-2 highlight'}}" (click)="sortByCategory(cat.id)">{{cat.title}}</div>
     </div>
-    <table >
+    <table [ngClass]="!Editable ? 'not-editable' : ''">
       <thead>
       <tr>
         <th>Skill name <i class="fa fa-sort-amount-desc" (click)="sortSkills('title', $event)"></i></th>
@@ -30,9 +30,12 @@
       <tbody *ngIf="skills && skills.skills.length > 0; else nothing">
       <tr *ngFor="let skill of skills.skills; let i = index" ngClass="{{skill.hide ? 'hidden' : ''}}">
         <td><a routerLink="/user/{{skill.userSkills[0].userId}}/logs/{{skill.id}}">{{skill.title}}</a></td>
-        <td><input type="text" value="{{skill.userSkills[0].mark}}" (change)="updateSkill('mark',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId,i)"></td>
-        <td><input type="text" value="{{skill.userSkills[0].disposition}}" (change)="updateSkill('disposition',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId)"></td>
-        <td><input type="text" value="{{skill.userSkills[0].comment}}" (change)="updateSkill('comment',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId)"></td>
+        <td *ngIf="Editable"><input type="text" value="{{skill.userSkills[0].mark}}" (change)="updateSkill('mark',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId,i)"></td>
+        <td *ngIf="Editable"><input type="text" value="{{skill.userSkills[0].disposition}}" (change)="updateSkill('disposition',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId)"></td>
+        <td *ngIf="Editable"><input type="text" value="{{skill.userSkills[0].comment}}" (change)="updateSkill('comment',$event, skill.userSkills[0].userId, skill.userSkills[0].skillId)"></td>
+        <td *ngIf="!Editable">{{skill.userSkills[0].mark}}</td>
+        <td *ngIf="!Editable">{{skill.userSkills[0].disposition}}</td>
+        <td *ngIf="!Editable">{{skill.userSkills[0].comment}}</td>
       </tr>
       </tbody>
     </table>

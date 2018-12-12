@@ -4,6 +4,9 @@ table td, table th{
 table th{
   padding: 15px 15px !important;
 }
+table.not-editable td, table.not-editable th {
+  padding: 15px !important;
+}
 .chip {
   cursor: pointer;
   transition: 0.3s all;

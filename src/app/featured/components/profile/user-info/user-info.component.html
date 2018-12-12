@@ -16,11 +16,11 @@
             <div class="name">Total mark</div>
           </div>
           <div class="col m4 stat">
-            <div class="value">3+</div>
+            <div class="value">{{user.user_setting.dev_years ? user.user_setting.dev_years : '1'}}</div>
             <div class="name">Developemet years</div>
           </div>
           <div class="col m4 stat">
-            <div class="value">10</div>
+            <div class="value">{{user.user_setting.projects_completed ? user.user_setting.projects_completed : '0'}}</div>
             <div class="name">Projects completed</div>
           </div>
         </div>

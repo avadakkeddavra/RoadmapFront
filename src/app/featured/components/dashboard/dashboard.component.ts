@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
     this.UserService.getAllUsers().subscribe( response => {
       this.Users = response;
-      for(let user of this.Users) {
+      for (let user of this.Users) {
         user.status = {};
         if (user.userSkills[0].marks >= 960) {
           user.status.color = 'green';
@@ -74,8 +74,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  search(value) {
-    this.UserService.getUserSkills(this.ChoosedUser.id, 1, null, value).subscribe( response => {
+  search(event) {
+    if (!event.category) {
+      event.category = null;
+    }
+    this.UserService.getUserSkills(this.ChoosedUser.id, 1, event.category, event.title).subscribe( response => {
       this.UserSkills = response;
     });
   }

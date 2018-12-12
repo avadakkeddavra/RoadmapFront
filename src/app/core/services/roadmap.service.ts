@@ -1,27 +1,24 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {environment} from 'environments/environment';
 
 @Injectable()
 export class RoadmapService {
 
-  alias:string = 'http://localhost:4200/api/roadmap';
+  alias = `${environment.api}/api/roadmap`;
 
   constructor(private Http: HttpClient) { }
 
-  getAllRoadmaps() {
-    return this.Http.get(this.alias);
-  }
-
   getSingleRoadmap(id) {
-    return this.Http.get(this.alias+'/'+id);
+    return this.Http.get(this.alias + '/' + id);
   }
 
   assignUserToRoadmap(id) {
-    return this.Http.post(this.alias+`/${id}/assign`, {});
+    return this.Http.post(this.alias + `/${id}/assign`, {});
   }
 
   unassignUserToRoadmap(id) {
-    return this.Http.delete(this.alias+`/${id}/unassign`,{});
+    return this.Http.delete(this.alias + `/${id}/unassign`, {});
   }
 
   createRoadmap(data) {
@@ -31,11 +28,11 @@ export class RoadmapService {
 
     let params = '';
 
-    if(name) {
+    if (name) {
       params += `name=${name}`;
     }
-  
-    if(category) {
+
+    if (category) {
       params += `&category=${category}`;
     }
 
@@ -43,7 +40,7 @@ export class RoadmapService {
       params += `&offset=${offset}`;
     }
 
-    return this.Http.get(this.alias+`/search?${params}`);
+    return this.Http.get(this.alias + `/search?${params}`);
   }
-
 }
+

@@ -5,3 +5,17 @@ a{
 a.current{
   background-color: #505050;
 }
+.cursor a > i{
+  font-size: 18px;
+}
+.cursor.disabled a {
+  pointer-events: none;
+
+}
+.cursor.disabled a > i {
+  color: #bebebe;
+}
+li span {
+  font-size: 14px;
+  color: #989898;
+}

@@ -55,11 +55,11 @@ export class ProfileComponent implements OnInit {
           this.User.data.user_setting = {};
           this.User.data.user_setting.bg_image = './../../../../../assets/images/bg.jpg';
         }
-        let Skills = this.User.data.userSkills;
+        const Skills = this.User.data.userSkills;
 
-        for (let skill of Skills) {
+        for (const skill of Skills) {
           if (skill.skill.title.length > 46) {
-            skill.skill.title = skill.skill.title.substr(0,43)+'...';
+            skill.skill.title = skill.skill.title.substr(0,43) + '...';
           }
 
           if (Number(skill.disposition) >= 7 ) {
@@ -75,8 +75,8 @@ export class ProfileComponent implements OnInit {
               return 0;
             }
           });
-          this.AimSkills = this.AimSkills.splice(0, 15);
         }
+        this.AimSkills = this.AimSkills.splice(0, 15);
       });
 
       this.UserService.getMatched(params.id).subscribe( response => {
@@ -139,7 +139,10 @@ export class ProfileComponent implements OnInit {
   }
 
   onSearch(event) {
-    this.UserService.getUserSkills(this.User.data.id, 1, null, event).subscribe((data: any) => {
+    if (!event.category) {
+      event.category = null;
+    }
+    this.UserService.getUserSkills(this.User.data.id, 1, event.category, event.title).subscribe((data: any) => {
       this.Skills = data;
     });
   }

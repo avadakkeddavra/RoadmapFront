@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {UserService} from '../../core/services/user.service';
 import {SkillsService} from '../../core/services/skills.service';
 import {toast} from 'angular2-materialize';
+import {AuthService} from '../../core/services/auth.service';
 
 
 @Component({
@@ -9,7 +10,7 @@ import {toast} from 'angular2-materialize';
   templateUrl: './skills-table.component.html',
   styleUrls: ['./skills-table.component.css']
 })
-export class SkillsTableComponent implements OnInit {
+export class SkillsTableComponent implements OnInit, OnChanges {
 
   @Input() skills;
   @Input() categories;
@@ -20,13 +21,22 @@ export class SkillsTableComponent implements OnInit {
   currentCat: number;
   showSearch: Boolean = false;
   searchString: string;
+  SortedCategory: number;
+  Editable: boolean;
   constructor(
     private UserService: UserService,
-    private SkillsService: SkillsService
+    private SkillsService: SkillsService,
+    private authService: AuthService
   ) { }
 
-  ngOnInit() {
+  ngOnChanges() {
+    if (this.user.id === this.authService.userData().id) {
+      this.Editable = true;
+    } else {
+      this.Editable = false;
+    }
   }
+  ngOnInit() {}
 
   nextPage($event) {
     this.UserService.getUserSkills($event.userId, $event.page, this.currentCat, this.searchString).subscribe( response => {
@@ -44,7 +54,7 @@ export class SkillsTableComponent implements OnInit {
       item.target.value = 10;
     }
     if(item.target.value < 1) {
-      item.target.value = 1
+      item.target.value = 1;
     }
     body[field] = item.target.value;
 
@@ -59,6 +69,7 @@ export class SkillsTableComponent implements OnInit {
   }
 
   sortByCategory(id) {
+    this.SortedCategory = id;
     this.sort.emit({
       by: 'category',
       id: id,
