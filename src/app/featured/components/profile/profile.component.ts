@@ -5,6 +5,7 @@ import {SkillsService} from '../../../core/services/skills.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {toast} from 'angular2-materialize';
 import {CategoryService} from '../../../core/services/catgory.service';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -50,7 +51,7 @@ export class ProfileComponent implements OnInit {
           this.router.navigate(['']);
         }
         if (this.User.data.user_setting && this.User.data.user_setting.bg_image) {
-          this.User.data.user_setting.bg_image = 'http://localhost:3010/assets/images/'+this.User.data.user_setting.bg_image;
+          this.User.data.user_setting.bg_image = environment.api + '/assets/images/' + this.User.data.user_setting.bg_image;
         } else {
           this.User.data.user_setting = {};
           this.User.data.user_setting.bg_image = './../../../../../assets/images/bg.jpg';

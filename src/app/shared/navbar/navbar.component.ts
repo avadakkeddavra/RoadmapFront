@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from '../../core/services/auth.service';
 import {Router} from '@angular/router';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,8 @@ import {Router} from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   sideBarStatus = true;
-  user:any;
+  user: any;
+  store = environment.api + '/assets/images';
   @Output() sideBarVisible = new EventEmitter();
 
   constructor(
@@ -19,7 +21,7 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = this.AuthService.userData()
+    this.user = this.AuthService.userData();
   }
 
   toggleSidebar() {

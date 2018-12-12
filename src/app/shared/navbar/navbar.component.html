@@ -4,7 +4,7 @@
     <i class="fa fa-bars" id="sidebarToggle" (click)="toggleSidebar()"></i>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li class="user-info">
-        <img src="http://localhost:3010/assets/images/{{user.avatar}}" alt="">
+        <img src="{{store}}/{{user.avatar}}" alt="">
         <div class="user-data">
           <p>{{user.name}}</p>
           <span>{{user.email}}</span>

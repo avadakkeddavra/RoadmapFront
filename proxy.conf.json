@@ -3,5 +3,10 @@
     "target": "http://localhost:3010/",
     "secure": false,
     "logLevel": "debug"
+  },
+  "/assets": {
+    "target": "http://localhost:3010/",
+    "secure": false,
+    "logLevel": "debug"
   }
 }

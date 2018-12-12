@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../../../core/services/auth.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-user-info',
@@ -8,7 +9,8 @@ import {AuthService} from '../../../../core/services/auth.service';
 })
 export class UserInfoComponent implements OnInit {
 
-  @Input() user:any;
+  @Input() user: any;
+  env = environment.api;
   constructor(public AuthService: AuthService) { }
 
   ngOnInit() {

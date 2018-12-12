@@ -4,7 +4,7 @@
   </div>
   <div class="user-info-body">
     <div class="row">
-      <img src="{{user.avatar ? 'http://localhost:3010/assets/images/'+user.avatar : './../../../../../assets/images/user.png'}}" alt="" class="user-image blue">
+      <img src="{{user.avatar ? env + '/assets/images/'+user.avatar : './../../../../../assets/images/user.png'}}" alt="" class="user-image blue">
       <div class="col m4 user-personal">
         <h4 class="name">{{user.name}}</h4>
         <span class="position">{{user.email}}</span>
