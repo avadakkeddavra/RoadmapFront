@@ -9,17 +9,17 @@ import {AuthService} from '../../core/services/auth.service';
 export class SidebarComponent implements OnInit {
 
   @Input() visible;
-  className:string;
-  id:number;
+  className: string;
+  User;
   constructor(
     private AuthService: AuthService
   ) { }
 
   ngOnInit() {
 
-    this.id = this.AuthService.userData().id;
+    this.User = this.AuthService.userData();
     // console.log(this.AuthService.userData());
-    if(this.visible) {
+    if (this.visible) {
       this.className = '';
     } else {
       this.className = 'collapsed';
