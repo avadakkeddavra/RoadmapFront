@@ -4,7 +4,7 @@
 </section>
 <section class="statistics">
   <div class="row">
-    <div class="col m4 top-skills">
+    <div class="col l4 m12 top-skills">
       <div class="card">
         <div class="card-title purple lighten-2 white-text">
           Aim skill chart
@@ -12,7 +12,7 @@
         <app-user-chart *ngIf="AimSkills.length > 0" [(skills)]="AimSkills"></app-user-chart>
       </div>
     </div>
-    <div class="col m8">
+    <div class="col l8 m12">
       <app-skills-table-shared *ngIf="Skills && User" [skills]="Skills" [categories]="Categories" [user]="User.data" (sort)="sort($event)" (backHandle)="onSkillUpdate($event)" (search)="onSearch($event)"></app-skills-table-shared>
     </div>
   </div>

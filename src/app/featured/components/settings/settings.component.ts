@@ -31,9 +31,9 @@ export class SettingsComponent implements OnInit {
       this.user.avatar = `${environment.api}/assets/images/${user.data.avatar}`;
       this.imageChangedEvent = this.user.avatar;
       this.UserService.getUsersSettings(this.user.id).subscribe((res: any) => {
-        this.settings = res;
+        this.settings = res ? res : {};
 
-        if (this.settings.bg_image) {
+        if (this.settings && this.settings.bg_image) {
           this.settings.bg_image = environment.api + '/assets/images/' + this.settings.bg_image;
         } else {
           this.settings.bg_image = './../../../../assets/images/bg.jpg';

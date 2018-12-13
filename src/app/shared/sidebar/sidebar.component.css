@@ -8,3 +8,21 @@
 .highlighted i {
   line-height: 30px;
 }
+.collapsed .sidebar-header{
+  padding: 0px 10px;
+}
+.collapsed .sidebar-header img {
+  left: 50%;
+  margin: 15px -17.5px;
+}
+li a i{
+  float: none !important;
+}
+
+li a span{
+  transform: translateY(-5px);
+  display: inline-block;
+}
+.collapsed li a span {
+  display: none;
+}

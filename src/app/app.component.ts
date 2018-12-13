@@ -8,10 +8,8 @@ import {AuthService} from './core/services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  sideBarVisability = true;
-  constructor(public AuthService: AuthService) {
-
-  }
+  sideBarVisability = false;
+  constructor(public AuthService: AuthService) {}
   sideBarToggle($event) {
     this.sideBarVisability = $event;
     console.log($event);

@@ -10,7 +10,7 @@ import {environment} from '../../../environments/environment';
 })
 export class NavbarComponent implements OnInit {
 
-  sideBarStatus = true;
+  sideBarStatus = false;
   user: any;
   store = environment.api + '/assets/images';
   @Output() sideBarVisible = new EventEmitter();
