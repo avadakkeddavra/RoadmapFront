@@ -30,7 +30,8 @@ export class SkillsTableComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges() {
-    if (this.user.id === this.authService.userData().id) {
+    const currUser = this.authService.userData();
+    if (this.user.id === this.authService.userData().id || currUser.role === 1) {
       this.Editable = true;
     } else {
       this.Editable = false;

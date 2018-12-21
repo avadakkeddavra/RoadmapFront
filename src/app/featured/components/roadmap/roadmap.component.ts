@@ -19,7 +19,7 @@ export class RoadmapComponent implements OnInit {
     offset: null
   };
   SearchRoadmaps: any = [];
-  Roadmaps: any;
+  Roadmaps: any = [];
   User: any;
   _toggleFlag: boolean = true;
 
@@ -35,16 +35,19 @@ export class RoadmapComponent implements OnInit {
     this._masonry = $event;
   }
 
-  async ngOnInit() {
+  ngOnInit() {
 
-    this.User = await this.AuthService.userData();
+    this.User = this.AuthService.userData();
 
     this.UserSerice.getUserRoadmaps(this.User.id).subscribe((roadmaps: any) => {
-     this.Roadmaps = roadmaps.roadmaps;
-     for (let mentor of roadmaps.mentor_roadmaps) {
-       mentor.mentor = true;
-       this.Roadmaps.push(mentor);
-     }
+      roadmaps.mentor_roadmaps.map((item) => {
+        item.mentor = true;
+        this.Roadmaps.push(item);
+      });
+      roadmaps.roadmaps.map((item) => {
+        item.mentor = false;
+        this.Roadmaps.push(item);
+      });
      console.log(this.Roadmaps);
     });
 
@@ -55,20 +58,18 @@ export class RoadmapComponent implements OnInit {
   }
 
   focusOnSearch() {
-      // Create our event (with options)
-      var evt = new MouseEvent('click', {
+      const evt = new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
         view: window
       });
-      // If cancelled, don't dispatch our event
-      var canceled = !document.querySelector('a.results-tab').dispatchEvent(evt);
+      const canceled = !document.querySelector('a.results-tab').dispatchEvent(evt);
   }
-  unassign(id, index) {
+  unassign(id) {
     this.RoadmapService.unassignUserToRoadmap(id).subscribe(res => {
-      let roadmaps = [];
+      const roadmaps = [];
       for (let item of this.Roadmaps) {
-        if (id != item.id) {
+        if (id !== item.id) {
           roadmaps.push(item);
         }
       }
@@ -91,15 +92,14 @@ export class RoadmapComponent implements OnInit {
       this.RoadmapService.search(name, '').subscribe(roadmaps => {
         this.SearchRoadmaps = roadmaps;
         console.log(this.SearchRoadmaps);
-      })
-    };
+      });
+    }
   }
 
   loadmore(data) {
     console.log(data);
-    this.RoadmapService.search(this.filters.name,this.filters.category, this.SearchRoadmaps.length).subscribe(res => {
-      let Response:any = res;
-      for (let item of Response) {
+    this.RoadmapService.search(this.filters.name,this.filters.category, this.SearchRoadmaps.length).subscribe((res: any) => {
+      for (let item of res) {
         this.SearchRoadmaps.push(item);
       }
     });
@@ -110,9 +110,7 @@ export class RoadmapComponent implements OnInit {
   }
 
   async assign($event) {
-    console.log($event)
     await this.RoadmapService.assignUserToRoadmap($event.id).subscribe( async res => {
-
       await this.Roadmaps.push($event.roadmap);
       this.toggleRoadmaps(true);
       toast('Assigned', 2000);

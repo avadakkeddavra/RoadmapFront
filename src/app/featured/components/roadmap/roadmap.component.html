@@ -18,7 +18,7 @@
   </header>
   <div id="my" [ngClass]="_toggleFlag === true ? 'row' : 'row hide'">
     <div class="col s8 offset-s1 roadmap-feed z-depth-2" *ngIf="Roadmaps && Roadmaps.length > 0; else nothing">
-      <div class="card z-depth-0" *ngFor="let roadmap of Roadmaps;let i = index">
+      <div class="card z-depth-0" *ngFor="let roadmap of Roadmaps;let i = index" [ngClass]="roadmap.mentor ? 'mentor' : ''">
         <div class="card-content">
             <p class="date">{{roadmap.created_at | date:'dd-MMMM'}}</p>
             <span class="card-title">{{roadmap.name}}</span>
@@ -29,6 +29,7 @@
                 </div>
               <ul>
                 <li *ngIf="roadmap.creator_id != User.id"><span class="badge teal">Forked</span></li>
+                <li *ngIf="roadmap.mentor"><span class="badge orange">Mentorship</span></li>
                 <li><span class="badge blue">{{roadmap.skillsCategory.title}}</span></li>
                 <li>chekpoints <b>{{roadmap.checkpoints.length}}</b></li>
                 <li>users <b>{{roadmap.users.length}}</b></li>

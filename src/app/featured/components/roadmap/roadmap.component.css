@@ -76,6 +76,9 @@ ul.custom-tabs a.active{
     background-color: #fff;
     margin-top: 40px;
 }
+.card.mentor{
+  background-color: #fff;
+}
 .card{
     padding-bottom: 20px !important;
     border-bottom: 1px solid #eee;
