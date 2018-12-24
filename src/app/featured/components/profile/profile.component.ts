@@ -51,10 +51,10 @@ export class ProfileComponent implements OnInit {
           this.router.navigate(['']);
         }
         if (this.User.data.user_setting && this.User.data.user_setting.bg_image) {
-          this.User.data.user_setting.bg_image = environment.api + '/assets/images/' + this.User.data.user_setting.bg_image;
+          this.User.data.user_setting.bg_image = environment.api + '/api/assets/images/' + this.User.data.user_setting.bg_image;
         } else {
           this.User.data.user_setting = {};
-          this.User.data.user_setting.bg_image = './../../../../../assets/images/bg.jpg';
+          this.User.data.user_setting.bg_image = '/assets/images/bg.jpg';
         }
         const Skills = this.User.data.userSkills;
 

@@ -28,13 +28,13 @@ export class SettingsComponent implements OnInit {
   async ngOnInit() {
     await this.UserService.getUser(this.AuthSettings.userData().id).subscribe((user: any) => {
       this.user = user.data;
-      this.user.avatar = `${environment.api}/assets/images/${user.data.avatar}`;
+      this.user.avatar = `${environment.api}/api/assets/images/${user.data.avatar}`;
       this.imageChangedEvent = this.user.avatar;
       this.UserService.getUsersSettings(this.user.id).subscribe((res: any) => {
         this.settings = res ? res : {};
 
         if (this.settings && this.settings.bg_image) {
-          this.settings.bg_image = environment.api + '/assets/images/' + this.settings.bg_image;
+          this.settings.bg_image = environment.api + '/api/assets/images/' + this.settings.bg_image;
         } else {
           this.settings.bg_image = './../../../../assets/images/bg.jpg';
         }
@@ -45,7 +45,7 @@ export class SettingsComponent implements OnInit {
   uploadAvatar() {
 
     this.UserService.uploadAvatar({avatar:this.croppedImage, userId: this.user.id}).subscribe((res: any) => {
-      this.user.avatar = `${environment.api}/assets/images/${res.file}`;
+      this.user.avatar = `${environment.api}/api/assets/images/${res.file}`;
       this.AuthSettings.rebuildToken(res.token);
       toast('Avatar was updated');
     });
@@ -57,7 +57,7 @@ export class SettingsComponent implements OnInit {
     formData.append('userId', this.user.id);
 
     this.UserService.uploadBg(formData).subscribe((res: any) => {
-      this.settings.bg_image =  environment.api + '/assets/images/' + res.bg;
+      this.settings.bg_image =  environment.api + '/api/assets/images/' + res.bg;
     });
   }
 

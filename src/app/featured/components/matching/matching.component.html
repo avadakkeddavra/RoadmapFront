@@ -11,7 +11,7 @@
             <div class="input-field">
               <select name="userId" ngModel materialize="material_select" *ngIf="Users && Users.length > 0">
                 <option value="" selected disabled>Not</option>
-                <option value="{{user.id}}" class="left" data-icon="./../../../../assets/images/user.png" *ngFor="let user of Users">{{user.name}}</option>
+                <option value="{{user.id}}" class="left" data-icon="/assets/images/user.png" *ngFor="let user of Users">{{user.name}}</option>
               </select>
               <label for="">User</label>
             </div>

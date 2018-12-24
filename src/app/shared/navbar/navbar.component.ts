@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
 
   sideBarStatus = false;
   user: any;
-  store = environment.api + '/assets/images';
+  store = environment.api + '/api/assets/images';
   @Output() sideBarVisible = new EventEmitter();
 
   constructor(
