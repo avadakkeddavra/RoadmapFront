@@ -58,4 +58,8 @@ export class SkillsService {
   delete(id) {
     return this.Http.delete(`${environment.api}/api/skills/${id}`);
   }
+
+  getLegend() {
+    return this.Http.get(`${environment.api}/api/skills/legend`);
+  }
 }

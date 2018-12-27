@@ -5,6 +5,17 @@
 <section class="statistics">
   <div class="row">
     <div class="col l4 m12 top-skills">
+      <div class="card legend">
+        <div class="card-title orange lighten-2 white-text">
+          Disposition Legend
+        </div>
+        <div class="card-content">
+          <div class="row" *ngFor="let legendItem of Legend">
+            <div class="col m1"><b>{{legendItem.value}}</b></div>
+            <div class="col m11">{{legendItem.name}}</div>
+          </div>
+        </div>
+      </div>
       <div class="card">
         <div class="card-title purple lighten-2 white-text">
           Aim skill chart

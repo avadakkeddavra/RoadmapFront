@@ -30,7 +30,11 @@ export class PaginationComponent implements OnInit, OnChanges {
   getData(page) {
     if (page > 0 && page <= this.PagesCount) {
       this.CurrentPage = page;
-      this.next.emit({userId: this.Data.userId, page: page});
+      if (this.Data.userId) {
+        this.next.emit({userId: this.Data.userId, page: page});
+      } else {
+        this.next.emit({page: page});
+      }
     }
   }
 }

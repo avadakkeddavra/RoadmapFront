@@ -19,17 +19,20 @@ export class ProfileComponent implements OnInit {
   AimSkills: Array<any> = [];
   Matched: Array<any> = [];
   Categories: any = [];
+  Legend: any[] = [];
   constructor(
     private router: Router,
     private UserService: UserService,
     private route: ActivatedRoute,
     private AuthService: AuthService,
-    private CategorySevice: CategoryService
+    private CategorySevice: CategoryService,
+    private skillsService: SkillsService
   ) { }
 
   ngOnInit() {
-
-
+    this.skillsService.getLegend().subscribe((legend: any) => {
+      this.Legend = legend.data;
+    });
     this.route.params.subscribe( params => {
 
       this.CategorySevice.getWithUserStats(params.id).subscribe(res => {

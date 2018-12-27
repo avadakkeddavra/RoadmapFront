@@ -46,21 +46,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let cat of filterItemsOfShow('category')">
+            <tr *ngFor="let cat of Categories; let i = index;" [hidden]="!cat.show">
               <td><input type="text" value="{{cat.title}}" class="unstyled" #categoryTitle (change)="updateCategory('title', categoryTitle.value, cat.id)"></td>
               <td><input type="text" value="{{cat.description}}" class="unstyled" #catDesc (change)="updateCategory('description',catDesc.value, cat.id)"></td>
-              <td><i class="fa fa-trash-o" (click)="deleteCategory(cat.id)"></i></td>
+              <td><i class="fa fa-trash-o" (click)="deleteCategory(cat.id, i)"></i></td>
             </tr>
             </tbody>
           </table>
           <div class="table-footer">
-            <div class="right">
-              <ul class="pagination-custom">
-                <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                <li *ngFor="let item of pagination.category" ><a  (click)="showPage('category',item.number - 1, item)" ngClass="{{item.current ? 'highlighted' : ''}}">{{item.number}}</a></li>
-                <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-              </ul>
-            </div>
+            <app-pagination [Data]="{total: Categories.length}" (next)="changeCategoryPage($event)"></app-pagination>
             <div class="clearfix"></div>
           </div>
         </div>
@@ -120,24 +114,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let skill of filterItemsOfShow('skills')">
+            <tr *ngFor="let skill of PaginationData.items; let i = index;" [hidden]="!skill.show">
               <td><input type="text" class="unstyled" value="{{skill.title}}" #skillTitle (change)="updateSkill('title', skillTitle.value, skill.id)"></td>
               <td><p *ngIf="skill.skillsCategory">{{skill.skillsCategory.title}}</p></td>
               <td><input type="text" class="unstyled" value="{{skill.description}}" #skillDesc (change)="updateSkill('description', skillDesc.value, skill.id)"></td>
-              <td><i class="fa fa-trash-o" (click)="deleteSkill(skill.id)"></i></td>
+              <td><i class="fa fa-trash-o" (click)="deleteSkill(skill.id, i)"></i></td>
             </tr>
 
             </tbody>
           </table>
           <div class="table-footer">
-            <div class="right">
-              <ul class="pagination-custom">
-                <li class="cursor"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                <li *ngFor="let item of pagination.skills"><a (click)="showPage('skill',item.number - 1, item)" ngClass="{{item.current ? 'highlighted' : ''}}">{{item.number}}</a></li>
-                <li  class="cursor"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-              </ul>
-            </div>
-            <div class="clearfix"></div>
+            <app-pagination [Data]="PaginationData" (next)="changePage($event)"></app-pagination>
           </div>
         </div>
       </div>

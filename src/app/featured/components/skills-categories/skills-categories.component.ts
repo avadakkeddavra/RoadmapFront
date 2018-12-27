@@ -25,6 +25,7 @@ export class SkillsCategoriesComponent implements OnInit {
 
   Categories:any;
   Skills:any;
+  PaginationData: any;
   modalErrors = new EventEmitter<string|MaterializeAction>();
   errors: any = {
     data: [],
@@ -40,15 +41,18 @@ export class SkillsCategoriesComponent implements OnInit {
     this.SkillsService.getSkills().subscribe(res => {
       const Response:any = res;
       this.Skills = Response.data;
+      this.PaginationData = {
+        items: [],
+        total: Response.data.length
+      };
+      for (let i = 0; i < this.Skills.length; i++) {
 
-      for(let i = 0; i < this.Skills.length; i++) {
-
-        if(i >= 0 && i < 10) {
+        if (i >= 0 && i < 10) {
           this.Skills[i].show = true;
         } else {
           this.Skills[i].show = false;
         }
-
+        this.PaginationData.items.push(this.Skills[i]);
       }
 
       console.log(this.Skills);
@@ -108,7 +112,7 @@ export class SkillsCategoriesComponent implements OnInit {
 
   searchCategory(title) {
     this.CategoryService.search({title: title}).subscribe(res => {
-      let Response:any = res;
+      let Response: any = res;
 
       this.Categories = Response;
 
@@ -217,7 +221,7 @@ export class SkillsCategoriesComponent implements OnInit {
     }
   }
 
-  createSkill(form:NgForm) {
+  createSkill(form: NgForm) {
 
     const body = {
       title: form.controls.name.value,
@@ -226,15 +230,17 @@ export class SkillsCategoriesComponent implements OnInit {
     };
 
     this.SkillsService.create(body).subscribe( response => {
-      let skill:any = response;
-      toast(skill.data.title+' skill was created', 200)
+      let skill: any = response;
+      this.Skills.push(skill.data);
+      this.sortByCategory(skill.data.categoryId);
+      // this.PaginationData.items.push(skill.data);
+      toast(skill.data.title + ' skill was created', 500);
     }, errors => {
-      this.generateErrors('Skill creation', errors.error.error);     
+      this.generateErrors('Skill creation', errors.error.error);
     });
   }
 
-  createCategory(form:NgForm)
-  {
+  createCategory(form: NgForm) {
 
     const body = {
       title: form.controls.title.value,
@@ -243,13 +249,13 @@ export class SkillsCategoriesComponent implements OnInit {
 
     this.CategoryService.create(body).subscribe( response => {
       let category:any = response;
-      if(category.success) {
-        this.Categories.unshift(category.data)
-        toast(category.data.title+' category was created',200)
-      }       
+      if (category.success) {
+        this.Categories.push(category.data);
+        toast(category.data.title + ' category was created',200)
+      }
     },errors => {
-        this.generateErrors('Category creation', errors.error.error);      
-    })
+        this.generateErrors('Category creation', errors.error.error);
+    });
   }
 
   private generateErrors(type:string, Errors:Array<any>) {
@@ -258,28 +264,33 @@ export class SkillsCategoriesComponent implements OnInit {
     this.errors.title = type;
   }
 
-  deleteCategory(id) {
+  deleteCategory(id, index) {
     this.CategoryService.delete(id).subscribe(res => {
-      console.log(res);
-    })
+      this.Categories.splice(index, 1);
+    });
   }
 
-  deleteSkill(id) {
+  deleteSkill(id, index) {
     this.SkillsService.delete(id).subscribe(res => {
-      let Response:any = res;
-      if(Response.success === true) {
-        toast('Successfully deleted', 1000);
-      }
-    })
+      this.Skills.splice(index, 1);
+      this.PaginationData.items.splice(index, 1);
+    });
   }
 
 
-  sortByCategory(catId:number) {
+  sortByCategory(catId: number) {
     console.log(catId);
     let countVisable = 1;
+    const catSkills = this.Skills.filter((skill) => skill.categoryId === catId);
+    const data = {
+      items: catSkills,
+      total: catSkills.length
+    };
+    this.PaginationData = data;
+
     for(let skill of this.Skills) {
 
-      if(Number(skill.categoryId) == catId) {
+      if (Number(skill.categoryId) == catId) {
         if(countVisable <= 10) {
           skill.show = true;
         } else {
@@ -296,7 +307,7 @@ export class SkillsCategoriesComponent implements OnInit {
         number: i+1,
         cat: catId,
         current: false
-      })
+      });
     }
     this.pagination.skills[0].current = true;
   }
@@ -320,6 +331,25 @@ export class SkillsCategoriesComponent implements OnInit {
       if(Response.success) {
         toast('Skill was updated', 1000);
       }
-    })
+    });
+  }
+  changePage(event) {
+    this.PaginationData.items.forEach((skill, index) => {
+        if ( index < (event.page * 10)  && ( index > (event.page * 10) - 11)) {
+          skill.show = true;
+        } else {
+          skill.show = false;
+        }
+    });
+  }
+
+  changeCategoryPage(event) {
+    this.Categories.forEach((cat, index) => {
+      if ( index < (event.page * 10)  && ( index > (event.page * 10) - 11)) {
+        cat.show = true;
+      } else {
+        cat.show = false;
+      }
+    });
   }
 }
